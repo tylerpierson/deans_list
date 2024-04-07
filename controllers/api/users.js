@@ -3,6 +3,7 @@ const User = require('../../models/user')
 
 module.exports = {
     create,
+    index,
     jsonUsers,
     jsonUser
 }
@@ -29,3 +30,20 @@ async function create(req, res, next){
         res.status(400).json({ msg: error.message })
     }
 }
+
+/****** R - Read *******/
+async function index(req, res, next){
+    try {
+        const user = await User.find({})
+        console.log(user)
+        res.locals.data.user = user
+        next()
+    } catch (error) {
+        res.status(400).json({ msg: error.message })
+    }
+}
+
+/****** U - Update *******/
+
+
+/****** D - Delete *******/

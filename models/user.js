@@ -1,7 +1,7 @@
-const { model, Schema } = require('mongoose')
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
-
-const userSchema = new Schema ({
+const userSchema = new Schema({
     firstName: { required: true, type: String },
     lastName: { required: true, type: String },
     email: { required: true, type: String, unique: true },
@@ -14,15 +14,15 @@ const userSchema = new Schema ({
         default: 'admin'
     },
     subjects: [String],
-    students: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+    students: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     studentId: String,
-    teachers: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+    teachers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     gradeLevel: { type: String, required: true },
-    assignments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Assignment'}],
+    assignments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Assignment' }],
 }, {
     timestamps: true
-})
+});
 
-const User = model('User', userSchema)
+const User = mongoose.model('User', userSchema);
 
-module.exports = User
+module.exports = User;
