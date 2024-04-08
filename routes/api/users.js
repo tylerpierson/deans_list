@@ -6,6 +6,14 @@ const userCtrl = require('../../controllers/api/users')
 router.post('/', userCtrl.create, userCtrl.jsonUser)
 
 // Read
-    //Index
-router.get('/', userCtrl.index, userCtrl.jsonUser)
+    //Index All
+router.get('/', userCtrl.indexUsers, userCtrl.jsonUser)
+    //Index Individual
+router.get('/:id', userCtrl.showUser, userCtrl.jsonUser)
+// Update
+router.put('/:id', userCtrl.updateUser, userCtrl.jsonUser)
+
+// Delete
+router.delete('/:id', userCtrl.deleteUser, userCtrl.jsonUser)
+
 module.exports = router
