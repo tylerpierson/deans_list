@@ -1,4 +1,5 @@
 const Campus = require('../../models/campus')
+const { v4: uuidv4 } = require('uuid');
 
 
 module.exports = {
@@ -25,12 +26,32 @@ function jsonCampuses (_, res) {
 /****** C - Create *******/
 async function create(req, res, next){
     try {
-        const assignment = await Campus.create(req.body)
-        console.log(assignment)
-        res.locals.data.assignment = assignment
-        next()
+        // Generate a unique identifier for campusNum
+        const campusNum = uuidv4();
+
+        // Create a new campus object with the generated campusNum
+        const newCampus = {
+            name: req.body.name,
+            district: req.body.district,
+            state: req.body.state,
+            city: req.body.city,
+            address: req.body.address,
+            zipCode: req.body.zipCode,
+            admins: req.body.admins,
+            students: req.body.students,
+            teachers: req.body.teachers,
+            score: req.body.score,
+            campusNum: campusNum // Assign the generated campusNum
+        };
+
+        // Create the campus in the database
+        const campus = await Campus.create(newCampus);
+
+        // Return the created campus
+        res.locals.data.assignment = campus;
+        next();
     } catch (error) {
-        res.status(400).json({ msg: error.message })
+        res.status(400).json({ msg: error.message });
     }
 }
 

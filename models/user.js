@@ -17,7 +17,7 @@ const userSchema = new Schema({
     students: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     studentId: String,
     teachers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-    gradeLevel: { type: String, required: true },
+    gradeLevel: String,
     assignments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Assignment' }],
 }, {
     timestamps: true
