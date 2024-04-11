@@ -91,20 +91,7 @@ export default function App(){
     }, [])
     return(
         <>
-			
-            <div className={styles.banner}>
-                <h1>The World Famous Big Poppa Code React Starter Kit</h1>
-              <img src='https://i.imgur.com/5WXigZL.jpg'/>
-            </div>
-            <UserList
-            newUser={newUser}
-            setNewUser={setNewUser}
-            createUser={createUser}
-            users={users}
-            moveToCompleted={moveToCompleted}
-            completedUsers={completedUsers}
-            deleteUser={deleteUser}
-            />
+            <h1>Hello</h1>
         </>
     )
 }
