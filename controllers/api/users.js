@@ -46,28 +46,26 @@ async function create(req, res, next) {
             return res.status(400).json({ msg: "Invalid campus information provided" });
         }
 
-        // If campus exists, proceed with creating the admin user
+        // Hash the user password before saving it to the database
+        const hashedPassword = await bcrypt.hash(req.body.password, 10); // 10 is the saltRounds
+        req.body.password = hashedPassword;
+
+        // If campus exists, proceed with creating the user
         const user = await User.create(req.body);
-        const token = createJWT(user)
-        // Push the user's ID into the admins array of the corresponding campus
+
+        // Push the user's ID into the corresponding campus array
         if (user.role === 'admin') {
             campus.admins.push(user._id);
-            await campus.save();
-        }
-
-        // Push the user's ID into the teachers array of the corresponding campus
-        if (user.role === 'teacher') {
+        } else if (user.role === 'teacher') {
             campus.teachers.push(user._id);
-            await campus.save();
-        }
-
-        // Push the user's ID into the students array of the corresponding campus
-        if (user.role === 'student') {
+        } else if (user.role === 'student') {
             campus.students.push(user._id);
-            await campus.save();
         }
 
-        console.log(user);
+        // Save the campus document after pushing the user's ID
+        await campus.save();
+
+        console.log('User created:', user);
         res.locals.data.user = user;
         next();
     } catch (error) {
@@ -78,15 +76,34 @@ async function create(req, res, next) {
 /****** Login *******/
 async function login(req, res, next) {
     try {
-        const user = await User.findOne({ email: req.body.email })
-        if (!user) throw new Error()
-        const match = await bcrypt.compare(req.body.password, user.password)
-        if (!match) throw new Error()
-        res.locals.data.user = user
-        res.locals.data.token = createJWT(user)
-        next()
-    } catch {
-        res.status(400).json('Bad Credentials')
+        const { email, password } = req.body;
+        console.log('Login request received for email:', email);
+
+        const user = await User.findOne({ email });
+        console.log('User found:', user);
+
+        if (!user) {
+            console.log('User not found');
+            return res.status(400).json({ error: 'Invalid email or password' });
+        }
+
+        const match = await bcrypt.compare(password, user.password);
+        console.log('Password match:', match);
+
+        if (!match) {
+            console.log('Password does not match');
+            return res.status(400).json({ error: 'Invalid email or password' });
+        }
+
+        const token = createJWT(user);
+
+        console.log('Login successful for user:', user, token);
+        res.locals.data.user = user;
+        res.locals.data.token = createJWT(user);
+        next();
+    } catch (error) {
+        console.error('Error during login:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 }
 
