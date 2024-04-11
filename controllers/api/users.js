@@ -1,8 +1,17 @@
 const User = require('../../models/user')
 const Campus = require('../../models/campus')
 
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
+
+const checkToken = (req, res) => {
+    console.log('req.user', req.user)
+    res.json(req.exp)
+  }
 
 module.exports = {
+    checkToken,
+    login,
     create,
     indexUsers,
     showUser,
@@ -14,7 +23,6 @@ module.exports = {
 
 // jsonUsers jsonUser
 // viewControllers
-
 function jsonUser (_, res) {
     res.json(res.locals.data.user)
 }
@@ -22,6 +30,7 @@ function jsonUser (_, res) {
 function jsonUsers (_, res) {
     res.json(res.locals.data.users)
 }
+
 
 /****** C - Create *******/
 async function create(req, res, next) {
@@ -39,7 +48,7 @@ async function create(req, res, next) {
 
         // If campus exists, proceed with creating the admin user
         const user = await User.create(req.body);
-
+        const token = createJWT(user)
         // Push the user's ID into the admins array of the corresponding campus
         if (user.role === 'admin') {
             campus.admins.push(user._id);
@@ -66,6 +75,20 @@ async function create(req, res, next) {
     }
 }
 
+/****** Login *******/
+async function login(req, res, next) {
+    try {
+        const user = await User.findOne({ email: req.body.email })
+        if (!user) throw new Error()
+        const match = await bcrypt.compare(req.body.password, user.password)
+        if (!match) throw new Error()
+        res.locals.data.user = user
+        res.locals.data.token = createJWT(user)
+        next()
+    } catch {
+        res.status(400).json('Bad Credentials')
+    }
+}
 
 /****** R - Read *******/
     /****** Index All Users *******/
@@ -131,3 +154,14 @@ async function deleteUser(req, res, next) {
         res.status(400).json({ msg: error.message });
     }
 }
+
+/* -- Helper Functions -- */
+
+function createJWT (user) {
+    return jwt.sign(
+      // data payload
+      {  user },
+      process.env.SECRET,
+      { expiresIn: '24h' }
+    )
+  }

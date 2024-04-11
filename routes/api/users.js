@@ -5,6 +5,9 @@ const userCtrl = require('../../controllers/api/users')
 // Create
 router.post('/', userCtrl.create, userCtrl.jsonUser)
 
+// Login
+router.post('/login', userCtrl.login, userCtrl.jsonUser)
+
 // Read
     //Index All
 router.get('/', userCtrl.indexUsers, userCtrl.jsonUser)
