@@ -8,7 +8,17 @@ module.exports = {
     updateAssignment,
     deleteAssignment,
     jsonAssignments,
-    jsonAssignment
+    jsonAssignment,
+    teacherRole
+}
+
+// teacherRole middleware to prevent students from accessing certain datasets
+async function teacherRole(req, res, next){
+    if(req.user.role !== 'teacher') {
+        res.status(401).json('Permission Denied')
+        return
+    }
+    next()
 }
 
 // jsonAssignments jsonAssignment
