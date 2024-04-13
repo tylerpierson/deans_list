@@ -65,6 +65,16 @@ async function create(req, res, next) {
         // Save the campus document after pushing the user's ID
         await campus.save();
 
+        // If the user who is creating the new user is an admin, 
+        // add their ID to the new user's "admins" array
+        if (req.user.role === 'admin' && user.role === 'teacher') {
+            req.user.teachers.push(user._id)
+            user.admins.push(req.user._id);
+            await user.save();
+        }
+
+        console.log(req.user.teachers)
+        console.log(user.admins)
         console.log('User created:', user);
         res.locals.data.user = user;
         next();

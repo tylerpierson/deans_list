@@ -5,7 +5,7 @@ const checkToken = require('../../config/checkToken')
 const ensureLoggedIn = require('../../config/ensureLoggedIn')
 
 // Create
-router.post('/', checkToken, ensureLoggedIn, assignmentCtrl.adminRole, assignmentCtrl.create, assignmentCtrl.jsonAssignment)
+router.post('/', checkToken, ensureLoggedIn, assignmentCtrl.teacherRole, assignmentCtrl.create, assignmentCtrl.jsonAssignment)
 
 // Read
     //Index All

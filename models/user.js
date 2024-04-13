@@ -14,11 +14,13 @@ const userSchema = new Schema({
         default: 'admin'
     },
     subjects: [String],
-    students: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-    studentId: String,
+    admins: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     teachers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     gradeLevel: String,
     assignments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Assignment' }],
+    students: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    studentId: String,
+    parents: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 }, {
     timestamps: true
 });
