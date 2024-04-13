@@ -41,6 +41,8 @@ async function create(req, res, next) {
             campus: req.body.name
         });
 
+        const currentUser = await User.findById(req.user._id)
+
         // If campus doesn't exist, return an error
         if (!campus) {
             return res.status(400).json({ msg: "Invalid campus information provided" });
@@ -67,13 +69,14 @@ async function create(req, res, next) {
 
         // If the user who is creating the new user is an admin, 
         // add their ID to the new user's "admins" array
-        if (req.user.role === 'admin' && user.role === 'teacher') {
-            req.user.teachers.push(user._id)
-            user.admins.push(req.user._id);
+        if (currentUser.role === 'admin' && user.role === 'teacher') {
+            currentUser.teachers.push(user._id)
+            user.admins.push(currentUser._id);
             await user.save();
+            await currentUser.save();
         }
 
-        console.log(req.user.teachers)
+        console.log(currentUser.teachers)
         console.log(user.admins)
         console.log('User created:', user);
         res.locals.data.user = user;
@@ -160,6 +163,14 @@ async function updateUser(req, res, next) {
 /****** D - Delete *******/
 async function deleteUser(req, res, next) {
     try {
+        // Fetch the current user (admin)
+        const currentUser = await User.findById(req.user._id);
+
+        // Check if the current user exists and is an admin
+        if (!currentUser || currentUser.role !== 'admin') {
+            return res.status(403).json({ msg: "Unauthorized to delete users" });
+        }
+
         // Find the user to be deleted
         const user = await User.findOneAndDelete({ _id: req.params.id });
 
@@ -176,11 +187,19 @@ async function deleteUser(req, res, next) {
         // Remove the user ID from the students array of the corresponding campus
         await Campus.updateMany({ students: user._id }, { $pull: { students: user._id } });
 
+        // If the deleted user was a teacher and the current user (admin) has them in their "teachers" array,
+        // remove the deleted user's ID from the current user's "teachers" array
+        if (user.role === 'teacher') {
+            currentUser.teachers.pull(user._id);
+            await currentUser.save();
+        }
+
         res.json({ message: `User @${req.params.id} has been deleted successfully.` });
     } catch (error) {
         res.status(400).json({ msg: error.message });
     }
 }
+
 
 /* -- Helper Functions -- */
 
