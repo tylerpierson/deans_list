@@ -76,8 +76,6 @@ async function create(req, res, next) {
             await currentUser.save();
         }
 
-        console.log(currentUser.teachers)
-        console.log(user.admins)
         console.log('User created:', user);
         res.locals.data.user = user;
         next();
