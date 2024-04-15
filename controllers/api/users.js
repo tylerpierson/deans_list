@@ -16,7 +16,7 @@ module.exports = {
     indexUsers,
     showUser,
     updateUser,
-    deleteUser,
+    deleteStudentOrParent,
     jsonUsers,
     jsonUser,
     staffPermissions
@@ -42,7 +42,7 @@ async function staffPermissions(req, res, next) {
 }
 
 
-/****** C - Create *******/
+/****** C - Create a Student or Parent as a Staff member *******/
 async function createStudentsOrParents(req, res, next) {
     try {
         // Check if the campus exists with the provided campusNum and name
@@ -75,52 +75,27 @@ async function createStudentsOrParents(req, res, next) {
         // Save the campus document after pushing the user's ID
         await campus.save();
 
-        // If the user who is creating the new user is an admin, 
-        // add their ID to the new user's "admins" array
-        // Update admins' teachers, students, and parents arrays
         if (currentUser.role === 'admin') {
-            const admins = await User.find({ role: 'admin' });
-
-            for (const admin of admins) {
-                if (user.role !== 'admin') {
-                    if (user.role === 'teacher') {
-                        admin.teachers.push(user._id);
-                    } else if (user.role === 'student') {
-                        admin.students.push(user._id);
-                    } else if (user.role === 'parent') {
-                        admin.parents.push(user._id);
-                    }
-                    await admin.save();
-                }
-                // Add the admin's ID to the new user's "admins" array
-                user.admins.push(admin._id);
+            user.admins.push(currentUser._id)
+            if(user.role === 'teacher'){
+                currentUser.teachers.push(user._id)
+            } else if (user.role === 'student'){
+                currentUser.students.push(user._id)
+            } else if (user.role === 'parent') {
+                currentUser.parents.push(user._id)
             }
-            // Save the new user after updating admins' arrays and adding all admin IDs
-            await user.save();
+            await currentUser.save()
+            await user.save()
         } else if (currentUser.role === 'teacher') {
-            // If the current user is a teacher, populate user.admins with admin IDs from the teacher's admins array
-            for (const adminId of currentUser.admins) {
-                user.admins.push(adminId);
+            user.teachers.push(currentUser._id)
+            user.admins.push(currentUser.admins)
+            if(user.role === 'student'){
+                currentUser.students.push(user._id)
+            } else if (user.role === 'parent'){
+                currentUser.parents.push(user._id)
             }
-            // Save the new user after adding admin IDs to user.admins
-            await user.save();
-
-            // Update the teacher's reference in the created user
-            user.teachers.push(currentUser._id);
-            await user.save();
-
-            // Update the teacher's reference in the current user (teacher) itself
-            currentUser.students.push(user._id);
-            await currentUser.save();
-        }
-
-        // Update the admin's reference with the new user's ID
-        if (user.role === 'student' || user.role === 'parent') {
-            const admins = await User.find({ role: 'admin' });
-            for (const admin of admins) {
-                admin[user.role === 'student' ? 'students' : 'parents'].push(user._id);
-                await admin.save();
-            }
+            await currentUser.save()
+            await user.save()
         }
 
         console.log('User created:', user);
@@ -208,7 +183,7 @@ async function updateUser(req, res, next) {
 }
 
 /****** D - Delete *******/
-async function deleteUser(req, res, next) {
+async function deleteStudentOrParent(req, res, next) {
     try {
         // Fetch the current user (admin)
         const currentUser = await User.findById(req.user._id);
@@ -232,30 +207,26 @@ async function deleteUser(req, res, next) {
         );
 
         // Remove the user from other users' arrays
-        if (currentUser.role === 'admin') {
-            const admins = await User.find({ role: 'admin' });
+        const usersToUpdate = await User.find({ $or: [{ admins: user._id }, { teachers: user._id }, { students: user._id }, { parents: user._id }] });
 
-            for (const admin of admins) {
-                try {
-                    if (admin.admins.includes(user._id)) {
-                        admin.admins.pull(user._id);
-                        await admin.save();
-                    }
-
-                    if (user.role !== 'admin') {
-                        if (user.role === 'teacher') {
-                            admin.teachers.pull(user._id);
-                        } else if (user.role === 'student') {
-                            admin.students.pull(user._id);
-                        } else if (user.role === 'parent') {
-                            admin.parents.pull(user._id);
-                        }
-                        await admin.save();
-                    }
-                } catch (error) {
-                    console.error(`Error removing user ID ${user._id} from admin ${admin._id}: ${error.message}`);
-                    continue;
+        for (const otherUser of usersToUpdate) {
+            try {
+                if (otherUser.admins.includes(user._id)) {
+                    otherUser.admins.pull(user._id);
                 }
+                if (otherUser.teachers.includes(user._id)) {
+                    otherUser.teachers.pull(user._id);
+                }
+                if (otherUser.students.includes(user._id)) {
+                    otherUser.students.pull(user._id);
+                }
+                if (otherUser.parents.includes(user._id)) {
+                    otherUser.parents.pull(user._id);
+                }
+                await otherUser.save();
+            } catch (error) {
+                console.error(`Error removing user ID ${user._id} from other user ${otherUser._id}: ${error.message}`);
+                continue;
             }
         }
 
@@ -264,6 +235,7 @@ async function deleteUser(req, res, next) {
         res.status(400).json({ msg: error.message });
     }
 }
+
 
 
 

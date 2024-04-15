@@ -19,6 +19,6 @@ router.get('/:id', userCtrl.showUser, userCtrl.jsonUser)
 router.put('/:id', checkToken, ensureLoggedIn, userCtrl.updateUser, userCtrl.jsonUser)
 
 // Delete
-router.delete('/:id', checkToken, ensureLoggedIn, userCtrl.deleteUser, userCtrl.jsonUser)
+router.delete('/:id', checkToken, ensureLoggedIn, userCtrl.deleteStudentOrParent, userCtrl.jsonUser)
 
 module.exports = router
