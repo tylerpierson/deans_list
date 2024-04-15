@@ -12,13 +12,14 @@ const checkToken = (req, res) => {
 module.exports = {
     checkToken,
     login,
-    create,
+    createStudentsOrParents,
     indexUsers,
     showUser,
     updateUser,
     deleteUser,
     jsonUsers,
-    jsonUser
+    jsonUser,
+    staffPermissions
 }
 
 // jsonUsers jsonUser
@@ -31,9 +32,18 @@ function jsonUsers (_, res) {
     res.json(res.locals.data.users)
 }
 
+// middleware to allow all staff members certain permissions
+async function staffPermissions(req, res, next) {
+    if(req.user.role === 'student' || req.user.role === 'parent') {
+        res.status(401).json('Permission Denied')
+        return
+    }
+    next()
+}
+
 
 /****** C - Create *******/
-async function create(req, res, next) {
+async function createStudentsOrParents(req, res, next) {
     try {
         // Check if the campus exists with the provided campusNum and name
         const campus = await Campus.findOne({
@@ -41,7 +51,7 @@ async function create(req, res, next) {
             campus: req.body.name
         });
 
-        const currentUser = await User.findById(req.user._id)
+        const currentUser = await User.findById(req.user._id);
 
         // If campus doesn't exist, return an error
         if (!campus) {
@@ -56,14 +66,10 @@ async function create(req, res, next) {
         const user = await User.create(req.body);
 
         // Push the user's ID into the corresponding campus array
-        if (user.role === 'admin') {
-            campus.admins.push(user._id);
-        } else if (user.role === 'teacher') {
-            campus.teachers.push(user._id);
-        } else if (user.role === 'student') {
+        if (user.role === 'student') {
             campus.students.push(user._id);
         } else if (user.role === 'parent') {
-            campus.parents.push(user._id)
+            campus.parents.push(user._id);
         }
 
         // Save the campus document after pushing the user's ID
@@ -91,6 +97,30 @@ async function create(req, res, next) {
             }
             // Save the new user after updating admins' arrays and adding all admin IDs
             await user.save();
+        } else if (currentUser.role === 'teacher') {
+            // If the current user is a teacher, populate user.admins with admin IDs from the teacher's admins array
+            for (const adminId of currentUser.admins) {
+                user.admins.push(adminId);
+            }
+            // Save the new user after adding admin IDs to user.admins
+            await user.save();
+
+            // Update the teacher's reference in the created user
+            user.teachers.push(currentUser._id);
+            await user.save();
+
+            // Update the teacher's reference in the current user (teacher) itself
+            currentUser.students.push(user._id);
+            await currentUser.save();
+        }
+
+        // Update the admin's reference with the new user's ID
+        if (user.role === 'student' || user.role === 'parent') {
+            const admins = await User.find({ role: 'admin' });
+            for (const admin of admins) {
+                admin[user.role === 'student' ? 'students' : 'parents'].push(user._id);
+                await admin.save();
+            }
         }
 
         console.log('User created:', user);
@@ -100,6 +130,8 @@ async function create(req, res, next) {
         res.status(400).json({ msg: error.message });
     }
 }
+
+
 
 /****** Login *******/
 async function login(req, res, next) {
