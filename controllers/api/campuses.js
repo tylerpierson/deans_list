@@ -40,6 +40,7 @@ async function create(req, res, next){
             admins: req.body.admins,
             students: req.body.students,
             teachers: req.body.teachers,
+            parents: req.body.parents,
             score: req.body.score,
             campusNum: campusNum // Assign the generated campusNum
         };

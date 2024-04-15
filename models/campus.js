@@ -12,6 +12,7 @@ const campusSchema = new Schema({
     admins: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     students: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     teachers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    parents: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     score: String,
 }, {
     timestamps: true

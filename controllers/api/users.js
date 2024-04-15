@@ -62,6 +62,8 @@ async function create(req, res, next) {
             campus.teachers.push(user._id);
         } else if (user.role === 'student') {
             campus.students.push(user._id);
+        } else if (user.role === 'parent') {
+            campus.parents.push(user._id)
         }
 
         // Save the campus document after pushing the user's ID
@@ -69,11 +71,26 @@ async function create(req, res, next) {
 
         // If the user who is creating the new user is an admin, 
         // add their ID to the new user's "admins" array
-        if (currentUser.role === 'admin' && user.role === 'teacher') {
-            currentUser.teachers.push(user._id)
-            user.admins.push(currentUser._id);
+        // Update admins' teachers, students, and parents arrays
+        if (currentUser.role === 'admin') {
+            const admins = await User.find({ role: 'admin' });
+
+            for (const admin of admins) {
+                if (user.role !== 'admin') {
+                    if (user.role === 'teacher') {
+                        admin.teachers.push(user._id);
+                    } else if (user.role === 'student') {
+                        admin.students.push(user._id);
+                    } else if (user.role === 'parent') {
+                        admin.parents.push(user._id);
+                    }
+                    await admin.save();
+                }
+                // Add the admin's ID to the new user's "admins" array
+                user.admins.push(admin._id);
+            }
+            // Save the new user after updating admins' arrays and adding all admin IDs
             await user.save();
-            await currentUser.save();
         }
 
         console.log('User created:', user);
@@ -176,27 +193,46 @@ async function deleteUser(req, res, next) {
             return res.status(404).json({ msg: "User not found" });
         }
 
-        // Remove the user ID from the admins array of the corresponding campus
-        await Campus.updateMany({ admins: user._id }, { $pull: { admins: user._id } });
+        // Remove the user from associated campuses
+        await Campus.updateMany(
+            { $or: [{ admins: user._id }, { teachers: user._id }, { students: user._id }] },
+            { $pull: { admins: user._id, teachers: user._id, students: user._id } }
+        );
 
-        // Remove the user ID from the teachers array of the corresponding campus
-        await Campus.updateMany({ teachers: user._id }, { $pull: { teachers: user._id } });
+        // Remove the user from other users' arrays
+        if (currentUser.role === 'admin') {
+            const admins = await User.find({ role: 'admin' });
 
-        // Remove the user ID from the students array of the corresponding campus
-        await Campus.updateMany({ students: user._id }, { $pull: { students: user._id } });
+            for (const admin of admins) {
+                try {
+                    if (admin.admins.includes(user._id)) {
+                        admin.admins.pull(user._id);
+                        await admin.save();
+                    }
 
-        // If the deleted user was a teacher and the current user (admin) has them in their "teachers" array,
-        // remove the deleted user's ID from the current user's "teachers" array
-        if (user.role === 'teacher') {
-            currentUser.teachers.pull(user._id);
-            await currentUser.save();
+                    if (user.role !== 'admin') {
+                        if (user.role === 'teacher') {
+                            admin.teachers.pull(user._id);
+                        } else if (user.role === 'student') {
+                            admin.students.pull(user._id);
+                        } else if (user.role === 'parent') {
+                            admin.parents.pull(user._id);
+                        }
+                        await admin.save();
+                    }
+                } catch (error) {
+                    console.error(`Error removing user ID ${user._id} from admin ${admin._id}: ${error.message}`);
+                    continue;
+                }
+            }
         }
 
-        res.json({ message: `User @${req.params.id} has been deleted successfully.` });
+        res.json({ message: `${user.firstName} ${user.lastName} @${req.params.id} has been deleted successfully.` });
     } catch (error) {
         res.status(400).json({ msg: error.message });
     }
 }
+
 
 
 /* -- Helper Functions -- */
