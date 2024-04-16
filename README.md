@@ -75,4 +75,4 @@ Create the initial campus with the following route:
 localhost:(PORT)/api/users
 
 **Admin Page**
-![Admin_Page](public/img/admin_wireframe.png)
+![Admin_Page](public/img/admin_wireframe.jpg)
