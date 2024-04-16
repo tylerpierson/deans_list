@@ -73,3 +73,6 @@ Follow the same model to continue creating other users. There must be an initial
 
 Create the initial campus with the following route:
 localhost:(PORT)/api/users
+
+**Admin Page**
+![Admin_Page](public/img/admin_wireframe.png)
