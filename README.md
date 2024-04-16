@@ -1,62 +1,75 @@
-# Big Poppa Code React Starter Kit
-This Starter Kit is being created for New Web Developers that want to get started with react
 
-Most people use a CLI Tool like Vue-Cli or Create React App and no idea what these things are doing
+![framework](public/img/deansList_schema.png)
 
-The goal of this is for it to be a tool that let's you learn JS at a new level because you have access to
-everything under the hood and no opinionated set up
+Dean's List is a dynamic online platform revolutionizing education through its innovative approach to Response to Intervention (RTI). With a mission to address the challenges faced in education, Dean's List offers a comprehensive suite of tools and resources designed to empower educators, students, and parents alike. By leveraging cutting-edge technology and expert insights, Dean's List aims to create a supportive environment where every learner can thrive. Join us on our journey to transform education and unlock the full potential of every student.
 
-I will base all my tutorials on this Starter Kit.
-
-# Who Am I?
-
-![bigpoppacode.io](public/img/deansList_schema.png)
-
-I am Arthur Bernier Jr. I work as freelance fullstack web developer and attraction marketing consultant specializing in supporting e-commerce brands,
-subscription box sites, social activists, religious/non-profit leaders and creative entrepreneurs(i.e. barbers, artists, musicians, stylists, models and photographers).
-I have a passion for helping entrepreneurs reach their perfect audience and helping you communicate to that audience in a way that makes them know, like and trust you. I also am a Part-Time Instructor at General Assembly, a Senior Director at a National Non-Profit, a Multi Time Start-Up Founder who has raised 7 figures in VC, Creator and Maintainer of MambaScript, and Multi Time Tech Lead at startups from Seed Stage to Billion Dollar Valuation.
-
-
-# My Favorite Online Instructors
-
-[__Colt Steele__](https://www.youtube.com/channel/UCrqAGUPPMOdo0jfQ6grikZw)
-
-[__Brad Traversy__](https://www.youtube.com/channel/UC29ju8bIPH5as8OGnQzwJyA)
-
-[__Jose Santos Garcia__](https://www.youtube.com/channel/UC46wWUso9H5KPQcoL9iE3Ug)
-
-[__Stephen Grider__](https://www.youtube.com/channel/UCQCaS3atWyNHEy5PkDXdpNg/)
 
 ## Steps
 
 
-**Start the dev server**
+**Start with Installation of Packages and Running Server**
+```bash
+npm i
+```
+### next
 ```bash
 npm run dev
 ```
-### or
-```bash
-yarn dev
+
+**Utilize Postman to create initial Campus**
+```
+const campusSchema = new Schema({
+    name: { required: true, type: String },
+    campusNum: String,
+    district: { required: true, type: String },
+    state: { required: true, type: String },
+    city: { required: true, type: String },
+    address: { required: true, type: String },
+    zipCode: { required: true, type: String },
+    admins: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    students: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    teachers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    parents: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    score: String,
+}
+```
+Follow the model to create an initial campus. Before being able to create an administrator, this step has to be completed. Be sure to leave the campuNum blank as it will be autopopulated upon creation. That campusNum will be utilized to create the initial administrator.
+
+Create the initial campus with the following route:
+localhost:(PORT)/api/campuses
+
+**Utilize Postman to Create Inital Administrator**
+```
+const userSchema = new Schema({
+    firstName: { required: true, type: String },
+    lastName: { required: true, type: String },
+    email: { required: true, type: String, unique: true },
+    password: { type: String, required: true },
+    campusNum: String,
+    campus: String,
+    role: {
+        type: String,
+        enum: ['admin', 'teacher', 'student', 'parent'],
+        default: 'admin'
+    },
+    subjects: [String],
+    admins: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    teachers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    gradeLevel: String,
+    assignments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Assignment' }],
+    students: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    studentId: String,
+    parents: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+}
 ```
 
-**Build files for production**
-```bash
-yarn build
-```
-### or
+Follow the model to create an initial administrator with which you will create more users to populate the campus. Before being able to create an administrator, you must manually input the campusNum that was received upon creation of the campus.
 
-```bash
-npm run build
-```
+Create the initial campus with the following route:
+localhost:(PORT)/api/users/admin
 
-**Deploy for production script**
-```bash
-npm start
-```
-### or
-```bash
-yarn start
-```
+**Utilize Postman to Create Lower Tier Users (teachers, students, parents)**
+Follow the same model to continue creating other users. There must be an initial user logged in to create other lower tier users. Without the creation of an administrator, it is not possible to create other users.
 
-
-This starter kit uses Gulp, Webpack, Browsersync, Nodemon and Babel to create a unified development environment with hot reloading and automatically building files to disk. It uses the concept of `Train How You Fight, Fight Like You Train`. Instead of building files in memory in dev mode, this starter kit builds your files directly to the public folder and statically serves the public folder. This means that the public folder is serving your site just like it would in production and this meant to be a simple full stack react starter kit that any learner can build upon.
+Create the initial campus with the following route:
+localhost:(PORT)/api/users
