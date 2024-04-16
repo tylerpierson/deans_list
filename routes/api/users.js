@@ -5,6 +5,8 @@ const ensureLoggedIn = require('../../config/ensureLoggedIn')
 const checkToken = require('../../config/checkToken')
 
 // Create
+router.post('/admin', userCtrl.createAdmin, userCtrl.jsonUser)
+
 router.post('/', checkToken, ensureLoggedIn, userCtrl.createUser, userCtrl.jsonUser)
 
 // Login

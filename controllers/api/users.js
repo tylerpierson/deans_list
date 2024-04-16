@@ -12,6 +12,7 @@ const checkToken = (req, res) => {
 module.exports = {
     checkToken,
     login,
+    createAdmin,
     createUser,
     indexUsers,
     showUser,
@@ -32,6 +33,51 @@ function jsonUsers (_, res) {
 }
 
 /****** C - Create a Student or Parent as a Staff member *******/
+async function createAdmin(req, res, next) {
+    try {
+        // Check if the campus exists with the provided campusNum and name
+        const campus = await Campus.findOne({
+            campusNum: req.body.campusNum,
+            campus: req.body.name
+        });
+
+        // If campus doesn't exist, return an error
+        if (!campus) {
+            return res.status(400).json({ msg: "Invalid campus information provided" });
+        }
+
+        if(req.body.role !== 'admin'){
+            return res.status(400).json({ msg: "Invalid user role" })
+        }
+
+        // Check if there are any existing administrators in the campus
+        if (campus.admins && campus.admins.length > 0) {
+            return res.status(400).json({ msg: "Initial Administrator already exists" });
+        }
+
+        // Hash the user password before saving it to the database
+        const hashedPassword = await bcrypt.hash(req.body.password, 10); // 10 is the saltRounds
+        req.body.password = hashedPassword;
+
+        // If campus exists, proceed with creating the user
+        const user = await User.create(req.body);
+
+        // Push the user's ID into the corresponding campus array
+        if (user.role === 'admin') {
+            campus.admins.push(user._id);
+        }
+
+        // Save the campus document after pushing the user's ID
+        await campus.save();
+
+        console.log('User created:', user);
+        res.locals.data.user = user;
+        next();
+    } catch (error) {
+        res.status(400).json({ msg: error.message });
+    }
+}
+
 async function createUser(req, res, next) {
     try {
         // Check if the campus exists with the provided campusNum and name
@@ -112,41 +158,28 @@ async function createUser(req, res, next) {
          
 
         if (currentUser.role === 'teacher') {
-            // Add the currentUser's ID to the new user's teachers array
             user.teachers.push(currentUser._id);
-        
-            // Add the currentUser's admin array to the new user's admins array
-            user.admins.push(...currentUser.admins);
-        
-            // Update other users' arrays based on the new user's role
             if (user.role === 'student') {
-                // Add the new user's ID to the currentUser's students array
                 currentUser.students.push(user._id);
+                user.admins.push(...currentUser.admins);
+                // Update other admin users' students array
+                const admins = await User.find({ role: 'admin', _id: { $in: currentUser.admins } });
+                for (const admin of admins) {
+                    admin.students.push(user._id);
+                    await admin.save();
+                }
             } else if (user.role === 'parent') {
-                // Add the new user's ID to the currentUser's parents array
                 currentUser.parents.push(user._id);
-            }
-        
-            // Save changes to both the currentUser and the new user
-            await currentUser.save();
-            await user.save();
-        
-            // Update other admin members' arrays
-            const admins = await User.find({ role: 'admin' });
-        
-            for (const admin of admins) {
-                // Check if the admin is not the currentUser to avoid redundant updates
-                if (!currentUser.admins.includes(admin._id)) {
-                    // Update the admin's arrays based on the new user's role
-                    if (user.role === 'student') {
-                        admin.students.push(user._id);
-                    } else if (user.role === 'parent') {
-                        admin.parents.push(user._id);
-                    }
-                    // Save changes to the admin
+                user.admins.push(...currentUser.admins);
+                // Update other admin users' parents array
+                const admins = await User.find({ role: 'admin', _id: { $in: currentUser.admins } });
+                for (const admin of admins) {
+                    admin.parents.push(user._id);
                     await admin.save();
                 }
             }
+            await currentUser.save();
+            await user.save();
         }
         
 

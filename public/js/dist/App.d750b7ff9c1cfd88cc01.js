@@ -109,7 +109,7 @@ function App() {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     getUsers();
   }, []);
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h1", null, "Hello"));
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h1", null, "Hello world"));
 }
 
 /***/ }),
@@ -406,4 +406,4 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.2262bf0fd2a1636c20ab0f7d417c223a.js.map
+//# sourceMappingURL=App.c074649e7ba5ff7943d4bd9b8a710814.js.map
