@@ -12,14 +12,13 @@ const checkToken = (req, res) => {
 module.exports = {
     checkToken,
     login,
-    createStudentsOrParents,
+    createUser,
     indexUsers,
     showUser,
     updateUser,
     deleteStudentOrParent,
     jsonUsers,
     jsonUser,
-    staffPermissions
 }
 
 // jsonUsers jsonUser
@@ -32,18 +31,8 @@ function jsonUsers (_, res) {
     res.json(res.locals.data.users)
 }
 
-// middleware to allow all staff members certain permissions
-async function staffPermissions(req, res, next) {
-    if(req.user.role === 'student' || req.user.role === 'parent') {
-        res.status(401).json('Permission Denied')
-        return
-    }
-    next()
-}
-
-
 /****** C - Create a Student or Parent as a Staff member *******/
-async function createStudentsOrParents(req, res, next) {
+async function createUser(req, res, next) {
     try {
         // Check if the campus exists with the provided campusNum and name
         const campus = await Campus.findOne({
@@ -52,6 +41,13 @@ async function createStudentsOrParents(req, res, next) {
         });
 
         const currentUser = await User.findById(req.user._id);
+
+        // Check if the user to be created is a teacher
+        if (currentUser.role === 'teacher' && req.body.role === 'teacher') {
+            return res.status(400).json({ msg: "Not authorized to create a teacher" });
+        } else if (currentUser.role === 'student' || currentUser.role === 'parent') {
+            return res.status(400).json({ msg: "Not authorized to create a user" });
+        }
 
         // If campus doesn't exist, return an error
         if (!campus) {
@@ -76,27 +72,83 @@ async function createStudentsOrParents(req, res, next) {
         await campus.save();
 
         if (currentUser.role === 'admin') {
-            user.admins.push(currentUser._id)
-            if(user.role === 'teacher'){
-                currentUser.teachers.push(user._id)
-            } else if (user.role === 'student'){
-                currentUser.students.push(user._id)
+            user.admins.push(currentUser._id);
+            if (user.role === 'admin') {
+                currentUser.admins.push(user._id);
+                user.teachers.push(...currentUser.teachers);
+                user.students.push(...currentUser.students);
+                user.parents.push(...currentUser.parents);
+            } else if (user.role === 'teacher') {
+                currentUser.teachers.push(user._id);
+                user.admins.push(...currentUser.admins);
+                // Update other admin users' teachers array
+                const admins = await User.find({ role: 'admin', _id: { $in: currentUser.admins } });
+                for (const admin of admins) {
+                    admin.teachers.push(user._id);
+                    await admin.save();
+                }
+            } else if (user.role === 'student') {
+                currentUser.students.push(user._id);
+                user.admins.push(...currentUser.admins);
+                // Update other admin users' students array
+                const admins = await User.find({ role: 'admin', _id: { $in: currentUser.admins } });
+                for (const admin of admins) {
+                    admin.students.push(user._id);
+                    await admin.save();
+                }
             } else if (user.role === 'parent') {
-                currentUser.parents.push(user._id)
+                currentUser.parents.push(user._id);
+                user.admins.push(...currentUser.admins);
+                // Update other admin users' parents array
+                const admins = await User.find({ role: 'admin', _id: { $in: currentUser.admins } });
+                for (const admin of admins) {
+                    admin.parents.push(user._id);
+                    await admin.save();
+                }
             }
-            await currentUser.save()
-            await user.save()
-        } else if (currentUser.role === 'teacher') {
-            user.teachers.push(currentUser._id)
-            user.admins.push(currentUser.admins)
-            if(user.role === 'student'){
-                currentUser.students.push(user._id)
-            } else if (user.role === 'parent'){
-                currentUser.parents.push(user._id)
-            }
-            await currentUser.save()
-            await user.save()
+            await currentUser.save();
+            await user.save();
         }
+         
+
+        if (currentUser.role === 'teacher') {
+            // Add the currentUser's ID to the new user's teachers array
+            user.teachers.push(currentUser._id);
+        
+            // Add the currentUser's admin array to the new user's admins array
+            user.admins.push(...currentUser.admins);
+        
+            // Update other users' arrays based on the new user's role
+            if (user.role === 'student') {
+                // Add the new user's ID to the currentUser's students array
+                currentUser.students.push(user._id);
+            } else if (user.role === 'parent') {
+                // Add the new user's ID to the currentUser's parents array
+                currentUser.parents.push(user._id);
+            }
+        
+            // Save changes to both the currentUser and the new user
+            await currentUser.save();
+            await user.save();
+        
+            // Update other admin members' arrays
+            const admins = await User.find({ role: 'admin' });
+        
+            for (const admin of admins) {
+                // Check if the admin is not the currentUser to avoid redundant updates
+                if (!currentUser.admins.includes(admin._id)) {
+                    // Update the admin's arrays based on the new user's role
+                    if (user.role === 'student') {
+                        admin.students.push(user._id);
+                    } else if (user.role === 'parent') {
+                        admin.parents.push(user._id);
+                    }
+                    // Save changes to the admin
+                    await admin.save();
+                }
+            }
+        }
+        
 
         console.log('User created:', user);
         res.locals.data.user = user;
@@ -105,7 +157,6 @@ async function createStudentsOrParents(req, res, next) {
         res.status(400).json({ msg: error.message });
     }
 }
-
 
 
 /****** Login *******/
