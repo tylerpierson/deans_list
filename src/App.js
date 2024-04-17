@@ -1,5 +1,11 @@
 import { useState, useEffect } from 'react'
+import { Route, Routes } from 'react-router-dom'
 import styles from './App.module.scss'
+
+import NavBar from './components/NavBar/NavBar'
+import HomePage from './pages/HomePage/HomePage'
+import DataPage from './pages/DataPage/DataPage'
+import UserPage from './pages/UserPage/UserPage'
 
 
 export default function App(){
@@ -91,7 +97,12 @@ export default function App(){
     }, [])
     return(
         <>
-            <h1>Hello world</h1>
+        <NavBar />
+        <Routes>
+            <Route path='/' element={<HomePage />} />
+            <Route path='/data' element={<DataPage />} />
+            <Route path='/profile' element={<UserPage />} />
+        </Routes>
         </>
     )
 }

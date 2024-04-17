@@ -1,0 +1,21 @@
+.NavBar {
+    width: 100%;
+    background-color: cornflowerblue;
+}
+
+.navList {
+    display: flex;
+    justify-content: space-evenly;
+    text-decoration: none;
+    margin: 0;
+}
+
+.navItem {
+    list-style-type: none;
+}
+
+.Link {
+    text-decoration: none;
+    color: white;
+}
+  
