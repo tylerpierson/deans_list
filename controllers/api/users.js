@@ -32,7 +32,7 @@ function jsonUsers (_, res) {
     res.json(res.locals.data.users)
 }
 
-/****** C - Create a Student or Parent as a Staff member *******/
+/****** C - Create an initial Admin User *******/
 async function createAdmin(req, res, next) {
     try {
         // Check if the campus exists with the provided campusNum and name
@@ -80,13 +80,17 @@ async function createAdmin(req, res, next) {
 
 async function createUser(req, res, next) {
     try {
+        const currentUser = await User.findById(req.user._id);
+
+        if(!req.body.campus && !req.body.campusNum){
+            req.body.campus = currentUser.campus
+            req.body.campusNum = currentUser.campusNum
+        }
         // Check if the campus exists with the provided campusNum and name
         const campus = await Campus.findOne({
             campusNum: req.body.campusNum,
             campus: req.body.name
         });
-
-        const currentUser = await User.findById(req.user._id);
 
         // Check if the user to be created is a teacher
         if (currentUser.role === 'teacher' && req.body.role === 'teacher') {
@@ -95,17 +99,17 @@ async function createUser(req, res, next) {
             return res.status(400).json({ msg: "Not authorized to create a user" });
         }
 
-        // If campus doesn't exist, return an error
-        if (!campus) {
-            return res.status(400).json({ msg: "Invalid campus information provided" });
-        }
-
         // Hash the user password before saving it to the database
         const hashedPassword = await bcrypt.hash(req.body.password, 10); // 10 is the saltRounds
         req.body.password = hashedPassword;
 
         // If campus exists, proceed with creating the user
         const user = await User.create(req.body);
+
+        // If campus doesn't exist, return an error
+        if (!campus) {
+            return res.status(400).json({ msg: "Invalid campus information provided" });
+        }
 
         // Push the user's ID into the corresponding campus array
         if (user.role === 'student') {
@@ -286,8 +290,8 @@ async function deleteStudentOrParent(req, res, next) {
 
         // Remove the user from associated campuses
         await Campus.updateMany(
-            { $or: [{ admins: user._id }, { teachers: user._id }, { students: user._id }] },
-            { $pull: { admins: user._id, teachers: user._id, students: user._id } }
+            { $or: [{ admins: user._id }, { teachers: user._id }, { students: user._id }, { parents: user._id }] },
+            { $pull: { admins: user._id, teachers: user._id, students: user._id, parents: user._id } }
         );
 
         // Remove the user from other users' arrays
