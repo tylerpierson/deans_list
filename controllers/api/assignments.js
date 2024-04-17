@@ -1,4 +1,5 @@
 const Assignment = require('../../models/assignment')
+const User = require('../../models/user')
 
 
 module.exports = {
@@ -35,7 +36,20 @@ function jsonAssignments (_, res) {
 /****** C - Create *******/
 async function create(req, res, next){
     try {
+        const user = await User.findById(req.user._id);
+        
         const assignment = await Assignment.create(req.body)
+        assignment.teachers.push(user._id)
+        assignment.students.push(...user.students)
+        user.assignments.push(assignment._id)
+        const students = await User.find({ role: 'student', _id: { $in: user.students } });
+        for (const student of students) {
+            student.assignments.push(assignment._id);
+            await student.save();
+        }
+
+        await user.save();
+        await assignment.save();
         console.log(assignment)
         res.locals.data.assignment = assignment
         next()
@@ -85,12 +99,21 @@ async function updateAssignment(req, res, next) {
 }
 
 /****** D - Delete *******/
-async function deleteAssignment(req ,res,next) {
+async function deleteAssignment(req, res, next) {
     try {
-        await Assignment.findOneAndDelete({_id : req.params.id})
-        res.json({ message: `Assignment@${req.params.id} has been deleted successfully.` })
-        next()
+        // Find the assignment to be deleted
+        const assignment = await Assignment.findOneAndDelete({ _id: req.params.id });
+
+        // Remove the assignment ID from all users who have it in their "assignments" array
+        await User.updateMany(
+            { _id: { $in: assignment.teachers.concat(assignment.students) } },
+            { $pull: { assignments: req.params.id } }
+        );
+
+        // Send response
+        res.json({ message: `Assignment @${req.params.id} has been deleted successfully.` });
+        next();
     } catch (error) {
-        res.status(400).json({ msg: error.message })
+        res.status(400).json({ msg: error.message });
     }
 }
