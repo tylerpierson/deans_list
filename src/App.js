@@ -98,11 +98,13 @@ export default function App(){
     return(
         <>
         <NavBar />
-        <Routes>
-            <Route path='/' element={<HomePage />} />
-            <Route path='/data' element={<DataPage />} />
-            <Route path='/profile' element={<UserPage />} />
-        </Routes>
+        <div className={styles.App}>
+            <Routes>
+                <Route path='/' element={<HomePage />} />
+                <Route path='/data' element={<DataPage />} />
+                <Route path='/profile' element={<UserPage />} />
+            </Routes>
+        </div>
         </>
     )
 }
