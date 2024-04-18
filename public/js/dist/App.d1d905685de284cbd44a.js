@@ -162,7 +162,7 @@ function NavBar() {
       } else {
         navbar.classList.remove(_NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].scrollDown);
       }
-      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
+      lastScrollTop = scrollTop < 0 ? 0 : scrollTop; // For Mobile or negative scrolling
     };
     window.addEventListener('scroll', handleScroll);
     return () => {
@@ -366,9 +366,9 @@ body .IMqMrT2eGOGeFiLbCAGg {
   width: 70%;
   height: 100%;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 7vh;
   background-color: white;
-}`, "",{"version":3,"sources":["webpack://./src/App.module.scss"],"names":[],"mappings":"AAAA;EACI,SAAA;EACA,WAAA;EACA,aAAA;EACA,yDAAA;EACA,oBAAA;AACJ;AAAI;EACI,UAAA;EACA,YAAA;EACA,cAAA;EACA,aAAA;EACA,uBAAA;AAER","sourcesContent":["body {\n    margin: 0;\n    width: 100%;\n    height: 100vh;\n    background-image: url('/Users/tylerpierson/software_projects/deans_list/public/img/star-bg.png');\n    background-size: 25%;\n    .App {\n        width: 70%;\n        height: 100%;\n        margin: 0 auto;\n        padding: 2rem;\n        background-color: white;\n    }\n}\n"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/App.module.scss"],"names":[],"mappings":"AAAA;EACI,SAAA;EACA,WAAA;EACA,aAAA;EACA,yDAAA;EACA,oBAAA;AACJ;AAAI;EACI,UAAA;EACA,YAAA;EACA,cAAA;EACA,YAAA;EACA,uBAAA;AAER","sourcesContent":["body {\n    margin: 0;\n    width: 100%;\n    height: 100vh;\n    background-image: url('/Users/tylerpierson/software_projects/deans_list/public/img/star-bg.png');\n    background-size: 25%;\n    .App {\n        width: 70%;\n        height: 100%;\n        margin: 0 auto;\n        padding: 7vh;\n        background-color: white;\n    }\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"App": `IMqMrT2eGOGeFiLbCAGg`
@@ -1102,4 +1102,4 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.2fc6a162cc03d0af7634593678dde355.js.map
+//# sourceMappingURL=App.6a064372c9565cf15742b08fe551c21a.js.map

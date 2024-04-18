@@ -17,7 +17,7 @@ function NavBar() {
                 navbar.classList.remove(styles.scrollDown);
             }
 
-            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
+            lastScrollTop = scrollTop < 0 ? 0 : scrollTop; // For Mobile or negative scrolling
         };
 
         window.addEventListener('scroll', handleScroll);
