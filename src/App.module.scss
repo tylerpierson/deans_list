@@ -2,10 +2,11 @@ body {
     margin: 0;
     width: 100%;
     height: 100vh;
-    background-color: #232946;
+    background-image: url('/Users/tylerpierson/software_projects/deans_list/public/img/star-bg.png');
+    background-size: 25%;
     .App {
         width: 70%;
-        height: 100vh;
+        height: 100%;
         margin: 0 auto;
         padding: 2rem;
         background-color: white;
