@@ -150,27 +150,62 @@ function App() {
 /* harmony import */ var _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NavBar.module.scss */ "./src/components/NavBar/NavBar.module.scss");
 
 
- // Make sure the path is correct
 
 function NavBar() {
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    const navbar = document.querySelector(".".concat(_NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].NavBar));
+    let lastScrollTop = 0;
+    const handleScroll = () => {
+      let scrollTop = window.scrollY || document.documentElement.scrollTop;
+      if (scrollTop > lastScrollTop) {
+        navbar.classList.add(_NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].scrollDown);
+      } else {
+        navbar.classList.remove(_NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].scrollDown);
+      }
+      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].NavBar
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].innerNav
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].label
+  }, "Search", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].search,
+    type: "text"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].LogoLink,
+    to: "/"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].LogoContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].LogoInnerContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Dean's"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Logo,
-    src: "/img/deans_logo2.png"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
+    src: "/img/deans_logo2.png",
+    alt: "Dean's Logo"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "List")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].p
+  }, "Response to Intervention"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].navList
-  }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Link,
     to: "/"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].iconContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].homeIcon,
-    src: "/img/home-logo-navy.png"
+    src: "/img/home-logo-navy.png",
+    alt: "Home Icon"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].outerIcon,
-    src: "/img/outer-circle.png"
+    src: "/img/outer-circle.png",
+    alt: "Outer Circle"
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Link,
     to: "/profile"
@@ -178,10 +213,12 @@ function NavBar() {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].iconContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].homeIcon,
-    src: "/img/profile-logo-navy.png"
+    src: "/img/profile-logo-navy.png",
+    alt: "Profile Icon"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].outerIcon,
-    src: "/img/outer-circle.png"
+    src: "/img/outer-circle.png",
+    alt: "Outer Circle"
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Link,
     to: "/data"
@@ -189,11 +226,13 @@ function NavBar() {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].iconContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].homeIcon,
-    src: "/img/data-logo-navy.png"
+    src: "/img/data-logo-navy.png",
+    alt: "Data Icon"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].outerIcon,
-    src: "/img/outer-circle.png"
-  })))));
+    src: "/img/outer-circle.png",
+    alt: "Outer Circle"
+  }))))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NavBar);
 
@@ -359,29 +398,82 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.QpVD3qAS0nYBtoQqAYoe {
   width: 100%;
-  height: 7vh;
+  height: 8vh;
   background-color: white;
-  position: absolute;
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-shadow: 0 0 10px darkgray;
+  opacity: 1; /* Initial opacity */
+  transition: opacity 0.3s ease; /* Add transition for opacity */
+  z-index: 1000; /* Ensure it's above other content */
+}
+.QpVD3qAS0nYBtoQqAYoe .Yzgk56lCq7Zq2IQkbBwB {
+  height: 100%;
+  width: 100%;
+  padding: 0 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 0 10px darkgray;
 }
-
-.eRf97gfbsMtLCn3UHWXE {
+.QpVD3qAS0nYBtoQqAYoe .Yzgk56lCq7Zq2IQkbBwB .RXRqtG9CqZA7GZzpQhW7 {
+  color: #232946;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.QpVD3qAS0nYBtoQqAYoe .Yzgk56lCq7Zq2IQkbBwB .gvnfbHH0c_3EMBSt3szj {
+  border: 1px solid lightgrey;
+  margin-left: 0.5rem;
+  border-radius: 0.3rem;
+  height: 1.7rem;
+  width: 15rem;
+  transition: 0.2s ease;
+}
+.QpVD3qAS0nYBtoQqAYoe .Yzgk56lCq7Zq2IQkbBwB .gvnfbHH0c_3EMBSt3szj:focus {
+  outline: none;
+  border: 0.1rem solid #232946;
+  box-shadow: 0 0 5px #232946;
+  transition: 0.2s ease;
+}
+.QpVD3qAS0nYBtoQqAYoe .Yzgk56lCq7Zq2IQkbBwB .TZrOea9psPFromsQ4Itw {
+  text-decoration: none;
+  color: #232946;
+}
+.QpVD3qAS0nYBtoQqAYoe .Yzgk56lCq7Zq2IQkbBwB .ptYl4qiA2uJxCNIiNhmp {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+}
+.QpVD3qAS0nYBtoQqAYoe .Yzgk56lCq7Zq2IQkbBwB .ptYl4qiA2uJxCNIiNhmp .VfnirYnsq2Y_yeiRPo2U {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-height: 40px;
+}
+.QpVD3qAS0nYBtoQqAYoe .Yzgk56lCq7Zq2IQkbBwB .ptYl4qiA2uJxCNIiNhmp .eRf97gfbsMtLCn3UHWXE {
+  margin: 0 0.5rem;
   height: 5vh;
-  margin-left: 2rem;
 }
-
-.VpziURjVmNZneeuBgj0D {
+.QpVD3qAS0nYBtoQqAYoe .Yzgk56lCq7Zq2IQkbBwB .ptYl4qiA2uJxCNIiNhmp .DSDe2rU_WOc8xsVCW1fJ {
+  letter-spacing: 0.2rem;
+  text-align: center;
+  width: 100%;
+  font-size: 0.5rem;
+  background-color: #232946;
+  color: white;
+  margin: 0;
+}
+.QpVD3qAS0nYBtoQqAYoe .Yzgk56lCq7Zq2IQkbBwB .VpziURjVmNZneeuBgj0D {
   display: flex;
   justify-content: flex-end;
   text-decoration: none;
   height: 100%;
   margin: 0;
 }
-
-.vdLcfAWwu7EJ_DwEISFz {
+.QpVD3qAS0nYBtoQqAYoe .Yzgk56lCq7Zq2IQkbBwB .VpziURjVmNZneeuBgj0D .vdLcfAWwu7EJ_DwEISFz {
   text-decoration: none;
   color: #232946;
   height: 100%;
@@ -392,22 +484,18 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.QpVD3qAS0nYBtoQqAYoe {
   transition: 1s ease;
   margin: 0 2rem;
 }
-
-.vdLcfAWwu7EJ_DwEISFz:hover .ai30QR49p4EdcdnoKw0m {
+.QpVD3qAS0nYBtoQqAYoe .Yzgk56lCq7Zq2IQkbBwB .VpziURjVmNZneeuBgj0D .vdLcfAWwu7EJ_DwEISFz:hover .ai30QR49p4EdcdnoKw0m {
   animation: YcxuCAlSHlcDjncnqx2w 1s ease-out;
 }
-
-.vdLcfAWwu7EJ_DwEISFz:hover .ai30QR49p4EdcdnoKw0m, .vdLcfAWwu7EJ_DwEISFz:hover .yDVXG9hfMpn86dnxe0SG {
+.QpVD3qAS0nYBtoQqAYoe .Yzgk56lCq7Zq2IQkbBwB .VpziURjVmNZneeuBgj0D .vdLcfAWwu7EJ_DwEISFz:hover .ai30QR49p4EdcdnoKw0m, .QpVD3qAS0nYBtoQqAYoe .Yzgk56lCq7Zq2IQkbBwB .VpziURjVmNZneeuBgj0D .vdLcfAWwu7EJ_DwEISFz:hover .yDVXG9hfMpn86dnxe0SG {
   filter: invert(100%);
   transition: 1s ease;
 }
-
-.vdLcfAWwu7EJ_DwEISFz:hover .v6PjNb4PGtuGvzHIU_ty {
+.QpVD3qAS0nYBtoQqAYoe .Yzgk56lCq7Zq2IQkbBwB .VpziURjVmNZneeuBgj0D .vdLcfAWwu7EJ_DwEISFz:hover .v6PjNb4PGtuGvzHIU_ty {
   background-color: #232946;
   transition: 1s ease;
 }
-
-.v6PjNb4PGtuGvzHIU_ty {
+.QpVD3qAS0nYBtoQqAYoe .Yzgk56lCq7Zq2IQkbBwB .VpziURjVmNZneeuBgj0D .v6PjNb4PGtuGvzHIU_ty {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -417,22 +505,24 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.QpVD3qAS0nYBtoQqAYoe {
   position: relative;
   transition: 1s ease;
 }
-
-.ai30QR49p4EdcdnoKw0m, .yDVXG9hfMpn86dnxe0SG {
+.QpVD3qAS0nYBtoQqAYoe .Yzgk56lCq7Zq2IQkbBwB .VpziURjVmNZneeuBgj0D .ai30QR49p4EdcdnoKw0m, .QpVD3qAS0nYBtoQqAYoe .Yzgk56lCq7Zq2IQkbBwB .VpziURjVmNZneeuBgj0D .yDVXG9hfMpn86dnxe0SG {
   transition: 1s ease;
 }
-
-.ai30QR49p4EdcdnoKw0m {
+.QpVD3qAS0nYBtoQqAYoe .Yzgk56lCq7Zq2IQkbBwB .VpziURjVmNZneeuBgj0D .ai30QR49p4EdcdnoKw0m {
   width: 35px;
   color: black; /* Initial color */
 }
-
-.yDVXG9hfMpn86dnxe0SG {
+.QpVD3qAS0nYBtoQqAYoe .Yzgk56lCq7Zq2IQkbBwB .VpziURjVmNZneeuBgj0D .yDVXG9hfMpn86dnxe0SG {
   width: 30px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+/* Use interpolation to reference the local class */
+.liy9XL89GoQRXss4enyt {
+  opacity: 0; /* Set opacity to 0 when scrolled down */
 }
 
 @keyframes YcxuCAlSHlcDjncnqx2w {
@@ -453,17 +543,25 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.QpVD3qAS0nYBtoQqAYoe {
 }
 .vdLcfAWwu7EJ_DwEISFz:not(:hover) .ai30QR49p4EdcdnoKw0m {
   animation: QmwfkIbRCzKk7YE6JPVX 1s ease-out;
-}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,WAAA;EACA,uBAAA;EACA,kBAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;EACA,6BAAA;AACJ;;AAEA;EACI,WAAA;EACA,iBAAA;AACJ;;AAEA;EACI,aAAA;EACA,yBAAA;EACA,qBAAA;EACA,YAAA;EACA,SAAA;AACJ;;AAEA;EACI,qBAAA;EACA,cAAA;EACA,YAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA,EAAA,0BAAA;EACA,mBAAA;EACA,cAAA;AACJ;;AAEA;EACI,2CAAA;AACJ;;AAEA;EACI,oBAAA;EACA,mBAAA;AACJ;;AAEA;EACI,yBAAA;EACA,mBAAA;AACJ;;AAEA;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,YAAA;EACA,WAAA;EACA,mBAAA;EACA,kBAAA;EACA,mBAAA;AACJ;;AAEA;EACI,mBAAA;AACJ;;AAEA;EACI,WAAA;EACA,YAAA,EAAA,kBAAA;AACJ;;AAEA;EACI,WAAA;EACA,kBAAA;EACA,QAAA;EACA,SAAA;EACA,gCAAA;AACJ;;AAEA;EACI;IAAO,uBAAA;EAET;EADE;IAAK,yBAAA;EAIP;AACF;AAFA;EACI;IAAO,yBAAA;EAKT;EAJE;IAAK,uBAAA;EAOP;AACF;AALA;EACI,2CAAA;AAOJ","sourcesContent":[".NavBar {\n    width: 100%;\n    height: 7vh;\n    background-color: white;\n    position: absolute;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    box-shadow: 0 0 10px darkgray;\n}\n\n.Logo {\n    height: 5vh;\n    margin-left: 2rem;\n}\n\n.navList {\n    display: flex;\n    justify-content: flex-end;\n    text-decoration: none;\n    height: 100%;\n    margin: 0;\n}\n\n.Link {\n    text-decoration: none;\n    color: #232946;\n    height: 100%;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    position: relative; /* Add position relative */\n    transition: 1s ease;\n    margin: 0 2rem;\n}\n\n.Link:hover .outerIcon {\n    animation: spin 1s ease-out;\n}\n\n.Link:hover .outerIcon, .Link:hover .homeIcon {\n    filter: invert(100%);\n    transition: 1s ease;\n}\n\n.Link:hover .iconContainer {\n    background-color: #232946;\n    transition: 1s ease;\n}\n\n.iconContainer {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 40px;\n    width: 40px;\n    border-radius: 100%;\n    position: relative;\n    transition: 1s ease;\n}\n\n.outerIcon, .homeIcon {\n    transition: 1s ease;\n}\n\n.outerIcon {\n    width: 35px;\n    color: black; /* Initial color */\n}\n\n.homeIcon {\n    width: 30px;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n}\n\n@keyframes spin {\n    from { transform: rotate(0deg); }\n    to { transform: rotate(360deg); }\n}\n\n@keyframes spinReverse {\n    from { transform: rotate(360deg); }\n    to { transform: rotate(0deg); }\n}\n\n.Link:not(:hover) .outerIcon {\n    animation: spinReverse 1s ease-out;\n}\n"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,WAAA;EACA,uBAAA;EACA,eAAA;EACA,MAAA;EACA,OAAA;EACA,6BAAA;EACA,UAAA,EAAA,oBAAA;EACA,6BAAA,EAAA,+BAAA;EACA,aAAA,EAAA,oCAAA;AACJ;AAAI;EACI,YAAA;EACA,WAAA;EACA,eAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;AAER;AADQ;EACI,cAAA;EACA,yBAAA;EACA,iBAAA;AAGZ;AADQ;EACI,2BAAA;EACA,mBAAA;EACA,qBAAA;EACA,cAAA;EACA,YAAA;EACA,qBAAA;AAGZ;AAFY;EACI,aAAA;EACA,4BAAA;EACA,2BAAA;EACA,qBAAA;AAIhB;AADQ;EACI,qBAAA;EACA,cAAA;AAGZ;AADQ;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;EACA,yBAAA;AAGZ;AAFY;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,WAAA;EACA,gBAAA;AAIhB;AAFY;EACI,gBAAA;EACA,WAAA;AAIhB;AAFY;EACI,sBAAA;EACA,kBAAA;EACA,WAAA;EACA,iBAAA;EACA,yBAAA;EACA,YAAA;EACA,SAAA;AAIhB;AADQ;EACI,aAAA;EACA,yBAAA;EACA,qBAAA;EACA,YAAA;EACA,SAAA;AAGZ;AAFY;EACI,qBAAA;EACA,cAAA;EACA,YAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA,EAAA,0BAAA;EACA,mBAAA;EACA,cAAA;AAIhB;AAFY;EACI,2CAAA;AAIhB;AADY;EACI,oBAAA;EACA,mBAAA;AAGhB;AAAY;EACI,yBAAA;EACA,mBAAA;AAEhB;AAAY;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,YAAA;EACA,WAAA;EACA,mBAAA;EACA,kBAAA;EACA,mBAAA;AAEhB;AAAY;EACI,mBAAA;AAEhB;AAAY;EACI,WAAA;EACA,YAAA,EAAA,kBAAA;AAEhB;AACY;EACI,WAAA;EACA,kBAAA;EACA,QAAA;EACA,SAAA;EACA,gCAAA;AAChB;;AAKA,mDAAA;AACA;EACI,UAAA,EAAA,wCAAA;AAFJ;;AAMA;EACI;IAAO,uBAAA;EAFT;EAGE;IAAK,yBAAA;EAAP;AACF;AAEA;EACI;IAAO,yBAAA;EACT;EAAE;IAAK,uBAAA;EAGP;AACF;AADA;EACI,2CAAA;AAGJ","sourcesContent":[".NavBar {\n    width: 100%;\n    height: 8vh;\n    background-color: white;\n    position: fixed;\n    top: 0;\n    left: 0;\n    box-shadow: 0 0 10px darkgray;\n    opacity: 1; /* Initial opacity */\n    transition: opacity 0.3s ease; /* Add transition for opacity */\n    z-index: 1000; /* Ensure it's above other content */\n    .innerNav {\n        height: 100%;\n        width: 100%;\n        padding: 0 2rem;\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        .label {\n            color: #232946;\n            text-transform: uppercase;\n            font-weight: bold;\n        }\n        .search {\n            border: 1px solid lightgrey;\n            margin-left: .5rem;\n            border-radius: .3rem;\n            height: 1.7rem;\n            width: 15rem;\n            transition: .2s ease;\n            &:focus {\n                outline: none;\n                border: .1rem solid #232946;\n                box-shadow: 0 0 5px #232946;\n                transition: .2s ease;\n            }\n        }\n        .LogoLink {\n            text-decoration: none;\n            color: #232946;\n        }\n        .LogoContainer {\n            display: flex;\n            flex-direction: column;\n            justify-content: center;\n            align-items: center;\n            text-transform: uppercase;\n            .LogoInnerContainer {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                width: 100%;\n                max-height: 40px;\n            }\n            .Logo {\n                margin: 0 .5rem;\n                height: 5vh;\n            }\n            .p {\n                letter-spacing: .2rem;\n                text-align: center;\n                width: 100%;\n                font-size: .5rem;\n                background-color: #232946;\n                color: white;\n                margin: 0;\n            }\n        }\n        .navList {\n            display: flex;\n            justify-content: flex-end;\n            text-decoration: none;\n            height: 100%;\n            margin: 0;\n            .Link {\n                text-decoration: none;\n                color: #232946;\n                height: 100%;\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                position: relative; /* Add position relative */\n                transition: 1s ease;\n                margin: 0 2rem;\n            }\n            .Link:hover .outerIcon {\n                animation: spin 1s ease-out;\n            }\n            \n            .Link:hover .outerIcon, .Link:hover .homeIcon {\n                filter: invert(100%);\n                transition: 1s ease;\n            }\n            \n            .Link:hover .iconContainer {\n                background-color: #232946;\n                transition: 1s ease;\n            }\n            .iconContainer {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                height: 40px;\n                width: 40px;\n                border-radius: 100%;\n                position: relative;\n                transition: 1s ease;\n            }\n            .outerIcon, .homeIcon {\n                transition: 1s ease;\n            }\n            .outerIcon {\n                width: 35px;\n                color: black; /* Initial color */\n            }\n            \n            .homeIcon {\n                width: 30px;\n                position: absolute;\n                top: 50%;\n                left: 50%;\n                transform: translate(-50%, -50%);\n            }\n        }\n    }\n}\n\n/* Use interpolation to reference the local class */\n.scrollDown {\n    opacity: 0; /* Set opacity to 0 when scrolled down */\n}\n\n\n@keyframes spin {\n    from { transform: rotate(0deg); }\n    to { transform: rotate(360deg); }\n}\n\n@keyframes spinReverse {\n    from { transform: rotate(360deg); }\n    to { transform: rotate(0deg); }\n}\n\n.Link:not(:hover) .outerIcon {\n    animation: spinReverse 1s ease-out;\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"NavBar": `QpVD3qAS0nYBtoQqAYoe`,
+	"innerNav": `Yzgk56lCq7Zq2IQkbBwB`,
+	"label": `RXRqtG9CqZA7GZzpQhW7`,
+	"search": `gvnfbHH0c_3EMBSt3szj`,
+	"LogoLink": `TZrOea9psPFromsQ4Itw`,
+	"LogoContainer": `ptYl4qiA2uJxCNIiNhmp`,
+	"LogoInnerContainer": `VfnirYnsq2Y_yeiRPo2U`,
 	"Logo": `eRf97gfbsMtLCn3UHWXE`,
+	"p": `DSDe2rU_WOc8xsVCW1fJ`,
 	"navList": `VpziURjVmNZneeuBgj0D`,
 	"Link": `vdLcfAWwu7EJ_DwEISFz`,
 	"outerIcon": `ai30QR49p4EdcdnoKw0m`,
 	"spin": `YcxuCAlSHlcDjncnqx2w`,
 	"homeIcon": `yDVXG9hfMpn86dnxe0SG`,
 	"iconContainer": `v6PjNb4PGtuGvzHIU_ty`,
+	"scrollDown": `liy9XL89GoQRXss4enyt`,
 	"spinReverse": `QmwfkIbRCzKk7YE6JPVX`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
@@ -1004,4 +1102,4 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.152837ceacf372ee64faa2866613156b.js.map
+//# sourceMappingURL=App.2fc6a162cc03d0af7634593678dde355.js.map
