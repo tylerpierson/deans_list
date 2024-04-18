@@ -155,24 +155,45 @@ function App() {
 function NavBar() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].NavBar
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Logo,
+    src: "/img/deans_logo2.png"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].navList
-  }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
-    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].navItem
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+  }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Link,
     to: "/"
-  }, "Home")), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
-    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].navItem
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].iconContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].homeIcon,
+    src: "/img/home-logo-navy.png"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].outerIcon,
+    src: "/img/outer-circle.png"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Link,
     to: "/profile"
-  }, "Profile")), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
-    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].navItem
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].iconContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].homeIcon,
+    src: "/img/profile-logo-navy.png"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].outerIcon,
+    src: "/img/outer-circle.png"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Link,
     to: "/data"
-  }, "Data")), " "));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].iconContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].homeIcon,
+    src: "/img/data-logo-navy.png"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].outerIcon,
+    src: "/img/outer-circle.png"
+  })))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NavBar);
 
@@ -338,32 +359,112 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.QpVD3qAS0nYBtoQqAYoe {
   width: 100%;
-  height: 5vh;
-  background-color: rgb(193, 221, 241);
+  height: 7vh;
+  background-color: white;
   position: absolute;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 0 10px darkgray;
+}
+
+.eRf97gfbsMtLCn3UHWXE {
+  height: 5vh;
+  margin-left: 2rem;
 }
 
 .VpziURjVmNZneeuBgj0D {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-end;
   text-decoration: none;
+  height: 100%;
   margin: 0;
-}
-
-.Vi729QB0vR8fTZ0UgVAQ {
-  list-style-type: none;
 }
 
 .vdLcfAWwu7EJ_DwEISFz {
   text-decoration: none;
   color: #232946;
-}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,WAAA;EACA,oCAAA;EACA,kBAAA;AACJ;;AAEA;EACI,aAAA;EACA,6BAAA;EACA,qBAAA;EACA,SAAA;AACJ;;AAEA;EACI,qBAAA;AACJ;;AAEA;EACI,qBAAA;EACA,cAAA;AACJ","sourcesContent":[".NavBar {\n    width: 100%;\n    height: 5vh;\n    background-color: rgb(193, 221, 241);\n    position: absolute;\n}\n\n.navList {\n    display: flex;\n    justify-content: space-evenly;\n    text-decoration: none;\n    margin: 0;\n}\n\n.navItem {\n    list-style-type: none;\n}\n\n.Link {\n    text-decoration: none;\n    color: #232946;\n}\n  "],"sourceRoot":""}]);
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative; /* Add position relative */
+  transition: 1s ease;
+  margin: 0 2rem;
+}
+
+.vdLcfAWwu7EJ_DwEISFz:hover .ai30QR49p4EdcdnoKw0m {
+  animation: YcxuCAlSHlcDjncnqx2w 1s ease-out;
+}
+
+.vdLcfAWwu7EJ_DwEISFz:hover .ai30QR49p4EdcdnoKw0m, .vdLcfAWwu7EJ_DwEISFz:hover .yDVXG9hfMpn86dnxe0SG {
+  filter: invert(100%);
+  transition: 1s ease;
+}
+
+.vdLcfAWwu7EJ_DwEISFz:hover .v6PjNb4PGtuGvzHIU_ty {
+  background-color: #232946;
+  transition: 1s ease;
+}
+
+.v6PjNb4PGtuGvzHIU_ty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+  position: relative;
+  transition: 1s ease;
+}
+
+.ai30QR49p4EdcdnoKw0m, .yDVXG9hfMpn86dnxe0SG {
+  transition: 1s ease;
+}
+
+.ai30QR49p4EdcdnoKw0m {
+  width: 35px;
+  color: black; /* Initial color */
+}
+
+.yDVXG9hfMpn86dnxe0SG {
+  width: 30px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes YcxuCAlSHlcDjncnqx2w {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes QmwfkIbRCzKk7YE6JPVX {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+.vdLcfAWwu7EJ_DwEISFz:not(:hover) .ai30QR49p4EdcdnoKw0m {
+  animation: QmwfkIbRCzKk7YE6JPVX 1s ease-out;
+}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,WAAA;EACA,uBAAA;EACA,kBAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;EACA,6BAAA;AACJ;;AAEA;EACI,WAAA;EACA,iBAAA;AACJ;;AAEA;EACI,aAAA;EACA,yBAAA;EACA,qBAAA;EACA,YAAA;EACA,SAAA;AACJ;;AAEA;EACI,qBAAA;EACA,cAAA;EACA,YAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA,EAAA,0BAAA;EACA,mBAAA;EACA,cAAA;AACJ;;AAEA;EACI,2CAAA;AACJ;;AAEA;EACI,oBAAA;EACA,mBAAA;AACJ;;AAEA;EACI,yBAAA;EACA,mBAAA;AACJ;;AAEA;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,YAAA;EACA,WAAA;EACA,mBAAA;EACA,kBAAA;EACA,mBAAA;AACJ;;AAEA;EACI,mBAAA;AACJ;;AAEA;EACI,WAAA;EACA,YAAA,EAAA,kBAAA;AACJ;;AAEA;EACI,WAAA;EACA,kBAAA;EACA,QAAA;EACA,SAAA;EACA,gCAAA;AACJ;;AAEA;EACI;IAAO,uBAAA;EAET;EADE;IAAK,yBAAA;EAIP;AACF;AAFA;EACI;IAAO,yBAAA;EAKT;EAJE;IAAK,uBAAA;EAOP;AACF;AALA;EACI,2CAAA;AAOJ","sourcesContent":[".NavBar {\n    width: 100%;\n    height: 7vh;\n    background-color: white;\n    position: absolute;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    box-shadow: 0 0 10px darkgray;\n}\n\n.Logo {\n    height: 5vh;\n    margin-left: 2rem;\n}\n\n.navList {\n    display: flex;\n    justify-content: flex-end;\n    text-decoration: none;\n    height: 100%;\n    margin: 0;\n}\n\n.Link {\n    text-decoration: none;\n    color: #232946;\n    height: 100%;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    position: relative; /* Add position relative */\n    transition: 1s ease;\n    margin: 0 2rem;\n}\n\n.Link:hover .outerIcon {\n    animation: spin 1s ease-out;\n}\n\n.Link:hover .outerIcon, .Link:hover .homeIcon {\n    filter: invert(100%);\n    transition: 1s ease;\n}\n\n.Link:hover .iconContainer {\n    background-color: #232946;\n    transition: 1s ease;\n}\n\n.iconContainer {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 40px;\n    width: 40px;\n    border-radius: 100%;\n    position: relative;\n    transition: 1s ease;\n}\n\n.outerIcon, .homeIcon {\n    transition: 1s ease;\n}\n\n.outerIcon {\n    width: 35px;\n    color: black; /* Initial color */\n}\n\n.homeIcon {\n    width: 30px;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n}\n\n@keyframes spin {\n    from { transform: rotate(0deg); }\n    to { transform: rotate(360deg); }\n}\n\n@keyframes spinReverse {\n    from { transform: rotate(360deg); }\n    to { transform: rotate(0deg); }\n}\n\n.Link:not(:hover) .outerIcon {\n    animation: spinReverse 1s ease-out;\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"NavBar": `QpVD3qAS0nYBtoQqAYoe`,
+	"Logo": `eRf97gfbsMtLCn3UHWXE`,
 	"navList": `VpziURjVmNZneeuBgj0D`,
-	"navItem": `Vi729QB0vR8fTZ0UgVAQ`,
-	"Link": `vdLcfAWwu7EJ_DwEISFz`
+	"Link": `vdLcfAWwu7EJ_DwEISFz`,
+	"outerIcon": `ai30QR49p4EdcdnoKw0m`,
+	"spin": `YcxuCAlSHlcDjncnqx2w`,
+	"homeIcon": `yDVXG9hfMpn86dnxe0SG`,
+	"iconContainer": `v6PjNb4PGtuGvzHIU_ty`,
+	"spinReverse": `QmwfkIbRCzKk7YE6JPVX`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -903,4 +1004,4 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.8a5703cb5210bfd6770ad95d4230e551.js.map
+//# sourceMappingURL=App.152837ceacf372ee64faa2866613156b.js.map
