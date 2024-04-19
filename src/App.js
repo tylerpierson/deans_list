@@ -5,7 +5,10 @@ import styles from './App.module.scss'
 import NavBar from './components/NavBar/NavBar'
 import HomePage from './pages/HomePage/HomePage'
 import DataPage from './pages/DataPage/DataPage'
-import UserPage from './pages/UserPage/UserPage'
+import AdminPage from './pages/AdminPage/AdminPage'
+import TeacherPage from './pages/TeacherPage/TeacherPage'
+import StudentPage from './pages/StudentPage/StudentPage'
+import ParentPage from './pages/ParentPage/ParentPage'
 
 
 export default function App(){
@@ -102,7 +105,10 @@ export default function App(){
             <Routes>
                 <Route path='/' element={<HomePage />} />
                 <Route path='/data' element={<DataPage />} />
-                <Route path='/profile' element={<UserPage />} />
+                <Route path='/admin' element={<AdminPage />} />
+                <Route path='/teacher' element={<TeacherPage />} />
+                <Route path='/student' element={<StudentPage />} />
+                <Route path='/parent' element={<ParentPage />} />
             </Routes>
         </div>
         </>
