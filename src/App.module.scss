@@ -2,10 +2,12 @@ body {
     margin: 0;
     width: 100%;
     height: 100vh;
-    background-image: url('/Users/tylerpierson/software_projects/deans_list/public/img/star-bg.png');
+    font-family: "Dekko", cursive;
+    color: var(--text-dark);
+    background-image: url('../public/img/star-bg.png');
     background-size: 25%;
     .App {
-        width: 70%;
+        width: 80%;
         height: 100%;
         margin: 0 auto;
         padding: 7vh;

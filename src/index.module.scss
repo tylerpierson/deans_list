@@ -1,3 +1,14 @@
+:root {
+    --text-dark: #232946;
+    --text-light: rgb(176, 207, 228);
+    --bg-color: rgb(244, 246, 240);
+    --btn-animation: rgba(219, 171, 171, 0.3);
+    --input-color: rgb(87, 8, 8);
+    --nav-border: rgba(219, 171, 171, 0.3);
+    --text-red: rgb(237, 100, 100);
+    --text-green: rgb(51, 86, 51);
+}
+
 * {
     box-sizing: border-box;
 }

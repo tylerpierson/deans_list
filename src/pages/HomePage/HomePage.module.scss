@@ -2,10 +2,93 @@
     height: 100%;
     background-color: white;
     margin: 2rem 0;
-    h2 {
-        margin: 0;
+    .introContainer {
+        height: 100vh;
+        width: 100%;
+        text-align: center;
+        .heading {
+            margin: 0;
+            color: white;
+            font-size: 3rem;
+            text-align: center;
+            background-color: var(--text-dark);
+            border-radius: 1.5rem;
+            box-shadow: 0 0 10px black;
+        }
+        .span {
+            font-size: 4rem;
+            letter-spacing: 5px;
+            color: var(--text-light);
+            text-shadow:
+              1px 1px 1px white,
+              -1px 1px 1px white,
+              -1px -1px 0 white,
+              1px -1px 0 white;
+        }
+        .introAndImgContainer {
+            display: flex;
+            width: 100%;
+            .intro {
+                text-align: left;
+                line-height: 2rem;
+                font-size: 1rem;
+                .titleSpan {
+                    font-weight: 800;
+                    font-size: 1.4rem;
+                }
+            }
+            .owlImage {
+                margin-top: 2rem;
+                height: 100%;
+                width: 40%;
+            }
+        }
+        .button {
+            margin: 0 auto;
+            width: 20rem;
+            height: 3rem;
+            background-color: var(--text-light);
+            color: var(--text-dark);
+            font-size: 1.3rem;
+            font-weight: bold;
+            font-family: "Dekko", cursive;
+            border: .1rem solid var(--text-dark);
+            border-radius: .5rem;
+            transition: .3s ease;
+            &:hover {
+                cursor: pointer;
+                transition: .3s ease;
+                background-color: var(--text-dark);
+                color: white;
+                box-shadow: 0 0 10px black;
+            }
+        }
     }
-    .image {
-        width: 300px;
+    .contentContainer {
+        background-color: var(--text-light);
+        width: 100%;
+        border-radius: 3rem;
+        padding: 2rem 0;
+        border: .2rem solid var(--text-dark);
+        .textImageContainer {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            margin: 2rem 0;
+            padding: 1rem 0;
+            .p {
+                max-width: 50%;
+                padding: 0 2rem;
+                font-size: 1.4rem
+            }
+            .image {
+                max-width: 350px;
+                border-radius: 3rem;
+                border: .4rem solid var(--text-dark);
+            }
+        }
+        .textImageContainer:nth-of-type(2) {
+            flex-direction: row-reverse;
+        }
     }
 }

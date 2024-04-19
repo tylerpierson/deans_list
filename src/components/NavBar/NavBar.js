@@ -37,9 +37,9 @@ function NavBar() {
                 <Link className={styles.LogoLink} to="/">
                     <div className={styles.LogoContainer}>
                         <div className={styles.LogoInnerContainer}>
-                            <h2>Dean's</h2>
+                            <h2 className={styles.logoTitle}>Dean's</h2>
                             <img className={styles.Logo} src="/img/deans_logo2.png" alt="Dean's Logo" />
-                            <h2>List</h2>
+                            <h2 className={styles.logoTitle}>List</h2>
                         </div>
                         <p className={styles.p}>Response to Intervention</p>
                     </div>

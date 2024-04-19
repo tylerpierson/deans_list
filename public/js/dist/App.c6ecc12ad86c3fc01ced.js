@@ -185,11 +185,15 @@ function NavBar() {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].LogoContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].LogoInnerContainer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Dean's"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].logoTitle
+  }, "Dean's"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Logo,
     src: "/img/deans_logo2.png",
     alt: "Dean's Logo"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "List")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].logoTitle
+  }, "List")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].p
   }, "Response to Intervention"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].navList
@@ -297,17 +301,48 @@ function DataPage() {
 function HomePage() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].HomePage
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "The next step forward in ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, "RTI")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Response to Intervention (RTI) is a multi-tiered approach to identify and support students who are struggling academically or behaviorally. It focuses on early intervention, data-driven decision-making, and targeted support to improve student outcomes."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    class: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].introContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
+    className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].heading
+  }, "The next step forward in ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].span
+  }, "RTI")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].introAndImgContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].intro
+  }, "Welcome to ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].titleSpan
+  }, "Dean's List"), "! We are a dedicated team passionate about transforming Response to Intervention (RTI) and improving educational outcomes for all students. At Dean's List, we believe in the power of data-driven decision-making and personalized interventions to support students who are struggling academically or behaviorally. Our mission is to provide educators, administrators, and parents with an intuitive platform that simplifies the RTI process and empowers them to make informed choices. By centralizing student data, tracking progress, and generating actionable insights, we aim to revolutionize RTI implementation. Our platform streamlines data collection, facilitates easy monitoring of student performance, and promotes collaboration among stakeholders for effective intervention planning and implementation. We understand the challenges faced by educators and the importance of timely, targeted interventions. With Dean's List, you can access a comprehensive toolkit to identify at-risk students, monitor their progress, and implement evidence-based strategies to unlock their full potential. Join us on this journey as we work together to create a supportive and inclusive learning environment where every student can thrive. Together, we can make a lasting impact in education through the power of RTI."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].owlImage,
+    src: "/img/owl-image-prime.png"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].button
+  }, "Request Access TODAY!")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].contentContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].textImageContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].p
+  }, "Response to Intervention (RTI) is a multi-tiered approach to identify and support students who are struggling academically or behaviorally. It focuses on early intervention, data-driven decision-making, and targeted support to improve student outcomes."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].image,
     src: "/img/class.jpg",
     alt: "class image"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "At Dean's List, we leverage the power of data collection and analysis to enhance RTI implementation. By centralizing student data, tracking progress, and generating actionable insights, we empower educators, administrators, and parents to make informed decisions and provide personalized interventions."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].textImageContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].p
+  }, "At Dean's List, we leverage the power of data collection and analysis to enhance RTI implementation. By centralizing student data, tracking progress, and generating actionable insights, we empower educators, administrators, and parents to make informed decisions and provide personalized interventions."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].image,
     src: "/img/student_one.jpg"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Our platform simplifies the process of data collection, allows for easy monitoring of student performance, and enables collaboration among stakeholders for effective intervention planning and implementation."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].textImageContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].p
+  }, "Our platform simplifies the process of data collection, allows for easy monitoring of student performance, and enables collaboration among stakeholders for effective intervention planning and implementation."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].image,
     src: "/img/student_two.jpg"
-  }));
+  }))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (HomePage);
 
@@ -351,7 +386,7 @@ function UserPage() {
 
 
 
-var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(/*! ./public/img/star-bg.png */ "./public/img/star-bg.png"), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(/*! ../public/img/star-bg.png */ "./public/img/star-bg.png"), __webpack_require__.b);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);
 // Module
@@ -359,16 +394,18 @@ ___CSS_LOADER_EXPORT___.push([module.id, `body {
   margin: 0;
   width: 100%;
   height: 100vh;
+  font-family: "Dekko", cursive;
+  color: var(--text-dark);
   background-image: url(${___CSS_LOADER_URL_REPLACEMENT_0___});
   background-size: 25%;
 }
 body .IMqMrT2eGOGeFiLbCAGg {
-  width: 70%;
+  width: 80%;
   height: 100%;
   margin: 0 auto;
   padding: 7vh;
   background-color: white;
-}`, "",{"version":3,"sources":["webpack://./src/App.module.scss"],"names":[],"mappings":"AAAA;EACI,SAAA;EACA,WAAA;EACA,aAAA;EACA,yDAAA;EACA,oBAAA;AACJ;AAAI;EACI,UAAA;EACA,YAAA;EACA,cAAA;EACA,YAAA;EACA,uBAAA;AAER","sourcesContent":["body {\n    margin: 0;\n    width: 100%;\n    height: 100vh;\n    background-image: url('/Users/tylerpierson/software_projects/deans_list/public/img/star-bg.png');\n    background-size: 25%;\n    .App {\n        width: 70%;\n        height: 100%;\n        margin: 0 auto;\n        padding: 7vh;\n        background-color: white;\n    }\n}\n"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/App.module.scss"],"names":[],"mappings":"AAAA;EACI,SAAA;EACA,WAAA;EACA,aAAA;EACA,6BAAA;EACA,uBAAA;EACA,yDAAA;EACA,oBAAA;AACJ;AAAI;EACI,UAAA;EACA,YAAA;EACA,cAAA;EACA,YAAA;EACA,uBAAA;AAER","sourcesContent":["body {\n    margin: 0;\n    width: 100%;\n    height: 100vh;\n    font-family: \"Dekko\", cursive;\n    color: var(--text-dark);\n    background-image: url('../public/img/star-bg.png');\n    background-size: 25%;\n    .App {\n        width: 80%;\n        height: 100%;\n        margin: 0 auto;\n        padding: 7vh;\n        background-color: white;\n    }\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"App": `IMqMrT2eGOGeFiLbCAGg`
@@ -452,6 +489,9 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.QpVD3qAS0nYBtoQqAYoe {
   align-items: center;
   width: 100%;
   max-height: 40px;
+}
+.QpVD3qAS0nYBtoQqAYoe .Yzgk56lCq7Zq2IQkbBwB .ptYl4qiA2uJxCNIiNhmp .AUuKMjmMyPnc33luKPTT {
+  font-family: Acme;
 }
 .QpVD3qAS0nYBtoQqAYoe .Yzgk56lCq7Zq2IQkbBwB .ptYl4qiA2uJxCNIiNhmp .eRf97gfbsMtLCn3UHWXE {
   margin: 0 0.5rem;
@@ -543,7 +583,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.QpVD3qAS0nYBtoQqAYoe {
 }
 .vdLcfAWwu7EJ_DwEISFz:not(:hover) .ai30QR49p4EdcdnoKw0m {
   animation: QmwfkIbRCzKk7YE6JPVX 1s ease-out;
-}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,WAAA;EACA,uBAAA;EACA,eAAA;EACA,MAAA;EACA,OAAA;EACA,6BAAA;EACA,UAAA,EAAA,oBAAA;EACA,6BAAA,EAAA,+BAAA;EACA,aAAA,EAAA,oCAAA;AACJ;AAAI;EACI,YAAA;EACA,WAAA;EACA,eAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;AAER;AADQ;EACI,cAAA;EACA,yBAAA;EACA,iBAAA;AAGZ;AADQ;EACI,2BAAA;EACA,mBAAA;EACA,qBAAA;EACA,cAAA;EACA,YAAA;EACA,qBAAA;AAGZ;AAFY;EACI,aAAA;EACA,4BAAA;EACA,2BAAA;EACA,qBAAA;AAIhB;AADQ;EACI,qBAAA;EACA,cAAA;AAGZ;AADQ;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;EACA,yBAAA;AAGZ;AAFY;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,WAAA;EACA,gBAAA;AAIhB;AAFY;EACI,gBAAA;EACA,WAAA;AAIhB;AAFY;EACI,sBAAA;EACA,kBAAA;EACA,WAAA;EACA,iBAAA;EACA,yBAAA;EACA,YAAA;EACA,SAAA;AAIhB;AADQ;EACI,aAAA;EACA,yBAAA;EACA,qBAAA;EACA,YAAA;EACA,SAAA;AAGZ;AAFY;EACI,qBAAA;EACA,cAAA;EACA,YAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA,EAAA,0BAAA;EACA,mBAAA;EACA,cAAA;AAIhB;AAFY;EACI,2CAAA;AAIhB;AADY;EACI,oBAAA;EACA,mBAAA;AAGhB;AAAY;EACI,yBAAA;EACA,mBAAA;AAEhB;AAAY;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,YAAA;EACA,WAAA;EACA,mBAAA;EACA,kBAAA;EACA,mBAAA;AAEhB;AAAY;EACI,mBAAA;AAEhB;AAAY;EACI,WAAA;EACA,YAAA,EAAA,kBAAA;AAEhB;AACY;EACI,WAAA;EACA,kBAAA;EACA,QAAA;EACA,SAAA;EACA,gCAAA;AAChB;;AAKA,mDAAA;AACA;EACI,UAAA,EAAA,wCAAA;AAFJ;;AAMA;EACI;IAAO,uBAAA;EAFT;EAGE;IAAK,yBAAA;EAAP;AACF;AAEA;EACI;IAAO,yBAAA;EACT;EAAE;IAAK,uBAAA;EAGP;AACF;AADA;EACI,2CAAA;AAGJ","sourcesContent":[".NavBar {\n    width: 100%;\n    height: 8vh;\n    background-color: white;\n    position: fixed;\n    top: 0;\n    left: 0;\n    box-shadow: 0 0 10px darkgray;\n    opacity: 1; /* Initial opacity */\n    transition: opacity 0.3s ease; /* Add transition for opacity */\n    z-index: 1000; /* Ensure it's above other content */\n    .innerNav {\n        height: 100%;\n        width: 100%;\n        padding: 0 2rem;\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        .label {\n            color: #232946;\n            text-transform: uppercase;\n            font-weight: bold;\n        }\n        .search {\n            border: 1px solid lightgrey;\n            margin-left: .5rem;\n            border-radius: .3rem;\n            height: 1.7rem;\n            width: 15rem;\n            transition: .2s ease;\n            &:focus {\n                outline: none;\n                border: .1rem solid #232946;\n                box-shadow: 0 0 5px #232946;\n                transition: .2s ease;\n            }\n        }\n        .LogoLink {\n            text-decoration: none;\n            color: #232946;\n        }\n        .LogoContainer {\n            display: flex;\n            flex-direction: column;\n            justify-content: center;\n            align-items: center;\n            text-transform: uppercase;\n            .LogoInnerContainer {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                width: 100%;\n                max-height: 40px;\n            }\n            .Logo {\n                margin: 0 .5rem;\n                height: 5vh;\n            }\n            .p {\n                letter-spacing: .2rem;\n                text-align: center;\n                width: 100%;\n                font-size: .5rem;\n                background-color: #232946;\n                color: white;\n                margin: 0;\n            }\n        }\n        .navList {\n            display: flex;\n            justify-content: flex-end;\n            text-decoration: none;\n            height: 100%;\n            margin: 0;\n            .Link {\n                text-decoration: none;\n                color: #232946;\n                height: 100%;\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                position: relative; /* Add position relative */\n                transition: 1s ease;\n                margin: 0 2rem;\n            }\n            .Link:hover .outerIcon {\n                animation: spin 1s ease-out;\n            }\n            \n            .Link:hover .outerIcon, .Link:hover .homeIcon {\n                filter: invert(100%);\n                transition: 1s ease;\n            }\n            \n            .Link:hover .iconContainer {\n                background-color: #232946;\n                transition: 1s ease;\n            }\n            .iconContainer {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                height: 40px;\n                width: 40px;\n                border-radius: 100%;\n                position: relative;\n                transition: 1s ease;\n            }\n            .outerIcon, .homeIcon {\n                transition: 1s ease;\n            }\n            .outerIcon {\n                width: 35px;\n                color: black; /* Initial color */\n            }\n            \n            .homeIcon {\n                width: 30px;\n                position: absolute;\n                top: 50%;\n                left: 50%;\n                transform: translate(-50%, -50%);\n            }\n        }\n    }\n}\n\n/* Use interpolation to reference the local class */\n.scrollDown {\n    opacity: 0; /* Set opacity to 0 when scrolled down */\n}\n\n\n@keyframes spin {\n    from { transform: rotate(0deg); }\n    to { transform: rotate(360deg); }\n}\n\n@keyframes spinReverse {\n    from { transform: rotate(360deg); }\n    to { transform: rotate(0deg); }\n}\n\n.Link:not(:hover) .outerIcon {\n    animation: spinReverse 1s ease-out;\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,WAAA;EACA,uBAAA;EACA,eAAA;EACA,MAAA;EACA,OAAA;EACA,6BAAA;EACA,UAAA,EAAA,oBAAA;EACA,6BAAA,EAAA,+BAAA;EACA,aAAA,EAAA,oCAAA;AACJ;AAAI;EACI,YAAA;EACA,WAAA;EACA,eAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;AAER;AADQ;EACI,cAAA;EACA,yBAAA;EACA,iBAAA;AAGZ;AADQ;EACI,2BAAA;EACA,mBAAA;EACA,qBAAA;EACA,cAAA;EACA,YAAA;EACA,qBAAA;AAGZ;AAFY;EACI,aAAA;EACA,4BAAA;EACA,2BAAA;EACA,qBAAA;AAIhB;AADQ;EACI,qBAAA;EACA,cAAA;AAGZ;AADQ;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;EACA,yBAAA;AAGZ;AAFY;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,WAAA;EACA,gBAAA;AAIhB;AAFY;EACI,iBAAA;AAIhB;AAFY;EACI,gBAAA;EACA,WAAA;AAIhB;AAFY;EACI,sBAAA;EACA,kBAAA;EACA,WAAA;EACA,iBAAA;EACA,yBAAA;EACA,YAAA;EACA,SAAA;AAIhB;AADQ;EACI,aAAA;EACA,yBAAA;EACA,qBAAA;EACA,YAAA;EACA,SAAA;AAGZ;AAFY;EACI,qBAAA;EACA,cAAA;EACA,YAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA,EAAA,0BAAA;EACA,mBAAA;EACA,cAAA;AAIhB;AAFY;EACI,2CAAA;AAIhB;AADY;EACI,oBAAA;EACA,mBAAA;AAGhB;AAAY;EACI,yBAAA;EACA,mBAAA;AAEhB;AAAY;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,YAAA;EACA,WAAA;EACA,mBAAA;EACA,kBAAA;EACA,mBAAA;AAEhB;AAAY;EACI,mBAAA;AAEhB;AAAY;EACI,WAAA;EACA,YAAA,EAAA,kBAAA;AAEhB;AACY;EACI,WAAA;EACA,kBAAA;EACA,QAAA;EACA,SAAA;EACA,gCAAA;AAChB;;AAKA,mDAAA;AACA;EACI,UAAA,EAAA,wCAAA;AAFJ;;AAMA;EACI;IAAO,uBAAA;EAFT;EAGE;IAAK,yBAAA;EAAP;AACF;AAEA;EACI;IAAO,yBAAA;EACT;EAAE;IAAK,uBAAA;EAGP;AACF;AADA;EACI,2CAAA;AAGJ","sourcesContent":[".NavBar {\n    width: 100%;\n    height: 8vh;\n    background-color: white;\n    position: fixed;\n    top: 0;\n    left: 0;\n    box-shadow: 0 0 10px darkgray;\n    opacity: 1; /* Initial opacity */\n    transition: opacity 0.3s ease; /* Add transition for opacity */\n    z-index: 1000; /* Ensure it's above other content */\n    .innerNav {\n        height: 100%;\n        width: 100%;\n        padding: 0 2rem;\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        .label {\n            color: #232946;\n            text-transform: uppercase;\n            font-weight: bold;\n        }\n        .search {\n            border: 1px solid lightgrey;\n            margin-left: .5rem;\n            border-radius: .3rem;\n            height: 1.7rem;\n            width: 15rem;\n            transition: .2s ease;\n            &:focus {\n                outline: none;\n                border: .1rem solid #232946;\n                box-shadow: 0 0 5px #232946;\n                transition: .2s ease;\n            }\n        }\n        .LogoLink {\n            text-decoration: none;\n            color: #232946;\n        }\n        .LogoContainer {\n            display: flex;\n            flex-direction: column;\n            justify-content: center;\n            align-items: center;\n            text-transform: uppercase;\n            .LogoInnerContainer {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                width: 100%;\n                max-height: 40px;\n            }\n            .logoTitle {\n                font-family: Acme;\n            }\n            .Logo {\n                margin: 0 .5rem;\n                height: 5vh;\n            }\n            .p {\n                letter-spacing: .2rem;\n                text-align: center;\n                width: 100%;\n                font-size: .5rem;\n                background-color: #232946;\n                color: white;\n                margin: 0;\n            }\n        }\n        .navList {\n            display: flex;\n            justify-content: flex-end;\n            text-decoration: none;\n            height: 100%;\n            margin: 0;\n            .Link {\n                text-decoration: none;\n                color: #232946;\n                height: 100%;\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                position: relative; /* Add position relative */\n                transition: 1s ease;\n                margin: 0 2rem;\n            }\n            .Link:hover .outerIcon {\n                animation: spin 1s ease-out;\n            }\n            \n            .Link:hover .outerIcon, .Link:hover .homeIcon {\n                filter: invert(100%);\n                transition: 1s ease;\n            }\n            \n            .Link:hover .iconContainer {\n                background-color: #232946;\n                transition: 1s ease;\n            }\n            .iconContainer {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                height: 40px;\n                width: 40px;\n                border-radius: 100%;\n                position: relative;\n                transition: 1s ease;\n            }\n            .outerIcon, .homeIcon {\n                transition: 1s ease;\n            }\n            .outerIcon {\n                width: 35px;\n                color: black; /* Initial color */\n            }\n            \n            .homeIcon {\n                width: 30px;\n                position: absolute;\n                top: 50%;\n                left: 50%;\n                transform: translate(-50%, -50%);\n            }\n        }\n    }\n}\n\n/* Use interpolation to reference the local class */\n.scrollDown {\n    opacity: 0; /* Set opacity to 0 when scrolled down */\n}\n\n\n@keyframes spin {\n    from { transform: rotate(0deg); }\n    to { transform: rotate(360deg); }\n}\n\n@keyframes spinReverse {\n    from { transform: rotate(360deg); }\n    to { transform: rotate(0deg); }\n}\n\n.Link:not(:hover) .outerIcon {\n    animation: spinReverse 1s ease-out;\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"NavBar": `QpVD3qAS0nYBtoQqAYoe`,
@@ -553,6 +593,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"LogoLink": `TZrOea9psPFromsQ4Itw`,
 	"LogoContainer": `ptYl4qiA2uJxCNIiNhmp`,
 	"LogoInnerContainer": `VfnirYnsq2Y_yeiRPo2U`,
+	"logoTitle": `AUuKMjmMyPnc33luKPTT`,
 	"Logo": `eRf97gfbsMtLCn3UHWXE`,
 	"p": `DSDe2rU_WOc8xsVCW1fJ`,
 	"navList": `VpziURjVmNZneeuBgj0D`,
@@ -587,9 +628,20 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `* {
+___CSS_LOADER_EXPORT___.push([module.id, `:root {
+  --text-dark: #232946;
+  --text-light: rgb(176, 207, 228);
+  --bg-color: rgb(244, 246, 240);
+  --btn-animation: rgba(219, 171, 171, 0.3);
+  --input-color: rgb(87, 8, 8);
+  --nav-border: rgba(219, 171, 171, 0.3);
+  --text-red: rgb(237, 100, 100);
+  --text-green: rgb(51, 86, 51);
+}
+
+* {
   box-sizing: border-box;
-}`, "",{"version":3,"sources":["webpack://./src/index.module.scss"],"names":[],"mappings":"AAAA;EACI,sBAAA;AACJ","sourcesContent":["* {\n    box-sizing: border-box;\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/index.module.scss"],"names":[],"mappings":"AAAA;EACI,oBAAA;EACA,gCAAA;EACA,8BAAA;EACA,yCAAA;EACA,4BAAA;EACA,sCAAA;EACA,8BAAA;EACA,6BAAA;AACJ;;AAEA;EACI,sBAAA;AACJ","sourcesContent":[":root {\n    --text-dark: #232946;\n    --text-light: rgb(176, 207, 228);\n    --bg-color: rgb(244, 246, 240);\n    --btn-animation: rgba(219, 171, 171, 0.3);\n    --input-color: rgb(87, 8, 8);\n    --nav-border: rgba(219, 171, 171, 0.3);\n    --text-red: rgb(237, 100, 100);\n    --text-green: rgb(51, 86, 51);\n}\n\n* {\n    box-sizing: border-box;\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
@@ -620,15 +672,105 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.luBJirBC3AbIwQNsEypk {
   background-color: white;
   margin: 2rem 0;
 }
-.luBJirBC3AbIwQNsEypk h2 {
-  margin: 0;
+.luBJirBC3AbIwQNsEypk .dDBktqHefpOPtro_D3nn {
+  height: 100vh;
+  width: 100%;
+  text-align: center;
 }
-.luBJirBC3AbIwQNsEypk .OANrHW02gzoqyv5UHhmL {
-  width: 300px;
-}`, "",{"version":3,"sources":["webpack://./src/pages/HomePage/HomePage.module.scss"],"names":[],"mappings":"AAAA;EACI,YAAA;EACA,uBAAA;EACA,cAAA;AACJ;AAAI;EACI,SAAA;AAER;AAAI;EACI,YAAA;AAER","sourcesContent":[".HomePage {\n    height: 100%;\n    background-color: white;\n    margin: 2rem 0;\n    h2 {\n        margin: 0;\n    }\n    .image {\n        width: 300px;\n    }\n}"],"sourceRoot":""}]);
+.luBJirBC3AbIwQNsEypk .dDBktqHefpOPtro_D3nn .HXb4If_3xaEW4b91vFuW {
+  margin: 0;
+  color: white;
+  font-size: 3rem;
+  text-align: center;
+  background-color: var(--text-dark);
+  border-radius: 1.5rem;
+  box-shadow: 0 0 10px black;
+}
+.luBJirBC3AbIwQNsEypk .dDBktqHefpOPtro_D3nn .XsNBZjjraoQhCb8vwGiG {
+  font-size: 4rem;
+  letter-spacing: 5px;
+  color: var(--text-light);
+  text-shadow: 1px 1px 1px white, -1px 1px 1px white, -1px -1px 0 white, 1px -1px 0 white;
+}
+.luBJirBC3AbIwQNsEypk .dDBktqHefpOPtro_D3nn .Y3O2_Ragj9tGH2q6vZ0u {
+  display: flex;
+  width: 100%;
+}
+.luBJirBC3AbIwQNsEypk .dDBktqHefpOPtro_D3nn .Y3O2_Ragj9tGH2q6vZ0u .q8pfVjuaeU_XkC47nJFh {
+  text-align: left;
+  line-height: 2rem;
+  font-size: 1rem;
+}
+.luBJirBC3AbIwQNsEypk .dDBktqHefpOPtro_D3nn .Y3O2_Ragj9tGH2q6vZ0u .q8pfVjuaeU_XkC47nJFh .v1AGjsW6weOpCWspyKhm {
+  font-weight: 800;
+  font-size: 1.4rem;
+}
+.luBJirBC3AbIwQNsEypk .dDBktqHefpOPtro_D3nn .Y3O2_Ragj9tGH2q6vZ0u .zji2A40FAnmBpMWl_jwR {
+  margin-top: 2rem;
+  height: 100%;
+  width: 40%;
+}
+.luBJirBC3AbIwQNsEypk .dDBktqHefpOPtro_D3nn .lXfzdOHBHXf5pLlpvxSs {
+  margin: 0 auto;
+  width: 20rem;
+  height: 3rem;
+  background-color: var(--text-light);
+  color: var(--text-dark);
+  font-size: 1.3rem;
+  font-weight: bold;
+  font-family: "Dekko", cursive;
+  border: 0.1rem solid var(--text-dark);
+  border-radius: 0.5rem;
+  transition: 0.3s ease;
+}
+.luBJirBC3AbIwQNsEypk .dDBktqHefpOPtro_D3nn .lXfzdOHBHXf5pLlpvxSs:hover {
+  cursor: pointer;
+  transition: 0.3s ease;
+  background-color: var(--text-dark);
+  color: white;
+  box-shadow: 0 0 10px black;
+}
+.luBJirBC3AbIwQNsEypk .SFzQUleyXLDlii7aEUlZ {
+  background-color: var(--text-light);
+  width: 100%;
+  border-radius: 3rem;
+  padding: 2rem 0;
+  border: 0.2rem solid var(--text-dark);
+}
+.luBJirBC3AbIwQNsEypk .SFzQUleyXLDlii7aEUlZ .Uww1ZXnPyqReM6vFaTjs {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 2rem 0;
+  padding: 1rem 0;
+}
+.luBJirBC3AbIwQNsEypk .SFzQUleyXLDlii7aEUlZ .Uww1ZXnPyqReM6vFaTjs .t7n9GX7N4b1nwTYj2BJv {
+  max-width: 50%;
+  padding: 0 2rem;
+  font-size: 1.4rem;
+}
+.luBJirBC3AbIwQNsEypk .SFzQUleyXLDlii7aEUlZ .Uww1ZXnPyqReM6vFaTjs .OANrHW02gzoqyv5UHhmL {
+  max-width: 350px;
+  border-radius: 3rem;
+  border: 0.4rem solid var(--text-dark);
+}
+.luBJirBC3AbIwQNsEypk .SFzQUleyXLDlii7aEUlZ .Uww1ZXnPyqReM6vFaTjs:nth-of-type(2) {
+  flex-direction: row-reverse;
+}`, "",{"version":3,"sources":["webpack://./src/pages/HomePage/HomePage.module.scss"],"names":[],"mappings":"AAAA;EACI,YAAA;EACA,uBAAA;EACA,cAAA;AACJ;AAAI;EACI,aAAA;EACA,WAAA;EACA,kBAAA;AAER;AADQ;EACI,SAAA;EACA,YAAA;EACA,eAAA;EACA,kBAAA;EACA,kCAAA;EACA,qBAAA;EACA,0BAAA;AAGZ;AADQ;EACI,eAAA;EACA,mBAAA;EACA,wBAAA;EACA,uFACE;AAEd;AAGQ;EACI,aAAA;EACA,WAAA;AADZ;AAEY;EACI,gBAAA;EACA,iBAAA;EACA,eAAA;AAAhB;AACgB;EACI,gBAAA;EACA,iBAAA;AACpB;AAEY;EACI,gBAAA;EACA,YAAA;EACA,UAAA;AAAhB;AAGQ;EACI,cAAA;EACA,YAAA;EACA,YAAA;EACA,mCAAA;EACA,uBAAA;EACA,iBAAA;EACA,iBAAA;EACA,6BAAA;EACA,qCAAA;EACA,qBAAA;EACA,qBAAA;AADZ;AAEY;EACI,eAAA;EACA,qBAAA;EACA,kCAAA;EACA,YAAA;EACA,0BAAA;AAAhB;AAII;EACI,mCAAA;EACA,WAAA;EACA,mBAAA;EACA,eAAA;EACA,qCAAA;AAFR;AAGQ;EACI,aAAA;EACA,6BAAA;EACA,mBAAA;EACA,cAAA;EACA,eAAA;AADZ;AAEY;EACI,cAAA;EACA,eAAA;EACA,iBAAA;AAAhB;AAEY;EACI,gBAAA;EACA,mBAAA;EACA,qCAAA;AAAhB;AAGQ;EACI,2BAAA;AADZ","sourcesContent":[".HomePage {\n    height: 100%;\n    background-color: white;\n    margin: 2rem 0;\n    .introContainer {\n        height: 100vh;\n        width: 100%;\n        text-align: center;\n        .heading {\n            margin: 0;\n            color: white;\n            font-size: 3rem;\n            text-align: center;\n            background-color: var(--text-dark);\n            border-radius: 1.5rem;\n            box-shadow: 0 0 10px black;\n        }\n        .span {\n            font-size: 4rem;\n            letter-spacing: 5px;\n            color: var(--text-light);\n            text-shadow:\n              1px 1px 1px white,\n              -1px 1px 1px white,\n              -1px -1px 0 white,\n              1px -1px 0 white;\n        }\n        .introAndImgContainer {\n            display: flex;\n            width: 100%;\n            .intro {\n                text-align: left;\n                line-height: 2rem;\n                font-size: 1rem;\n                .titleSpan {\n                    font-weight: 800;\n                    font-size: 1.4rem;\n                }\n            }\n            .owlImage {\n                margin-top: 2rem;\n                height: 100%;\n                width: 40%;\n            }\n        }\n        .button {\n            margin: 0 auto;\n            width: 20rem;\n            height: 3rem;\n            background-color: var(--text-light);\n            color: var(--text-dark);\n            font-size: 1.3rem;\n            font-weight: bold;\n            font-family: \"Dekko\", cursive;\n            border: .1rem solid var(--text-dark);\n            border-radius: .5rem;\n            transition: .3s ease;\n            &:hover {\n                cursor: pointer;\n                transition: .3s ease;\n                background-color: var(--text-dark);\n                color: white;\n                box-shadow: 0 0 10px black;\n            }\n        }\n    }\n    .contentContainer {\n        background-color: var(--text-light);\n        width: 100%;\n        border-radius: 3rem;\n        padding: 2rem 0;\n        border: .2rem solid var(--text-dark);\n        .textImageContainer {\n            display: flex;\n            justify-content: space-evenly;\n            align-items: center;\n            margin: 2rem 0;\n            padding: 1rem 0;\n            .p {\n                max-width: 50%;\n                padding: 0 2rem;\n                font-size: 1.4rem\n            }\n            .image {\n                max-width: 350px;\n                border-radius: 3rem;\n                border: .4rem solid var(--text-dark);\n            }\n        }\n        .textImageContainer:nth-of-type(2) {\n            flex-direction: row-reverse;\n        }\n    }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"HomePage": `luBJirBC3AbIwQNsEypk`,
+	"introContainer": `dDBktqHefpOPtro_D3nn`,
+	"heading": `HXb4If_3xaEW4b91vFuW`,
+	"span": `XsNBZjjraoQhCb8vwGiG`,
+	"introAndImgContainer": `Y3O2_Ragj9tGH2q6vZ0u`,
+	"intro": `q8pfVjuaeU_XkC47nJFh`,
+	"titleSpan": `v1AGjsW6weOpCWspyKhm`,
+	"owlImage": `zji2A40FAnmBpMWl_jwR`,
+	"button": `lXfzdOHBHXf5pLlpvxSs`,
+	"contentContainer": `SFzQUleyXLDlii7aEUlZ`,
+	"textImageContainer": `Uww1ZXnPyqReM6vFaTjs`,
+	"p": `t7n9GX7N4b1nwTYj2BJv`,
 	"image": `OANrHW02gzoqyv5UHhmL`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
@@ -1102,4 +1244,4 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.6a064372c9565cf15742b08fe551c21a.js.map
+//# sourceMappingURL=App.8499e8843ed6325471922bb040d81582.js.map
