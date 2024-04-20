@@ -87,7 +87,6 @@ export default function App(){
             const response = await fetch('/api/users')
             const foundUsers = await response.json()
             setUsers(foundUsers.reverse())
-            console.log('hey')
             const responseTwo = await fetch('/api/users/completed')
             const foundCompletedUsers = await responseTwo.json()
             setCompletedUsers(foundCompletedUsers.reverse())

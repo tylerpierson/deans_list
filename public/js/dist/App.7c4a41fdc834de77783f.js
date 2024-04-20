@@ -114,7 +114,6 @@ function App() {
       const response = await fetch('/api/users');
       const foundUsers = await response.json();
       setUsers(foundUsers.reverse());
-      console.log('hey');
       const responseTwo = await fetch('/api/users/completed');
       const foundCompletedUsers = await responseTwo.json();
       setCompletedUsers(foundCompletedUsers.reverse());
@@ -146,6 +145,122 @@ function App() {
     path: "/parent",
     element: /*#__PURE__*/React.createElement(_pages_ParentPage_ParentPage__WEBPACK_IMPORTED_MODULE_8__["default"], null)
   }))));
+}
+
+/***/ }),
+
+/***/ "./src/components/BarGraph/BarGraph.js":
+/*!*********************************************!*\
+  !*** ./src/components/BarGraph/BarGraph.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ BarGraph)
+/* harmony export */ });
+/* harmony import */ var _BarGraph_module_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BarGraph.module.scss */ "./src/components/BarGraph/BarGraph.module.scss");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/chart/BarChart.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/CartesianGrid.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/XAxis.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/YAxis.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/Tooltip.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/component/Legend.js");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/cartesian/Bar.js");
+
+
+
+const data = [{
+  name: "KG",
+  Goal: 20,
+  Current: 80,
+  amt: 2400
+}, {
+  name: "1st",
+  Goal: 40,
+  Current: 60,
+  amt: 2210
+}, {
+  name: "2nd",
+  Goal: 25,
+  Current: 75,
+  amt: 2290
+}, {
+  name: "3rd",
+  Goal: 18,
+  Current: 82,
+  amt: 2000
+}, {
+  name: "4th",
+  Goal: 8,
+  Current: 92,
+  amt: 2181
+}, {
+  name: "5th",
+  Goal: 27,
+  Current: 73,
+  amt: 2500
+}, {
+  name: "6th",
+  Goal: 0,
+  Current: 100,
+  amt: 2100
+}, {
+  name: "7th",
+  Goal: 0,
+  Current: 0,
+  amt: 2100
+}, {
+  name: "8th",
+  Goal: 0,
+  Current: 0,
+  amt: 2100
+}, {
+  name: "9th",
+  Goal: 0,
+  Current: 0,
+  amt: 2100
+}, {
+  name: "10th",
+  Goal: 0,
+  Current: 0,
+  amt: 2100
+}, {
+  name: "11th",
+  Goal: 0,
+  Current: 0,
+  amt: 2100
+}, {
+  name: "12th",
+  Goal: 0,
+  Current: 0,
+  amt: 2100
+}];
+function BarGraph() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_2__.BarChart, {
+    width: 550,
+    height: 300,
+    data: data,
+    margin: {
+      top: 20,
+      right: 30,
+      left: 20,
+      bottom: 5
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_3__.CartesianGrid, {
+    strokeDasharray: "3 3"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_4__.XAxis, {
+    dataKey: "name"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_5__.YAxis, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_6__.Tooltip, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_7__.Legend, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_8__.Bar, {
+    dataKey: "Current",
+    stackId: "a",
+    fill: "var(--text-dark)"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_8__.Bar, {
+    dataKey: "Goal",
+    stackId: "a",
+    fill: "var(--text-light)"
+  }));
 }
 
 /***/ }),
@@ -292,6 +407,8 @@ root.render( /*#__PURE__*/React.createElement(react__WEBPACK_IMPORTED_MODULE_0__
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminPage.module.scss */ "./src/pages/AdminPage/AdminPage.module.scss");
+/* harmony import */ var _components_BarGraph_BarGraph__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/BarGraph/BarGraph */ "./src/components/BarGraph/BarGraph.js");
+
 
 
 function AdminPage() {
@@ -303,113 +420,7 @@ function AdminPage() {
     className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].span
   }, "Admin"), "!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].leftContainer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].graphContainer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].gradeContainer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].bar
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].barColor
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].grade
-  }, "KG")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].gradeContainer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].bar
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].barColor
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].grade
-  }, "1st")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].gradeContainer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].bar
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].barColor
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].grade
-  }, "2nd")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].gradeContainer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].bar
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].barColor
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].grade
-  }, "3rd")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].gradeContainer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].bar
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].barColor
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].grade
-  }, "4th")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].gradeContainer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].bar
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].barColor
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].grade
-  }, "5th")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].gradeContainer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].bar
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].barColor
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].grade
-  }, "6th")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].gradeContainer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].bar
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].barColor
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].grade
-  }, "7th")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].gradeContainer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].bar
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].barColor
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].grade
-  }, "8th")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].gradeContainer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].bar
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].barColor
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].grade
-  }, "9th")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].gradeContainer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].bar
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].barColor
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].grade
-  }, "10th")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].gradeContainer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].bar
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].barColor
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].grade
-  }, "11th")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].gradeContainer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].bar
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].barColor
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].grade
-  }, "12th")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_BarGraph_BarGraph__WEBPACK_IMPORTED_MODULE_2__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].rightContainer
   }));
 }
@@ -600,6 +611,32 @@ body .IMqMrT2eGOGeFiLbCAGg {
 ___CSS_LOADER_EXPORT___.locals = {
 	"App": `IMqMrT2eGOGeFiLbCAGg`
 };
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/BarGraph/BarGraph.module.scss":
+/*!*********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/BarGraph/BarGraph.module.scss ***!
+  \*********************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ``, "",{"version":3,"sources":[],"names":[],"mappings":"","sourceRoot":""}]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
@@ -879,43 +916,68 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.t94ykq1IYkjSjcirq1io {
   height: 100%;
   width: 50%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+}
+.t94ykq1IYkjSjcirq1io .X2PJMDJ4ICy0sqSiVUIN .okfSNkPLGLju07TQuKfK {
+  height: 325px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.t94ykq1IYkjSjcirq1io .X2PJMDJ4ICy0sqSiVUIN .okfSNkPLGLju07TQuKfK p {
+  margin: 0;
 }
 .t94ykq1IYkjSjcirq1io .X2PJMDJ4ICy0sqSiVUIN .qMMAmIImaZjL54Y95S6S {
   display: flex;
-  justify-content: space-evenly;
-  align-items: flex-end;
+  justify-content: center;
+  align-items: center;
   border-radius: 2rem;
   border: 0.2rem solid var(--text-dark);
   background-color: var(--text-light);
   width: 500px;
   height: 500px;
 }
-.t94ykq1IYkjSjcirq1io .X2PJMDJ4ICy0sqSiVUIN .qMMAmIImaZjL54Y95S6S .lT28ZqmJktdnEp2m5AiZ {
+.t94ykq1IYkjSjcirq1io .X2PJMDJ4ICy0sqSiVUIN .qMMAmIImaZjL54Y95S6S .EF9FrgVHGzCZKH6tUiDO {
+  margin: 0;
+}
+.t94ykq1IYkjSjcirq1io .X2PJMDJ4ICy0sqSiVUIN .qMMAmIImaZjL54Y95S6S .ZhLhAJpMDCKNj_v8WoDn {
+  width: 400px;
+  height: 350px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  border-radius: 2rem;
+  background-color: white;
+}
+.t94ykq1IYkjSjcirq1io .X2PJMDJ4ICy0sqSiVUIN .qMMAmIImaZjL54Y95S6S .ZhLhAJpMDCKNj_v8WoDn .lT28ZqmJktdnEp2m5AiZ {
   display: flex;
   flex-direction: column;
 }
-.t94ykq1IYkjSjcirq1io .X2PJMDJ4ICy0sqSiVUIN .qMMAmIImaZjL54Y95S6S .lT28ZqmJktdnEp2m5AiZ .HITcdosq_5oztVa42bvl {
-  width: 1rem;
-  height: 400px;
+.t94ykq1IYkjSjcirq1io .X2PJMDJ4ICy0sqSiVUIN .qMMAmIImaZjL54Y95S6S .ZhLhAJpMDCKNj_v8WoDn .lT28ZqmJktdnEp2m5AiZ .HITcdosq_5oztVa42bvl {
+  width: 1.5rem;
+  height: 325px;
   position: relative;
 }
-.t94ykq1IYkjSjcirq1io .X2PJMDJ4ICy0sqSiVUIN .qMMAmIImaZjL54Y95S6S .lT28ZqmJktdnEp2m5AiZ .HITcdosq_5oztVa42bvl .PH_VdmsmMDGWDsKCCLWQ {
+.t94ykq1IYkjSjcirq1io .X2PJMDJ4ICy0sqSiVUIN .qMMAmIImaZjL54Y95S6S .ZhLhAJpMDCKNj_v8WoDn .lT28ZqmJktdnEp2m5AiZ .HITcdosq_5oztVa42bvl .PH_VdmsmMDGWDsKCCLWQ {
   position: absolute;
   bottom: 0;
-  height: 80%;
+  height: 100%;
   width: 100%;
   background-color: var(--text-dark);
   border: 0.15rem solid white;
-}`, "",{"version":3,"sources":["webpack://./src/pages/AdminPage/AdminPage.module.scss"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,YAAA;AACJ;AAAI;EACI,YAAA;EACA,eAAA;EACA,kBAAA;EACA,kCAAA;EACA,qBAAA;EACA,0BAAA;AAER;AADQ;EACI,wBAAA;EACA,uFACA;AAEZ;AAII;EACI,UAAA;EACA,SAAA;EACA,YAAA;EACA,UAAA;EACA,aAAA;EACA,sBAAA;EACA,mBAAA;AAFR;AAGQ;EACI,aAAA;EACA,6BAAA;EACA,qBAAA;EACA,mBAAA;EACA,qCAAA;EACA,mCAAA;EACA,YAAA;EACA,aAAA;AADZ;AAEY;EACI,aAAA;EACA,sBAAA;AAAhB;AACgB;EACI,WAAA;EACA,aAAA;EACA,kBAAA;AACpB;AAAoB;EACI,kBAAA;EACA,SAAA;EACA,WAAA;EACA,WAAA;EACA,kCAAA;EACA,2BAAA;AAExB","sourcesContent":[".AdminPage {\n    width: 100%;\n    height: 100%;\n    .Header {\n        color: white;\n        font-size: 3rem;\n        text-align: center;\n        background-color: var(--text-dark);\n        border-radius: 1.5rem;\n        box-shadow: 0 0 10px black;\n        .span {\n            color: var(--text-light);\n            text-shadow:\n            1px 1px 1px white,\n            -1px 1px 1px white,\n            -1px -1px 0 white,\n            1px -1px 0 white;\n        }\n    }\n    .leftContainer {\n        padding: 0;\n        margin: 0;\n        height: 100%;\n        width: 50%;\n        display: flex;\n        flex-direction: column;\n        align-items: center;\n        .graphContainer {\n            display: flex;\n            justify-content: space-evenly;\n            align-items: flex-end;\n            border-radius: 2rem;\n            border: .2rem solid var(--text-dark);\n            background-color: var(--text-light);\n            width: 500px;\n            height: 500px;\n            .gradeContainer {\n                display: flex;\n                flex-direction: column;\n                .bar {\n                    width: 1rem;\n                    height: 400px;\n                    position: relative;\n                    .barColor {\n                        position: absolute;\n                        bottom: 0;\n                        height: 80%;\n                        width: 100%;\n                        background-color: var(--text-dark);\n                        border: .15rem solid white;\n                    }\n                }\n            }\n        }\n    }\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/pages/AdminPage/AdminPage.module.scss"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,YAAA;AACJ;AAAI;EACI,YAAA;EACA,eAAA;EACA,kBAAA;EACA,kCAAA;EACA,qBAAA;EACA,0BAAA;AAER;AADQ;EACI,wBAAA;EACA,uFACA;AAEZ;AAII;EACI,UAAA;EACA,SAAA;EACA,YAAA;EACA,UAAA;EACA,aAAA;EACA,mBAAA;EACA,mBAAA;AAFR;AAGQ;EACI,aAAA;EACA,aAAA;EACA,sBAAA;EACA,8BAAA;EACA,mBAAA;AADZ;AAEY;EACI,SAAA;AAAhB;AAGQ;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,mBAAA;EACA,qCAAA;EACA,mCAAA;EACA,YAAA;EACA,aAAA;AADZ;AAEY;EACI,SAAA;AAAhB;AAEY;EACI,YAAA;EACA,aAAA;EACA,aAAA;EACA,6BAAA;EACA,qBAAA;EACA,mBAAA;EACA,uBAAA;AAAhB;AACgB;EACI,aAAA;EACA,sBAAA;AACpB;AAAoB;EACI,aAAA;EACA,aAAA;EACA,kBAAA;AAExB;AADwB;EACI,kBAAA;EACA,SAAA;EACA,YAAA;EACA,WAAA;EACA,kCAAA;EACA,2BAAA;AAG5B","sourcesContent":[".AdminPage {\n    width: 100%;\n    height: 100%;\n    .Header {\n        color: white;\n        font-size: 3rem;\n        text-align: center;\n        background-color: var(--text-dark);\n        border-radius: 1.5rem;\n        box-shadow: 0 0 10px black;\n        .span {\n            color: var(--text-light);\n            text-shadow:\n            1px 1px 1px white,\n            -1px 1px 1px white,\n            -1px -1px 0 white,\n            1px -1px 0 white;\n        }\n    }\n    .leftContainer {\n        padding: 0;\n        margin: 0;\n        height: 100%;\n        width: 50%;\n        display: flex;\n        flex-direction: row;\n        align-items: center;\n        .graphScale {\n            height: 325px;\n            display: flex;\n            flex-direction: column;\n            justify-content: space-between;\n            margin-bottom: 1rem;\n            p {\n                margin: 0;\n            }\n        }\n        .graphContainer {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            border-radius: 2rem;\n            border: .2rem solid var(--text-dark);\n            background-color: var(--text-light);\n            width: 500px;\n            height: 500px;\n            .subject {\n                margin: 0;\n            }\n            .graphInnerContainer {\n                width: 400px;\n                height: 350px;\n                display: flex;\n                justify-content: space-evenly;\n                align-items: flex-end;\n                border-radius: 2rem;\n                background-color: white;\n                .gradeContainer {\n                    display: flex;\n                    flex-direction: column;\n                    .bar {\n                        width: 1.5rem;\n                        height: 325px;\n                        position: relative;\n                        .barColor {\n                            position: absolute;\n                            bottom: 0;\n                            height: 100%;\n                            width: 100%;\n                            background-color: var(--text-dark);\n                            border: .15rem solid white;\n                        }\n                    }\n                }\n            }\n        }\n    }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"AdminPage": `t94ykq1IYkjSjcirq1io`,
 	"Header": `thz6UkFUFIkfZxopICYv`,
 	"span": `NqbYiys6TGloJyZJmPi_`,
 	"leftContainer": `X2PJMDJ4ICy0sqSiVUIN`,
+	"graphScale": `okfSNkPLGLju07TQuKfK`,
 	"graphContainer": `qMMAmIImaZjL54Y95S6S`,
+	"subject": `EF9FrgVHGzCZKH6tUiDO`,
+	"graphInnerContainer": `ZhLhAJpMDCKNj_v8WoDn`,
 	"gradeContainer": `lT28ZqmJktdnEp2m5AiZ`,
 	"bar": `HITcdosq_5oztVa42bvl`,
 	"barColor": `PH_VdmsmMDGWDsKCCLWQ`
@@ -1103,6 +1165,56 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
        /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_App_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_App_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_App_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
+/***/ "./src/components/BarGraph/BarGraph.module.scss":
+/*!******************************************************!*\
+  !*** ./src/components/BarGraph/BarGraph.module.scss ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
+
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_BarGraph_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../../../node_modules/sass-loader/dist/cjs.js!../../../node_modules/postcss-loader/dist/cjs.js!./BarGraph.module.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/BarGraph/BarGraph.module.scss");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+
+      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+    
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_BarGraph_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_BarGraph_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_BarGraph_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_BarGraph_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),
@@ -1346,7 +1458,7 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 /******/ 	
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
@@ -1568,9 +1680,9 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["vendors-node_modules_css-loader_dist_runtime_api_js-node_modules_css-loader_dist_runtime_getU-13f77f"], () => (__webpack_require__("./src/index.js")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["vendors-node_modules_css-loader_dist_runtime_api_js-node_modules_css-loader_dist_runtime_getU-daac32"], () => (__webpack_require__("./src/index.js")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.9f83fd8eda899be29dc81b522866fe3a.js.map
+//# sourceMappingURL=App.c80c6c99c85cf8a16b76b54d6d7b8b93.js.map
