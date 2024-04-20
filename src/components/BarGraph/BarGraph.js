@@ -50,7 +50,7 @@ const data = [
   {
     name: "6th",
     Goal: 0,
-    Current: 100,
+    Current: 0,
     amt: 2100,
   },
   {

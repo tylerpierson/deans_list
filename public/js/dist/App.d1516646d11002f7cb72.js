@@ -204,7 +204,7 @@ const data = [{
 }, {
   name: "6th",
   Goal: 0,
-  Current: 100,
+  Current: 0,
   amt: 2100
 }, {
   name: "7th",
@@ -262,6 +262,34 @@ function BarGraph() {
     fill: "var(--text-light)"
   }));
 }
+
+/***/ }),
+
+/***/ "./src/components/Collapsible/Collapsible.js":
+/*!***************************************************!*\
+  !*** ./src/components/Collapsible/Collapsible.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function Collapsible(props) {
+  const [open, setOpen] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const toggle = () => {
+    setOpen(!open);
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    onClick: toggle
+  }, props.label)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, open && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "toggle"
+  }, props.children)));
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Collapsible);
 
 /***/ }),
 
@@ -408,6 +436,8 @@ root.render( /*#__PURE__*/React.createElement(react__WEBPACK_IMPORTED_MODULE_0__
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminPage.module.scss */ "./src/pages/AdminPage/AdminPage.module.scss");
 /* harmony import */ var _components_BarGraph_BarGraph__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/BarGraph/BarGraph */ "./src/components/BarGraph/BarGraph.js");
+/* harmony import */ var _components_Collapsible_Collapsible__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/Collapsible/Collapsible */ "./src/components/Collapsible/Collapsible.js");
+
 
 
 
@@ -422,7 +452,13 @@ function AdminPage() {
     className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].leftContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_BarGraph_BarGraph__WEBPACK_IMPORTED_MODULE_2__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].rightContainer
-  }));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_Collapsible_Collapsible__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    label: "Introduction"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "introduction"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "The collapsible component puts long sections of the information under a block enabling users to expand or collapse to access its details.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_Collapsible_Collapsible__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    label: "Prerequisite"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Prerequisite"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "I am going to assume that you know the basics like how a component works, how useState works, and how to set up React. I will only focus on building the project and though this is for an absolute beginner who would like to know how useEffect and useRef work.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_Collapsible_Collapsible__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    label: "Goals "
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Goals"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "This article will teach you more about the useState hook, useRef hook, and animation in React; we will make simple React collapsible components, useful for all kinds of apps. This collapsible element can be shown or hidden by clicking a button."))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AdminPage);
 
@@ -1685,4 +1721,4 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.c80c6c99c85cf8a16b76b54d6d7b8b93.js.map
+//# sourceMappingURL=App.8a3b91e50d598a4714e4775315ed28a9.js.map
