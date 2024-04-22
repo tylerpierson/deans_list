@@ -10,18 +10,30 @@ function AssignmentCollapsible() {
             assignments: [
                 {
                     title: 'Fractions Assignment #1',
-                    subject: 'Math'
+                    subject: 'Math',
+                    createdAt: '12/22/2023'
                 },
                 {
                     title: 'History Essay',
-                    subject: 'Social Studies'
+                    subject: 'Social Studies',
+                    createdAt: '12/1/2023'
                 },
             ]
         },
         {
             type: 'Completed',
-            title: 'Weather Patterns',
-            subject: 'Science'
+            assignments: [
+                {
+                    title: 'Weather Patterns',
+                    subject: 'Science',
+                    createdAt: '11/12/2023'
+                },
+                {
+                    title: 'Harry Potter ch.6',
+                    subject: 'Reading',
+                    createdAt: '8/17/2023'
+                },
+            ]
         }
     ];
 
@@ -45,17 +57,27 @@ function AssignmentCollapsible() {
                         <div className={`${styles.content} ${selected === i ? styles.show : ''}`}>
                             <div className={styles.contentContainer}>
                                 {item.type === 'In Progress' && item.assignments.map((assignment, index) => (
-                                    <div key={index}>
-                                        <p className={styles.assignmentTitle}>{assignment.title}</p>
-                                        <p className={styles.subject}>{assignment.subject}</p>
+                                    <>
+                                    <div className={styles.innerContent} key={index}>
+                                        <div className={styles.text}>
+                                            <p className={styles.assignmentTitle}>{assignment.title}</p>
+                                            <p className={styles.subject}>{assignment.subject}</p>
+                                        </div>
+                                        <p className={styles.date}>{assignment.createdAt}</p>
                                     </div>
+                                    </>
                                 ))}
-                                {item.type !== 'In Progress' && (
-                                    <div>
-                                        <p className={styles.assignmentTitle}>{item.title}</p>
-                                        <p className={styles.subject}>{item.subject}</p>
+                                {item.type !== 'In Progress' && item.assignments.map((assignment, index) => (
+                                    <>
+                                    <div className={styles.innerContent} key={index}>
+                                        <div className={styles.text}>
+                                            <p className={styles.assignmentTitle}>{assignment.title}</p>
+                                            <p className={styles.subject}>{assignment.subject}</p>
+                                        </div>
+                                        <p className={styles.date}>{assignment.createdAt}</p>
                                     </div>
-                                )}
+                                    </>
+                                ))}
                             </div>
                         </div>
                     </div>

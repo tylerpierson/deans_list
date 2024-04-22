@@ -170,15 +170,24 @@ function AssignmentCollapsible() {
     type: 'In Progress',
     assignments: [{
       title: 'Fractions Assignment #1',
-      subject: 'Math'
+      subject: 'Math',
+      createdAt: '12/22/2023'
     }, {
       title: 'History Essay',
-      subject: 'Social Studies'
+      subject: 'Social Studies',
+      createdAt: '12/1/2023'
     }]
   }, {
     type: 'Completed',
-    title: 'Weather Patterns',
-    subject: 'Science'
+    assignments: [{
+      title: 'Weather Patterns',
+      subject: 'Science',
+      createdAt: '11/12/2023'
+    }, {
+      title: 'Harry Potter ch.6',
+      subject: 'Reading',
+      createdAt: '8/17/2023'
+    }]
   }];
   const toggle = i => {
     if (selected === i) {
@@ -202,17 +211,29 @@ function AssignmentCollapsible() {
     className: "".concat(_AssignmentCollapsible_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].content, " ").concat(selected === i ? _AssignmentCollapsible_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].show : '')
   }, /*#__PURE__*/React.createElement("div", {
     className: _AssignmentCollapsible_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].contentContainer
-  }, item.type === 'In Progress' && item.assignments.map((assignment, index) => /*#__PURE__*/React.createElement("div", {
+  }, item.type === 'In Progress' && item.assignments.map((assignment, index) => /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: _AssignmentCollapsible_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].innerContent,
     key: index
+  }, /*#__PURE__*/React.createElement("div", {
+    className: _AssignmentCollapsible_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].text
   }, /*#__PURE__*/React.createElement("p", {
     className: _AssignmentCollapsible_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].assignmentTitle
   }, assignment.title), /*#__PURE__*/React.createElement("p", {
     className: _AssignmentCollapsible_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].subject
-  }, assignment.subject))), item.type !== 'In Progress' && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", {
+  }, assignment.subject)), /*#__PURE__*/React.createElement("p", {
+    className: _AssignmentCollapsible_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].date
+  }, assignment.createdAt)))), item.type !== 'In Progress' && item.assignments.map((assignment, index) => /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: _AssignmentCollapsible_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].innerContent,
+    key: index
+  }, /*#__PURE__*/React.createElement("div", {
+    className: _AssignmentCollapsible_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].text
+  }, /*#__PURE__*/React.createElement("p", {
     className: _AssignmentCollapsible_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].assignmentTitle
-  }, item.title), /*#__PURE__*/React.createElement("p", {
+  }, assignment.title), /*#__PURE__*/React.createElement("p", {
     className: _AssignmentCollapsible_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].subject
-  }, item.subject))))))));
+  }, assignment.subject)), /*#__PURE__*/React.createElement("p", {
+    className: _AssignmentCollapsible_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].date
+  }, assignment.createdAt))))))))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AssignmentCollapsible);
 
@@ -1058,6 +1079,13 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.KfVSaU_BUHxF7mN12lp0 {
   margin-bottom: 0.5rem;
 }
 
+.d7jyR2gVK8IpuUCkdMNs {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 0.5rem;
+}
+
 .K2Etzu1uM6iIGvflDSpn {
   margin: 0;
 }
@@ -1072,7 +1100,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.KfVSaU_BUHxF7mN12lp0 {
   height: auto;
   max-height: 9999px;
   transition: all 0.5s cubic-bezier(1, 0, 1, 0);
-}`, "",{"version":3,"sources":["webpack://./src/components/AssignmentCollapsible/AssignmentCollapsible.module.scss"],"names":[],"mappings":"AAAA;EACI,aAAA;AACJ;;AAEA;EACI,YAAA;AACJ;;AAEA;EACI,gBAAA;AACJ;;AAEA;EACI,6BAAA;EACA,kBAAA;AACJ;;AAEA;EACI,8BAAA;EACA,+BAAA;AACJ;;AAEA;EACI,iCAAA;EACA,kCAAA;AACJ;;AAEA;EACI,eAAA;AACJ;;AAEA;EACI,kCAAA;EACA,YAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;EACA,eAAA;EACA,cAAA;AACJ;;AAEA;EACI,8BAAA;EACA,+BAAA;AACJ;;AAEA;EACI,iCAAA;EACA,kCAAA;AACJ;;AAGA;EACI,mCAAA;EACA,eAAA;EACA,uBAAA;EACA,aAAA;EACA,gBAAA;EACA,6CAAA;AAAJ;;AAGA;EACI,qBAAA;AAAJ;;AAGA;EACI,SAAA;AAAJ;;AAEA;EACI,SAAA;EACA,iBAAA;EACA,WAAA;AACJ;;AAEA;EACI,YAAA;EACA,kBAAA;EACA,6CAAA;AACJ","sourcesContent":[".wrapper {\n    display: flex;\n}\n\n.accordion {\n    width: 500px;\n}\n\n.header {\n    margin-bottom: 0;\n}\n\n.item {\n    background: var(--text-light);\n    margin-bottom: 5px;\n}\n\n.firstItem {\n    border-top-left-radius: .5rem;\n    border-top-right-radius: .5rem;\n}\n\n.lastItem {\n    border-bottom-left-radius: .5rem;\n    border-bottom-right-radius: .5rem;\n}\n\n.title, .content.show {\n    padding: 0 20px;\n}\n\n.title {\n    background-color: var(--text-dark);\n    color: white;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    cursor: pointer;\n    height: 47.5px;\n}\n\n.firstTitle {\n    border-top-left-radius: .5rem;\n    border-top-right-radius: .5rem;\n}\n\n.lastTitle {\n    border-bottom-left-radius: .5rem;\n    border-bottom-right-radius: .5rem;\n}\n\n\n.content {\n    background-color: var(--text-light);\n    padding: 0 20px;\n    color: var(--text-dark);\n    max-height: 0;\n    overflow: hidden;\n    transition: all .5s cubic-bezier(0,1,0,1);\n}\n\n.contentContainer {\n    margin-bottom: .5rem;\n}\n\n.assignmentTitle {\n    margin: 0;\n}\n.subject {\n    margin: 0;\n    font-size: .8rem;\n    color: grey;\n}\n\n.content.show {\n    height: auto;\n    max-height: 9999px;\n    transition: all .5s cubic-bezier(1,0,1,0);\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/AssignmentCollapsible/AssignmentCollapsible.module.scss"],"names":[],"mappings":"AAAA;EACI,aAAA;AACJ;;AAEA;EACI,YAAA;AACJ;;AAEA;EACI,gBAAA;AACJ;;AAEA;EACI,6BAAA;EACA,kBAAA;AACJ;;AAEA;EACI,8BAAA;EACA,+BAAA;AACJ;;AAEA;EACI,iCAAA;EACA,kCAAA;AACJ;;AAEA;EACI,eAAA;AACJ;;AAEA;EACI,kCAAA;EACA,YAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;EACA,eAAA;EACA,cAAA;AACJ;;AAEA;EACI,8BAAA;EACA,+BAAA;AACJ;;AAEA;EACI,iCAAA;EACA,kCAAA;AACJ;;AAGA;EACI,mCAAA;EACA,eAAA;EACA,uBAAA;EACA,aAAA;EACA,gBAAA;EACA,6CAAA;AAAJ;;AAGA;EACI,qBAAA;AAAJ;;AAGA;EACI,aAAA;EACA,8BAAA;EACA,qBAAA;EACA,qBAAA;AAAJ;;AAGA;EACI,SAAA;AAAJ;;AAEA;EACI,SAAA;EACA,iBAAA;EACA,WAAA;AACJ;;AAEA;EACI,YAAA;EACA,kBAAA;EACA,6CAAA;AACJ","sourcesContent":[".wrapper {\n    display: flex;\n}\n\n.accordion {\n    width: 500px;\n}\n\n.header {\n    margin-bottom: 0;\n}\n\n.item {\n    background: var(--text-light);\n    margin-bottom: 5px;\n}\n\n.firstItem {\n    border-top-left-radius: .5rem;\n    border-top-right-radius: .5rem;\n}\n\n.lastItem {\n    border-bottom-left-radius: .5rem;\n    border-bottom-right-radius: .5rem;\n}\n\n.title, .content.show {\n    padding: 0 20px;\n}\n\n.title {\n    background-color: var(--text-dark);\n    color: white;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    cursor: pointer;\n    height: 47.5px;\n}\n\n.firstTitle {\n    border-top-left-radius: .5rem;\n    border-top-right-radius: .5rem;\n}\n\n.lastTitle {\n    border-bottom-left-radius: .5rem;\n    border-bottom-right-radius: .5rem;\n}\n\n\n.content {\n    background-color: var(--text-light);\n    padding: 0 20px;\n    color: var(--text-dark);\n    max-height: 0;\n    overflow: hidden;\n    transition: all .5s cubic-bezier(0,1,0,1);\n}\n\n.contentContainer {\n    margin-bottom: .5rem;\n}\n\n.innerContent {\n    display: flex;\n    justify-content: space-between;\n    align-items: flex-end;\n    margin-bottom: .5rem;\n}\n\n.assignmentTitle {\n    margin: 0;\n}\n.subject {\n    margin: 0;\n    font-size: .8rem;\n    color: grey;\n}\n\n.content.show {\n    height: auto;\n    max-height: 9999px;\n    transition: all .5s cubic-bezier(1,0,1,0);\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"wrapper": `KfVSaU_BUHxF7mN12lp0`,
@@ -1087,6 +1115,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"firstTitle": `W473GJ0e7gA1ZFJPElkP`,
 	"lastTitle": `UGlOMyXCNP80V9m4GJxy`,
 	"contentContainer": `BuyVgCJ88vj4PjuFJ1Ci`,
+	"innerContent": `d7jyR2gVK8IpuUCkdMNs`,
 	"assignmentTitle": `K2Etzu1uM6iIGvflDSpn`,
 	"subject": `_uerHlkU0zKdobV1dFwi`
 };
@@ -2975,4 +3004,4 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.6a38419888e1d1cd0742e1696557291d.js.map
+//# sourceMappingURL=App.3edea1cdc490d605ea3c89ed2b632103.js.map
