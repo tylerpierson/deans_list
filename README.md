@@ -78,4 +78,4 @@ localhost:(PORT)/api/users
 ![Admin_Page](public/img/admin_wireframe.jpg)
 
 **Teacher Page**
-![Admin_Page](public/img/teacherpage_wireframe.jpg)
+![Teacher_Page](public/img/teacherpage_wireframe.jpeg)
