@@ -1,0 +1,26 @@
+.ReadingTracker {
+    width: 90%;
+    height: 20rem;
+    border-radius: .5rem;
+    margin-top: 1rem;
+    .headerContainer {
+        background-color: var(--text-dark);
+        border-top-left-radius: .5rem;
+        border-top-right-radius: .5rem;
+        color: white;
+        padding: .3rem 1rem;
+        .header {
+            margin: 0;
+        }
+    }
+    .scoringContainer {
+        border: .3rem solid var(--text-light);
+        height: 80%;
+    }
+    .teacherSelector {
+        background-color: var(--text-light);
+        height: 20%;
+        border-bottom-left-radius: .5rem;
+        border-bottom-right-radius: .5rem;
+    }
+}
