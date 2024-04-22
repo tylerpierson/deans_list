@@ -76,3 +76,6 @@ localhost:(PORT)/api/users
 
 **Admin Page**
 ![Admin_Page](public/img/admin_wireframe.jpg)
+
+**Teacher Page**
+![Admin_Page](public/img/teacherpage_wireframe.jpg)
