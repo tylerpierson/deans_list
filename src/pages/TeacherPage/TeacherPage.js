@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './TeacherPage.module.scss'
 import BarGraph from '../../components/BarGraph/BarGraph'
-import ReadingTracker from '../../components/ReadingTracker/ReadingTracker'
+import TeacherReadingTracker from '../../components/TeacherReadingTracker/TeacherReadingTracker'
 import AssignmentCollapsible from '../../components/AssignmentCollapsible/AssignmentCollapsible'
 import ClassCollapsible from '../../components/ClassCollapsible/ClassCollapsible'
 import TeamCollapsible from '../../components/TeamCollapsible/TeamCollapsible'
@@ -13,7 +13,7 @@ function TeacherPage() {
         <div className={styles.mainContainer}>
           <div className={styles.leftContainer}>
             <BarGraph />
-            <ReadingTracker />
+            <TeacherReadingTracker />
           </div>
           <div className={styles.rightContainer}>
             <AssignmentCollapsible />

@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './AdminPage.module.scss'
 import BarGraph from '../../components/BarGraph/BarGraph'
-import ReadingTracker from '../../components/ReadingTracker/ReadingTracker'
+import AdminReadingTracker from '../../components/AdminReadingTracker/AdminReadingTracker'
 import Collapsible from '../../components/Collapsible/Collapsible'
 
 function AdminPage() {
@@ -11,7 +11,7 @@ function AdminPage() {
         <div className={styles.mainContainer}>
           <div className={styles.leftContainer}>
             <BarGraph />
-            <ReadingTracker />
+            <AdminReadingTracker />
           </div>
           <div className={styles.rightContainer}>
             <Collapsible />

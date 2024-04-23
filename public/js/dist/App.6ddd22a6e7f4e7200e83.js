@@ -149,6 +149,628 @@ function App() {
 
 /***/ }),
 
+/***/ "./src/components/AdminReadingTracker/AdminReadingTracker.js":
+/*!*******************************************************************!*\
+  !*** ./src/components/AdminReadingTracker/AdminReadingTracker.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_select__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-select */ "./node_modules/react-select/dist/react-select.esm.js");
+/* harmony import */ var _AdminReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminReadingTracker.module.scss */ "./src/components/AdminReadingTracker/AdminReadingTracker.module.scss");
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+
+
+function AdminReadingTracker() {
+  const gradeOptions = [{
+    value: 'KG',
+    label: 'KG'
+  }, {
+    value: '1st',
+    label: '1st'
+  }, {
+    value: '2nd',
+    label: '2nd'
+  }, {
+    value: '3rd',
+    label: '3rd'
+  }, {
+    value: '4th',
+    label: '4th'
+  }, {
+    value: '5th',
+    label: '5th'
+  }, {
+    value: '6th',
+    label: '6th'
+  }, {
+    value: '7th',
+    label: '7th'
+  }, {
+    value: '8th',
+    label: '8th'
+  }, {
+    value: '9th',
+    label: '9th'
+  }, {
+    value: '10th',
+    label: '10th'
+  }, {
+    value: '11th',
+    label: '11th'
+  }, {
+    value: '12th',
+    label: '12th'
+  }];
+  const scaleOptions = [{
+    value: 'AR',
+    label: 'AR'
+  }, {
+    value: 'Fountas & Pinnell',
+    label: 'Fountas & Pinnell'
+  }, {
+    value: 'Lexile',
+    label: 'Lexile'
+  }, {
+    value: 'DRA',
+    label: 'DRA'
+  }, {
+    value: 'Reading Recovery',
+    label: 'Reading Recovery'
+  }, {
+    value: 'Rigby',
+    label: 'Rigby'
+  }, {
+    value: 'Basal',
+    label: 'Basal'
+  }];
+  const [scoreOptions, setScoreOptions] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const generateScoreOptions = value => {
+    let options = [];
+    switch (value) {
+      case 'AR':
+        options = [{
+          value: 'K',
+          label: 'K'
+        }, {
+          value: 'K.5',
+          label: 'K.5'
+        }, {
+          value: '1.0',
+          label: '1.0'
+        }, {
+          value: '1.1',
+          label: '1.1'
+        }, {
+          value: '1.2',
+          label: '1.2'
+        }, {
+          value: '1.4',
+          label: '1.4'
+        }, {
+          value: '1.5',
+          label: '1.5'
+        }, {
+          value: '1.7',
+          label: '1.7'
+        }, {
+          value: '1.8',
+          label: '1.8'
+        }, {
+          value: '2.0',
+          label: '2.0'
+        }, {
+          value: '2.3',
+          label: '2.3'
+        }, {
+          value: '2.6',
+          label: '2.6'
+        }, {
+          value: '2.9',
+          label: '2.9'
+        }, {
+          value: '3.0',
+          label: '3.0'
+        }, {
+          value: '3.3',
+          label: '3.3'
+        }, {
+          value: '3.6',
+          label: '3.6'
+        }, {
+          value: '4.0',
+          label: '4.0'
+        }, {
+          value: '4.3',
+          label: '4.3'
+        }, {
+          value: '4.6',
+          label: '4.6'
+        }, {
+          value: '4.8',
+          label: '4.8'
+        }, {
+          value: '5.0',
+          label: '5.0'
+        }, {
+          value: '5.3',
+          label: '5.3'
+        }, {
+          value: '5.6',
+          label: '5.6'
+        }, {
+          value: '6.0',
+          label: '6.0'
+        }, {
+          value: '6.5',
+          label: '6.5'
+        }, {
+          value: '7.0',
+          label: '7.0'
+        }, {
+          value: '7.3',
+          label: '7.3'
+        }, {
+          value: '7.6',
+          label: '7.6'
+        }, {
+          value: '8+',
+          label: '8+'
+        }];
+        break;
+      case 'Fountas & Pinnell':
+        options = [{
+          value: 'A',
+          label: 'A'
+        }, {
+          value: 'B',
+          label: 'B'
+        }, {
+          value: 'C',
+          label: 'C'
+        }, {
+          value: 'D',
+          label: 'D'
+        }, {
+          value: 'E',
+          label: 'E'
+        }, {
+          value: 'F',
+          label: 'F'
+        }, {
+          value: 'G',
+          label: 'G'
+        }, {
+          value: 'H',
+          label: 'H'
+        }, {
+          value: 'I',
+          label: 'I'
+        }, {
+          value: 'J',
+          label: 'J'
+        }, {
+          value: 'K',
+          label: 'K'
+        }, {
+          value: 'L',
+          label: 'L'
+        }, {
+          value: 'M',
+          label: 'M'
+        }, {
+          value: 'N',
+          label: 'N'
+        }, {
+          value: 'O',
+          label: 'O'
+        }, {
+          value: 'P',
+          label: 'P'
+        }, {
+          value: 'Q',
+          label: 'Q'
+        }, {
+          value: 'R',
+          label: 'R'
+        }, {
+          value: 'S',
+          label: 'S'
+        }, {
+          value: 'T',
+          label: 'T'
+        }, {
+          value: 'U',
+          label: 'U'
+        }, {
+          value: 'V',
+          label: 'V'
+        }, {
+          value: 'W',
+          label: 'W'
+        }, {
+          value: 'X',
+          label: 'X'
+        }, {
+          value: 'Y',
+          label: 'Y'
+        }, {
+          value: 'Z',
+          label: 'Z'
+        }, {
+          value: 'Z+',
+          label: 'Z+'
+        }];
+        break;
+      case 'Lexile':
+        options = [{
+          value: '<100',
+          label: '<100'
+        }, {
+          value: '100-199',
+          label: '100-199'
+        }, {
+          value: '200-299',
+          label: '200-299'
+        }, {
+          value: '300',
+          label: '300'
+        }, {
+          value: '400',
+          label: '400'
+        }, {
+          value: '500',
+          label: '500'
+        }, {
+          value: '600',
+          label: '600'
+        }, {
+          value: '700',
+          label: '700'
+        }, {
+          value: '800',
+          label: '800'
+        }, {
+          value: '900',
+          label: '900'
+        }, {
+          value: '1000',
+          label: '1000'
+        }, {
+          value: '1100',
+          label: '1100'
+        }, {
+          value: '1200',
+          label: '1200'
+        }, {
+          value: '1200+',
+          label: '1200+'
+        }];
+        break;
+      case 'DRA':
+        options = [{
+          value: 'A.1',
+          label: 'A.1'
+        }, {
+          value: '2',
+          label: '2'
+        }, {
+          value: '3',
+          label: '3'
+        }, {
+          value: '4',
+          label: '4'
+        }, {
+          value: '6-8',
+          label: '6-8'
+        }, {
+          value: '10',
+          label: '10'
+        }, {
+          value: '12',
+          label: '12'
+        }, {
+          value: '14',
+          label: '14'
+        }, {
+          value: '16',
+          label: '16'
+        }, {
+          value: '18',
+          label: '18'
+        }, {
+          value: '20',
+          label: '20'
+        }, {
+          value: '24',
+          label: '24'
+        }, {
+          value: '28',
+          label: '28'
+        }, {
+          value: '30',
+          label: '30'
+        }, {
+          value: '34',
+          label: '34'
+        }, {
+          value: '38',
+          label: '38'
+        }, {
+          value: '38-40',
+          label: '38-40'
+        }, {
+          value: '40',
+          label: '40'
+        }, {
+          value: '40-44',
+          label: '40-44'
+        }, {
+          value: '44',
+          label: '44'
+        }, {
+          value: '44-60',
+          label: '44-60'
+        }, {
+          value: '50',
+          label: '50'
+        }, {
+          value: '50-60',
+          label: '50-60'
+        }, {
+          value: '60',
+          label: '60'
+        }, {
+          value: '60-70',
+          label: '60-70'
+        }, {
+          value: '70',
+          label: '70'
+        }, {
+          value: '70-80',
+          label: '70-80'
+        }, {
+          value: '70-120',
+          label: '70-120'
+        }, {
+          value: '80',
+          label: '80'
+        }, {
+          value: '80+',
+          label: '80+'
+        }];
+        break;
+      case 'Reading Recovery':
+        options = [{
+          value: '1',
+          label: '1'
+        }, {
+          value: '2',
+          label: '2'
+        }, {
+          value: '3',
+          label: '3'
+        }, {
+          value: '4',
+          label: '4'
+        }, {
+          value: '5',
+          label: '5'
+        }, {
+          value: '6',
+          label: '6'
+        }, {
+          value: '7',
+          label: '7'
+        }, {
+          value: '8',
+          label: '8'
+        }, {
+          value: '9',
+          label: '9'
+        }, {
+          value: '10',
+          label: '10'
+        }, {
+          value: '11',
+          label: '11'
+        }, {
+          value: '12',
+          label: '12'
+        }, {
+          value: '13',
+          label: '13'
+        }, {
+          value: '14',
+          label: '14'
+        }, {
+          value: '15',
+          label: '15'
+        }, {
+          value: '16',
+          label: '16'
+        }, {
+          value: '17',
+          label: '17'
+        }, {
+          value: '18',
+          label: '18'
+        }, {
+          value: '19',
+          label: '19'
+        }, {
+          value: '20',
+          label: '20'
+        }];
+        break;
+      case 'Rigby':
+        options = [{
+          value: '1-2',
+          label: '1-2'
+        }, {
+          value: '3-4',
+          label: '3-4'
+        }, {
+          value: '5',
+          label: '5'
+        }, {
+          value: '6',
+          label: '6'
+        }, {
+          value: '7',
+          label: '7'
+        }, {
+          value: '8',
+          label: '8'
+        }, {
+          value: '9',
+          label: '9'
+        }, {
+          value: '10',
+          label: '10'
+        }, {
+          value: '11',
+          label: '11'
+        }, {
+          value: '12',
+          label: '12'
+        }, {
+          value: '13',
+          label: '13'
+        }, {
+          value: '14-15',
+          label: '14-15'
+        }, {
+          value: '16-17',
+          label: '16-17'
+        }, {
+          value: '18',
+          label: '18'
+        }, {
+          value: '19',
+          label: '19'
+        }, {
+          value: '20+',
+          label: '20+'
+        }];
+        break;
+      case 'Basal':
+        options = [{
+          value: 'Readiness',
+          label: 'Readiness'
+        }, {
+          value: 'Preprim. 1',
+          label: 'Preprim. 1'
+        }, {
+          value: 'Preprim. 2',
+          label: 'Preprim. 2'
+        }, {
+          value: 'Preprim. 3',
+          label: 'Preprim. 3'
+        }, {
+          value: 'Primer',
+          label: 'Primer'
+        }, {
+          value: 'Primer+',
+          label: 'Primer+'
+        }, {
+          value: 'Grade 1',
+          label: 'Grade 1'
+        }, {
+          value: 'Grade 1 (late)',
+          label: 'Grade 1 (late)'
+        }, {
+          value: 'Grade 2',
+          label: 'Grade 2'
+        }, {
+          value: 'Grade 3',
+          label: 'Grade 3'
+        }, {
+          value: 'Grade 4',
+          label: 'Grade 4'
+        }, {
+          value: 'Grade 5',
+          label: 'Grade 5'
+        }, {
+          value: 'Grade 6',
+          label: 'Grade 6'
+        }];
+        break;
+      default:
+        options = [];
+        break;
+    }
+    setScoreOptions(options);
+  };
+  const optionStyles = {
+    option: (provided, state) => _objectSpread(_objectSpread({}, provided), {}, {
+      color: 'black',
+      // Change the text color here
+      maxHeight: '15rem',
+      overflow: 'scroll'
+    }),
+    control: (provided, state) => _objectSpread(_objectSpread({}, provided), {}, {
+      border: '2px solid var(--text-light)',
+      // Remove the border
+      outline: 'none' // Remove the outline
+    })
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _AdminReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ReadingTracker
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _AdminReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].headerContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", {
+    className: _AdminReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].header
+  }, "Reading Levels"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _AdminReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].selectorContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_select__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    className: _AdminReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].selector,
+    options: gradeOptions,
+    styles: optionStyles,
+    placeholder: "Grade"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_select__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    className: _AdminReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].selector,
+    options: scaleOptions,
+    styles: optionStyles,
+    placeholder: "Type",
+    onChange: selectedOption => generateScoreOptions(selectedOption.value)
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _AdminReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].scoringContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _AdminReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].goalContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", {
+    className: _AdminReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].goalLabel
+  }, "Goal:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_select__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    className: _AdminReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].selector,
+    options: scoreOptions,
+    styles: optionStyles,
+    placeholder: "Scale"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _AdminReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].targetContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Target %: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _AdminReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].targetInnerContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, "80"), "%"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "|"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, "5"), " Students"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "On Level: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: _AdminReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].onLevelSpan
+  }, "75%")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Next Check-In: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: _AdminReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].checkInSpan
+  }, "April 30, 2024"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _AdminReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].teacherSelector
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "All"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Teacher 1"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Teacher 2"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Teacher 3"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Teacher 4")));
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AdminReadingTracker);
+
+/***/ }),
+
 /***/ "./src/components/AssignmentCollapsible/AssignmentCollapsible.js":
 /*!***********************************************************************!*\
   !*** ./src/components/AssignmentCollapsible/AssignmentCollapsible.js ***!
@@ -614,10 +1236,10 @@ function NavBar() {
 
 /***/ }),
 
-/***/ "./src/components/ReadingTracker/ReadingTracker.js":
-/*!*********************************************************!*\
-  !*** ./src/components/ReadingTracker/ReadingTracker.js ***!
-  \*********************************************************/
+/***/ "./src/components/TeacherReadingTracker/TeacherReadingTracker.js":
+/*!***********************************************************************!*\
+  !*** ./src/components/TeacherReadingTracker/TeacherReadingTracker.js ***!
+  \***********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -625,23 +1247,596 @@ function NavBar() {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _ReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ReadingTracker.module.scss */ "./src/components/ReadingTracker/ReadingTracker.module.scss");
+/* harmony import */ var react_select__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-select */ "./node_modules/react-select/dist/react-select.esm.js");
+/* harmony import */ var _TeacherReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TeacherReadingTracker.module.scss */ "./src/components/TeacherReadingTracker/TeacherReadingTracker.module.scss");
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 
-function ReadingTracker() {
+
+function TeacherReadingTracker() {
+  const gradeOptions = [{
+    value: 'Student1',
+    label: 'Student1'
+  }, {
+    value: 'Student2',
+    label: 'Student2'
+  }, {
+    value: 'Student3',
+    label: 'Student3'
+  }, {
+    value: 'Student4',
+    label: 'Student4'
+  }, {
+    value: 'Student5',
+    label: 'Student5'
+  }, {
+    value: 'Student6',
+    label: 'Student6'
+  }];
+  const scaleOptions = [{
+    value: 'AR',
+    label: 'AR'
+  }, {
+    value: 'Fountas & Pinnell',
+    label: 'Fountas & Pinnell'
+  }, {
+    value: 'Lexile',
+    label: 'Lexile'
+  }, {
+    value: 'DRA',
+    label: 'DRA'
+  }, {
+    value: 'Reading Recovery',
+    label: 'Reading Recovery'
+  }, {
+    value: 'Rigby',
+    label: 'Rigby'
+  }, {
+    value: 'Basal',
+    label: 'Basal'
+  }];
+  const [scoreOptions, setScoreOptions] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const generateScoreOptions = value => {
+    let options = [];
+    switch (value) {
+      case 'AR':
+        options = [{
+          value: 'K',
+          label: 'K'
+        }, {
+          value: 'K.5',
+          label: 'K.5'
+        }, {
+          value: '1.0',
+          label: '1.0'
+        }, {
+          value: '1.1',
+          label: '1.1'
+        }, {
+          value: '1.2',
+          label: '1.2'
+        }, {
+          value: '1.4',
+          label: '1.4'
+        }, {
+          value: '1.5',
+          label: '1.5'
+        }, {
+          value: '1.7',
+          label: '1.7'
+        }, {
+          value: '1.8',
+          label: '1.8'
+        }, {
+          value: '2.0',
+          label: '2.0'
+        }, {
+          value: '2.3',
+          label: '2.3'
+        }, {
+          value: '2.6',
+          label: '2.6'
+        }, {
+          value: '2.9',
+          label: '2.9'
+        }, {
+          value: '3.0',
+          label: '3.0'
+        }, {
+          value: '3.3',
+          label: '3.3'
+        }, {
+          value: '3.6',
+          label: '3.6'
+        }, {
+          value: '4.0',
+          label: '4.0'
+        }, {
+          value: '4.3',
+          label: '4.3'
+        }, {
+          value: '4.6',
+          label: '4.6'
+        }, {
+          value: '4.8',
+          label: '4.8'
+        }, {
+          value: '5.0',
+          label: '5.0'
+        }, {
+          value: '5.3',
+          label: '5.3'
+        }, {
+          value: '5.6',
+          label: '5.6'
+        }, {
+          value: '6.0',
+          label: '6.0'
+        }, {
+          value: '6.5',
+          label: '6.5'
+        }, {
+          value: '7.0',
+          label: '7.0'
+        }, {
+          value: '7.3',
+          label: '7.3'
+        }, {
+          value: '7.6',
+          label: '7.6'
+        }, {
+          value: '8+',
+          label: '8+'
+        }];
+        break;
+      case 'Fountas & Pinnell':
+        options = [{
+          value: 'A',
+          label: 'A'
+        }, {
+          value: 'B',
+          label: 'B'
+        }, {
+          value: 'C',
+          label: 'C'
+        }, {
+          value: 'D',
+          label: 'D'
+        }, {
+          value: 'E',
+          label: 'E'
+        }, {
+          value: 'F',
+          label: 'F'
+        }, {
+          value: 'G',
+          label: 'G'
+        }, {
+          value: 'H',
+          label: 'H'
+        }, {
+          value: 'I',
+          label: 'I'
+        }, {
+          value: 'J',
+          label: 'J'
+        }, {
+          value: 'K',
+          label: 'K'
+        }, {
+          value: 'L',
+          label: 'L'
+        }, {
+          value: 'M',
+          label: 'M'
+        }, {
+          value: 'N',
+          label: 'N'
+        }, {
+          value: 'O',
+          label: 'O'
+        }, {
+          value: 'P',
+          label: 'P'
+        }, {
+          value: 'Q',
+          label: 'Q'
+        }, {
+          value: 'R',
+          label: 'R'
+        }, {
+          value: 'S',
+          label: 'S'
+        }, {
+          value: 'T',
+          label: 'T'
+        }, {
+          value: 'U',
+          label: 'U'
+        }, {
+          value: 'V',
+          label: 'V'
+        }, {
+          value: 'W',
+          label: 'W'
+        }, {
+          value: 'X',
+          label: 'X'
+        }, {
+          value: 'Y',
+          label: 'Y'
+        }, {
+          value: 'Z',
+          label: 'Z'
+        }, {
+          value: 'Z+',
+          label: 'Z+'
+        }];
+        break;
+      case 'Lexile':
+        options = [{
+          value: '<100',
+          label: '<100'
+        }, {
+          value: '100-199',
+          label: '100-199'
+        }, {
+          value: '200-299',
+          label: '200-299'
+        }, {
+          value: '300',
+          label: '300'
+        }, {
+          value: '400',
+          label: '400'
+        }, {
+          value: '500',
+          label: '500'
+        }, {
+          value: '600',
+          label: '600'
+        }, {
+          value: '700',
+          label: '700'
+        }, {
+          value: '800',
+          label: '800'
+        }, {
+          value: '900',
+          label: '900'
+        }, {
+          value: '1000',
+          label: '1000'
+        }, {
+          value: '1100',
+          label: '1100'
+        }, {
+          value: '1200',
+          label: '1200'
+        }, {
+          value: '1200+',
+          label: '1200+'
+        }];
+        break;
+      case 'DRA':
+        options = [{
+          value: 'A.1',
+          label: 'A.1'
+        }, {
+          value: '2',
+          label: '2'
+        }, {
+          value: '3',
+          label: '3'
+        }, {
+          value: '4',
+          label: '4'
+        }, {
+          value: '6-8',
+          label: '6-8'
+        }, {
+          value: '10',
+          label: '10'
+        }, {
+          value: '12',
+          label: '12'
+        }, {
+          value: '14',
+          label: '14'
+        }, {
+          value: '16',
+          label: '16'
+        }, {
+          value: '18',
+          label: '18'
+        }, {
+          value: '20',
+          label: '20'
+        }, {
+          value: '24',
+          label: '24'
+        }, {
+          value: '28',
+          label: '28'
+        }, {
+          value: '30',
+          label: '30'
+        }, {
+          value: '34',
+          label: '34'
+        }, {
+          value: '38',
+          label: '38'
+        }, {
+          value: '38-40',
+          label: '38-40'
+        }, {
+          value: '40',
+          label: '40'
+        }, {
+          value: '40-44',
+          label: '40-44'
+        }, {
+          value: '44',
+          label: '44'
+        }, {
+          value: '44-60',
+          label: '44-60'
+        }, {
+          value: '50',
+          label: '50'
+        }, {
+          value: '50-60',
+          label: '50-60'
+        }, {
+          value: '60',
+          label: '60'
+        }, {
+          value: '60-70',
+          label: '60-70'
+        }, {
+          value: '70',
+          label: '70'
+        }, {
+          value: '70-80',
+          label: '70-80'
+        }, {
+          value: '70-120',
+          label: '70-120'
+        }, {
+          value: '80',
+          label: '80'
+        }, {
+          value: '80+',
+          label: '80+'
+        }];
+        break;
+      case 'Reading Recovery':
+        options = [{
+          value: '1',
+          label: '1'
+        }, {
+          value: '2',
+          label: '2'
+        }, {
+          value: '3',
+          label: '3'
+        }, {
+          value: '4',
+          label: '4'
+        }, {
+          value: '5',
+          label: '5'
+        }, {
+          value: '6',
+          label: '6'
+        }, {
+          value: '7',
+          label: '7'
+        }, {
+          value: '8',
+          label: '8'
+        }, {
+          value: '9',
+          label: '9'
+        }, {
+          value: '10',
+          label: '10'
+        }, {
+          value: '11',
+          label: '11'
+        }, {
+          value: '12',
+          label: '12'
+        }, {
+          value: '13',
+          label: '13'
+        }, {
+          value: '14',
+          label: '14'
+        }, {
+          value: '15',
+          label: '15'
+        }, {
+          value: '16',
+          label: '16'
+        }, {
+          value: '17',
+          label: '17'
+        }, {
+          value: '18',
+          label: '18'
+        }, {
+          value: '19',
+          label: '19'
+        }, {
+          value: '20',
+          label: '20'
+        }];
+        break;
+      case 'Rigby':
+        options = [{
+          value: '1-2',
+          label: '1-2'
+        }, {
+          value: '3-4',
+          label: '3-4'
+        }, {
+          value: '5',
+          label: '5'
+        }, {
+          value: '6',
+          label: '6'
+        }, {
+          value: '7',
+          label: '7'
+        }, {
+          value: '8',
+          label: '8'
+        }, {
+          value: '9',
+          label: '9'
+        }, {
+          value: '10',
+          label: '10'
+        }, {
+          value: '11',
+          label: '11'
+        }, {
+          value: '12',
+          label: '12'
+        }, {
+          value: '13',
+          label: '13'
+        }, {
+          value: '14-15',
+          label: '14-15'
+        }, {
+          value: '16-17',
+          label: '16-17'
+        }, {
+          value: '18',
+          label: '18'
+        }, {
+          value: '19',
+          label: '19'
+        }, {
+          value: '20+',
+          label: '20+'
+        }];
+        break;
+      case 'Basal':
+        options = [{
+          value: 'Readiness',
+          label: 'Readiness'
+        }, {
+          value: 'Preprim. 1',
+          label: 'Preprim. 1'
+        }, {
+          value: 'Preprim. 2',
+          label: 'Preprim. 2'
+        }, {
+          value: 'Preprim. 3',
+          label: 'Preprim. 3'
+        }, {
+          value: 'Primer',
+          label: 'Primer'
+        }, {
+          value: 'Primer+',
+          label: 'Primer+'
+        }, {
+          value: 'Grade 1',
+          label: 'Grade 1'
+        }, {
+          value: 'Grade 1 (late)',
+          label: 'Grade 1 (late)'
+        }, {
+          value: 'Grade 2',
+          label: 'Grade 2'
+        }, {
+          value: 'Grade 3',
+          label: 'Grade 3'
+        }, {
+          value: 'Grade 4',
+          label: 'Grade 4'
+        }, {
+          value: 'Grade 5',
+          label: 'Grade 5'
+        }, {
+          value: 'Grade 6',
+          label: 'Grade 6'
+        }];
+        break;
+      default:
+        options = [];
+        break;
+    }
+    setScoreOptions(options);
+  };
+  const optionStyles = {
+    option: (provided, state) => _objectSpread(_objectSpread({}, provided), {}, {
+      color: 'black',
+      // Change the text color here
+      maxHeight: '15rem',
+      overflow: 'scroll'
+    }),
+    control: (provided, state) => _objectSpread(_objectSpread({}, provided), {}, {
+      border: '2px solid var(--text-light)',
+      // Remove the border
+      outline: 'none' // Remove the outline
+    })
+  };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _ReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ReadingTracker
+    className: _TeacherReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ReadingTracker
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _ReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].headerContainer
+    className: _TeacherReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].headerContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", {
-    className: _ReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].header
-  }, "Reading Levels")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _ReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].scoringContainer
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _ReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].teacherSelector
-  }));
+    className: _TeacherReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].header
+  }, "Reading Levels"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _TeacherReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].selectorContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_select__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    className: _TeacherReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].selector,
+    options: gradeOptions,
+    styles: optionStyles,
+    placeholder: "Student"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_select__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    className: _TeacherReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].selector,
+    options: scaleOptions,
+    styles: optionStyles,
+    placeholder: "Type",
+    onChange: selectedOption => generateScoreOptions(selectedOption.value)
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _TeacherReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].scoringContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _TeacherReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].goalContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", {
+    className: _TeacherReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].goalLabel
+  }, "Goal:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_select__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    className: _TeacherReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].selector,
+    options: scoreOptions,
+    styles: optionStyles,
+    placeholder: "Scale"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _TeacherReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].targetContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", {
+    className: _TeacherReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].targetLabel
+  }, "Target %: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _TeacherReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].targetInnerContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, "80"), "%"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "|"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, "5"), " Students"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", {
+    className: _TeacherReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].onLevelLabel
+  }, "On Level: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: _TeacherReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].onLevelSpan
+  }, "75%")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Next Check-In: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: _TeacherReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].checkInSpan
+  }, "April 30, 2024"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _TeacherReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].teacherSelector
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "All"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Teacher 1"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Teacher 2"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Teacher 3"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Teacher 4")));
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ReadingTracker);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TeacherReadingTracker);
 
 /***/ }),
 
@@ -759,7 +1954,7 @@ root.render( /*#__PURE__*/React.createElement(react__WEBPACK_IMPORTED_MODULE_0__
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminPage.module.scss */ "./src/pages/AdminPage/AdminPage.module.scss");
 /* harmony import */ var _components_BarGraph_BarGraph__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/BarGraph/BarGraph */ "./src/components/BarGraph/BarGraph.js");
-/* harmony import */ var _components_ReadingTracker_ReadingTracker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/ReadingTracker/ReadingTracker */ "./src/components/ReadingTracker/ReadingTracker.js");
+/* harmony import */ var _components_AdminReadingTracker_AdminReadingTracker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/AdminReadingTracker/AdminReadingTracker */ "./src/components/AdminReadingTracker/AdminReadingTracker.js");
 /* harmony import */ var _components_Collapsible_Collapsible__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/Collapsible/Collapsible */ "./src/components/Collapsible/Collapsible.js");
 
 
@@ -777,7 +1972,7 @@ function AdminPage() {
     className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].mainContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].leftContainer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_BarGraph_BarGraph__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ReadingTracker_ReadingTracker__WEBPACK_IMPORTED_MODULE_3__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_BarGraph_BarGraph__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_AdminReadingTracker_AdminReadingTracker__WEBPACK_IMPORTED_MODULE_3__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].rightContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_Collapsible_Collapsible__WEBPACK_IMPORTED_MODULE_4__["default"], null))));
 }
@@ -919,7 +2114,7 @@ function StudentPage() {
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TeacherPage.module.scss */ "./src/pages/TeacherPage/TeacherPage.module.scss");
 /* harmony import */ var _components_BarGraph_BarGraph__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/BarGraph/BarGraph */ "./src/components/BarGraph/BarGraph.js");
-/* harmony import */ var _components_ReadingTracker_ReadingTracker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/ReadingTracker/ReadingTracker */ "./src/components/ReadingTracker/ReadingTracker.js");
+/* harmony import */ var _components_TeacherReadingTracker_TeacherReadingTracker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/TeacherReadingTracker/TeacherReadingTracker */ "./src/components/TeacherReadingTracker/TeacherReadingTracker.js");
 /* harmony import */ var _components_AssignmentCollapsible_AssignmentCollapsible__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/AssignmentCollapsible/AssignmentCollapsible */ "./src/components/AssignmentCollapsible/AssignmentCollapsible.js");
 /* harmony import */ var _components_ClassCollapsible_ClassCollapsible__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/ClassCollapsible/ClassCollapsible */ "./src/components/ClassCollapsible/ClassCollapsible.js");
 /* harmony import */ var _components_TeamCollapsible_TeamCollapsible__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/TeamCollapsible/TeamCollapsible */ "./src/components/TeamCollapsible/TeamCollapsible.js");
@@ -941,7 +2136,7 @@ function TeacherPage() {
     className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].mainContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].leftContainer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_BarGraph_BarGraph__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ReadingTracker_ReadingTracker__WEBPACK_IMPORTED_MODULE_3__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_BarGraph_BarGraph__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_TeacherReadingTracker_TeacherReadingTracker__WEBPACK_IMPORTED_MODULE_3__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].rightContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_AssignmentCollapsible_AssignmentCollapsible__WEBPACK_IMPORTED_MODULE_4__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ClassCollapsible_ClassCollapsible__WEBPACK_IMPORTED_MODULE_5__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_TeamCollapsible_TeamCollapsible__WEBPACK_IMPORTED_MODULE_6__["default"], null))));
 }
@@ -991,6 +2186,107 @@ body .IMqMrT2eGOGeFiLbCAGg {
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"App": `IMqMrT2eGOGeFiLbCAGg`
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/AdminReadingTracker/AdminReadingTracker.module.scss":
+/*!*******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/AdminReadingTracker/AdminReadingTracker.module.scss ***!
+  \*******************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `.lmrKupmV4cAPSL6wwRvc {
+  width: 90%;
+  height: 15rem;
+  border-radius: 0.5rem;
+  margin: 1rem 0 10rem 0;
+}
+.lmrKupmV4cAPSL6wwRvc .u69Ta0uc8YJFz1nvSlZs {
+  background-color: var(--text-dark);
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  color: white;
+  padding: 0.3rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.lmrKupmV4cAPSL6wwRvc .u69Ta0uc8YJFz1nvSlZs ._ugh8_RG0GCe6YAI_ODS {
+  margin: 0;
+}
+.lmrKupmV4cAPSL6wwRvc .Ttbje6EhigrMSFRAbUSA {
+  border: 0.3rem solid var(--text-light);
+  background-color: aliceblue;
+  padding-left: 1rem;
+}
+.lmrKupmV4cAPSL6wwRvc .Ttbje6EhigrMSFRAbUSA .kJF2WRCfRr7H_Z3r1Qkc {
+  display: flex;
+  align-items: center;
+}
+.lmrKupmV4cAPSL6wwRvc .Ttbje6EhigrMSFRAbUSA .kJF2WRCfRr7H_Z3r1Qkc .Y_DWZVlYhJmFJguun48w {
+  margin-right: 1rem;
+}
+.lmrKupmV4cAPSL6wwRvc .Ttbje6EhigrMSFRAbUSA .UMdk48Cjh0qBtkJ21NvI {
+  display: flex;
+}
+.lmrKupmV4cAPSL6wwRvc .Ttbje6EhigrMSFRAbUSA .UMdk48Cjh0qBtkJ21NvI .h3fUnhAQXGeF8WWRgU5o {
+  margin-left: 1rem;
+  width: 40%;
+  display: flex;
+  justify-content: space-between;
+}
+.lmrKupmV4cAPSL6wwRvc .Ttbje6EhigrMSFRAbUSA .AzVNoOacQVewtsA1RQXQ, .lmrKupmV4cAPSL6wwRvc .Ttbje6EhigrMSFRAbUSA .A7buPJZRmt6a4qgOf_Pz {
+  margin-left: 1rem;
+}
+.lmrKupmV4cAPSL6wwRvc .IcgarP6SUymiS_RSCmXf {
+  background-color: var(--text-light);
+  height: 20%;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.uAoANfNhLzLYrcsPA8ta {
+  display: flex;
+  justify-content: flex-end;
+  width: 70%;
+}
+.uAoANfNhLzLYrcsPA8ta .KXGBhjVYquYuz_r1e8dv:focus {
+  outline: none;
+}`, "",{"version":3,"sources":["webpack://./src/components/AdminReadingTracker/AdminReadingTracker.module.scss"],"names":[],"mappings":"AAAA;EACI,UAAA;EACA,aAAA;EACA,qBAAA;EACA,sBAAA;AACJ;AAAI;EACI,kCAAA;EACA,8BAAA;EACA,+BAAA;EACA,YAAA;EACA,oBAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;AAER;AADQ;EACI,SAAA;AAGZ;AAAI;EACI,sCAAA;EACA,2BAAA;EACA,kBAAA;AAER;AADQ;EACI,aAAA;EACA,mBAAA;AAGZ;AAFY;EACI,kBAAA;AAIhB;AADQ;EACI,aAAA;AAGZ;AAFY;EACI,iBAAA;EACA,UAAA;EACA,aAAA;EACA,8BAAA;AAIhB;AADQ;EACI,iBAAA;AAGZ;AAAI;EACI,mCAAA;EACA,WAAA;EACA,iCAAA;EACA,kCAAA;EACA,aAAA;EACA,eAAA;EACA,6BAAA;EACA,mBAAA;AAER;;AACA;EACI,aAAA;EACA,yBAAA;EACA,UAAA;AAEJ;AAAQ;EACI,aAAA;AAEZ","sourcesContent":[".ReadingTracker {\n    width: 90%;\n    height: 15rem;\n    border-radius: .5rem;\n    margin: 1rem 0 10rem 0;\n    .headerContainer {\n        background-color: var(--text-dark);\n        border-top-left-radius: .5rem;\n        border-top-right-radius: .5rem;\n        color: white;\n        padding: .3rem 1rem;\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        .header {\n            margin: 0;\n        }\n    }\n    .scoringContainer {\n        border: .3rem solid var(--text-light);\n        background-color: aliceblue;\n        padding-left: 1rem;\n        .goalContainer {\n            display: flex;\n            align-items: center;\n            .goalLabel {\n                margin-right: 1rem;\n            }\n        }\n        .targetContainer {\n            display: flex;\n            .targetInnerContainer {\n                margin-left: 1rem;\n                width: 40%;\n                display: flex;\n                justify-content: space-between;\n            }\n        }\n        .onLevelSpan, .checkInSpan {\n            margin-left: 1rem;\n        }\n    }\n    .teacherSelector {\n        background-color: var(--text-light);\n        height: 20%;\n        border-bottom-left-radius: .5rem;\n        border-bottom-right-radius: .5rem;\n        display: flex;\n        flex-wrap: wrap;\n        justify-content: space-evenly;\n        align-items: center;\n    }\n}\n.selectorContainer {\n    display: flex;\n    justify-content: flex-end;\n    width: 70%;\n    .selector {\n        &:focus {\n            outline: none;\n        }\n    }\n}"],"sourceRoot":""}]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"ReadingTracker": `lmrKupmV4cAPSL6wwRvc`,
+	"headerContainer": `u69Ta0uc8YJFz1nvSlZs`,
+	"header": `_ugh8_RG0GCe6YAI_ODS`,
+	"scoringContainer": `Ttbje6EhigrMSFRAbUSA`,
+	"goalContainer": `kJF2WRCfRr7H_Z3r1Qkc`,
+	"goalLabel": `Y_DWZVlYhJmFJguun48w`,
+	"targetContainer": `UMdk48Cjh0qBtkJ21NvI`,
+	"targetInnerContainer": `h3fUnhAQXGeF8WWRgU5o`,
+	"onLevelSpan": `AzVNoOacQVewtsA1RQXQ`,
+	"checkInSpan": `A7buPJZRmt6a4qgOf_Pz`,
+	"teacherSelector": `IcgarP6SUymiS_RSCmXf`,
+	"selectorContainer": `uAoANfNhLzLYrcsPA8ta`,
+	"selector": `KXGBhjVYquYuz_r1e8dv`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1540,10 +2836,10 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/ReadingTracker/ReadingTracker.module.scss":
-/*!*********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/ReadingTracker/ReadingTracker.module.scss ***!
-  \*********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/TeacherReadingTracker/TeacherReadingTracker.module.scss":
+/*!***********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/TeacherReadingTracker/TeacherReadingTracker.module.scss ***!
+  \***********************************************************************************************************************************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -1558,39 +2854,83 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `.Smg6Y4LvPwZ7EaCYR_As {
+___CSS_LOADER_EXPORT___.push([module.id, `.dpQGpbiC4SZapu2Yjmr5 {
   width: 90%;
-  height: 20rem;
+  height: 15rem;
   border-radius: 0.5rem;
-  margin-top: 1rem;
+  margin: 1rem 0 10rem 0;
 }
-.Smg6Y4LvPwZ7EaCYR_As .gYnnj1hvZCrqLtXUEsiw {
+.dpQGpbiC4SZapu2Yjmr5 .kQXXS63lk1AOtMRf9k1g {
   background-color: var(--text-dark);
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
   color: white;
   padding: 0.3rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.Smg6Y4LvPwZ7EaCYR_As .gYnnj1hvZCrqLtXUEsiw .xr3SrTCGuF8U1hD7mPfD {
+.dpQGpbiC4SZapu2Yjmr5 .kQXXS63lk1AOtMRf9k1g .cWboqian8YAaoXaLUlgV {
   margin: 0;
 }
-.Smg6Y4LvPwZ7EaCYR_As .unTwwUsceeQJWO8qT9gd {
+.dpQGpbiC4SZapu2Yjmr5 .OdmiW9kOLKerqlbWsBkw {
   border: 0.3rem solid var(--text-light);
-  height: 80%;
+  background-color: aliceblue;
+  padding-left: 1rem;
 }
-.Smg6Y4LvPwZ7EaCYR_As .SiXtn2hKQUuL1_ZhCvXA {
+.dpQGpbiC4SZapu2Yjmr5 .OdmiW9kOLKerqlbWsBkw .sufKvomTvNagsh8348Xw {
+  display: flex;
+  align-items: center;
+}
+.dpQGpbiC4SZapu2Yjmr5 .OdmiW9kOLKerqlbWsBkw .sufKvomTvNagsh8348Xw .l9uWJByiTnyLTT6ycPlQ {
+  margin-right: 1rem;
+}
+.dpQGpbiC4SZapu2Yjmr5 .OdmiW9kOLKerqlbWsBkw .q4EBXp_XxAU2McEi0U5X {
+  display: flex;
+}
+.dpQGpbiC4SZapu2Yjmr5 .OdmiW9kOLKerqlbWsBkw .q4EBXp_XxAU2McEi0U5X .IDFvwTcXxmvlKtixHbo8 {
+  margin-left: 1rem;
+  width: 40%;
+  display: flex;
+  justify-content: space-between;
+}
+.dpQGpbiC4SZapu2Yjmr5 .OdmiW9kOLKerqlbWsBkw .oTGQwgnrKSZwBl6FQKJt, .dpQGpbiC4SZapu2Yjmr5 .OdmiW9kOLKerqlbWsBkw .cXX2LTSRZq7_BFoW0jgm {
+  margin-left: 1rem;
+}
+.dpQGpbiC4SZapu2Yjmr5 .uaJSk454LHz2QK3qVoH9 {
   background-color: var(--text-light);
   height: 20%;
   border-bottom-left-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
-}`, "",{"version":3,"sources":["webpack://./src/components/ReadingTracker/ReadingTracker.module.scss"],"names":[],"mappings":"AAAA;EACI,UAAA;EACA,aAAA;EACA,qBAAA;EACA,gBAAA;AACJ;AAAI;EACI,kCAAA;EACA,8BAAA;EACA,+BAAA;EACA,YAAA;EACA,oBAAA;AAER;AADQ;EACI,SAAA;AAGZ;AAAI;EACI,sCAAA;EACA,WAAA;AAER;AAAI;EACI,mCAAA;EACA,WAAA;EACA,iCAAA;EACA,kCAAA;AAER","sourcesContent":[".ReadingTracker {\n    width: 90%;\n    height: 20rem;\n    border-radius: .5rem;\n    margin-top: 1rem;\n    .headerContainer {\n        background-color: var(--text-dark);\n        border-top-left-radius: .5rem;\n        border-top-right-radius: .5rem;\n        color: white;\n        padding: .3rem 1rem;\n        .header {\n            margin: 0;\n        }\n    }\n    .scoringContainer {\n        border: .3rem solid var(--text-light);\n        height: 80%;\n    }\n    .teacherSelector {\n        background-color: var(--text-light);\n        height: 20%;\n        border-bottom-left-radius: .5rem;\n        border-bottom-right-radius: .5rem;\n    }\n}"],"sourceRoot":""}]);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.FctXze9aCqeQgcg3Nnhx {
+  display: flex;
+  justify-content: flex-end;
+  width: 70%;
+}
+.FctXze9aCqeQgcg3Nnhx .GLavoEiZXmlp_rfyyVvK:focus {
+  outline: none;
+}`, "",{"version":3,"sources":["webpack://./src/components/TeacherReadingTracker/TeacherReadingTracker.module.scss"],"names":[],"mappings":"AAAA;EACI,UAAA;EACA,aAAA;EACA,qBAAA;EACA,sBAAA;AACJ;AAAI;EACI,kCAAA;EACA,8BAAA;EACA,+BAAA;EACA,YAAA;EACA,oBAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;AAER;AADQ;EACI,SAAA;AAGZ;AAAI;EACI,sCAAA;EACA,2BAAA;EACA,kBAAA;AAER;AADQ;EACI,aAAA;EACA,mBAAA;AAGZ;AAFY;EACI,kBAAA;AAIhB;AADQ;EACI,aAAA;AAGZ;AAFY;EACI,iBAAA;EACA,UAAA;EACA,aAAA;EACA,8BAAA;AAIhB;AADQ;EACI,iBAAA;AAGZ;AAAI;EACI,mCAAA;EACA,WAAA;EACA,iCAAA;EACA,kCAAA;EACA,aAAA;EACA,eAAA;EACA,6BAAA;EACA,mBAAA;AAER;;AACA;EACI,aAAA;EACA,yBAAA;EACA,UAAA;AAEJ;AAAQ;EACI,aAAA;AAEZ","sourcesContent":[".ReadingTracker {\n    width: 90%;\n    height: 15rem;\n    border-radius: .5rem;\n    margin: 1rem 0 10rem 0;\n    .headerContainer {\n        background-color: var(--text-dark);\n        border-top-left-radius: .5rem;\n        border-top-right-radius: .5rem;\n        color: white;\n        padding: .3rem 1rem;\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        .header {\n            margin: 0;\n        }\n    }\n    .scoringContainer {\n        border: .3rem solid var(--text-light);\n        background-color: aliceblue;\n        padding-left: 1rem;\n        .goalContainer {\n            display: flex;\n            align-items: center;\n            .goalLabel {\n                margin-right: 1rem;\n            }\n        }\n        .targetContainer {\n            display: flex;\n            .targetInnerContainer {\n                margin-left: 1rem;\n                width: 40%;\n                display: flex;\n                justify-content: space-between;\n            }\n        }\n        .onLevelSpan, .checkInSpan {\n            margin-left: 1rem;\n        }\n    }\n    .teacherSelector {\n        background-color: var(--text-light);\n        height: 20%;\n        border-bottom-left-radius: .5rem;\n        border-bottom-right-radius: .5rem;\n        display: flex;\n        flex-wrap: wrap;\n        justify-content: space-evenly;\n        align-items: center;\n    }\n}\n.selectorContainer {\n    display: flex;\n    justify-content: flex-end;\n    width: 70%;\n    .selector {\n        &:focus {\n            outline: none;\n        }\n    }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"ReadingTracker": `Smg6Y4LvPwZ7EaCYR_As`,
-	"headerContainer": `gYnnj1hvZCrqLtXUEsiw`,
-	"header": `xr3SrTCGuF8U1hD7mPfD`,
-	"scoringContainer": `unTwwUsceeQJWO8qT9gd`,
-	"teacherSelector": `SiXtn2hKQUuL1_ZhCvXA`
+	"ReadingTracker": `dpQGpbiC4SZapu2Yjmr5`,
+	"headerContainer": `kQXXS63lk1AOtMRf9k1g`,
+	"header": `cWboqian8YAaoXaLUlgV`,
+	"scoringContainer": `OdmiW9kOLKerqlbWsBkw`,
+	"goalContainer": `sufKvomTvNagsh8348Xw`,
+	"goalLabel": `l9uWJByiTnyLTT6ycPlQ`,
+	"targetContainer": `q4EBXp_XxAU2McEi0U5X`,
+	"targetInnerContainer": `IDFvwTcXxmvlKtixHbo8`,
+	"onLevelSpan": `oTGQwgnrKSZwBl6FQKJt`,
+	"checkInSpan": `cXX2LTSRZq7_BFoW0jgm`,
+	"teacherSelector": `uaJSk454LHz2QK3qVoH9`,
+	"selectorContainer": `FctXze9aCqeQgcg3Nnhx`,
+	"selector": `GLavoEiZXmlp_rfyyVvK`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2170,6 +3510,59 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./src/components/AdminReadingTracker/AdminReadingTracker.module.scss":
+/*!****************************************************************************!*\
+  !*** ./src/components/AdminReadingTracker/AdminReadingTracker.module.scss ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_AdminReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../../../node_modules/sass-loader/dist/cjs.js!../../../node_modules/postcss-loader/dist/cjs.js!./AdminReadingTracker.module.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/AdminReadingTracker/AdminReadingTracker.module.scss");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+
+      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+    
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_AdminReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_AdminReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_AdminReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_AdminReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
 /***/ "./src/components/AssignmentCollapsible/AssignmentCollapsible.module.scss":
 /*!********************************************************************************!*\
   !*** ./src/components/AssignmentCollapsible/AssignmentCollapsible.module.scss ***!
@@ -2432,10 +3825,10 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
-/***/ "./src/components/ReadingTracker/ReadingTracker.module.scss":
-/*!******************************************************************!*\
-  !*** ./src/components/ReadingTracker/ReadingTracker.module.scss ***!
-  \******************************************************************/
+/***/ "./src/components/TeacherReadingTracker/TeacherReadingTracker.module.scss":
+/*!********************************************************************************!*\
+  !*** ./src/components/TeacherReadingTracker/TeacherReadingTracker.module.scss ***!
+  \********************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -2453,7 +3846,7 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../../../node_modules/sass-loader/dist/cjs.js!../../../node_modules/postcss-loader/dist/cjs.js!./ReadingTracker.module.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/ReadingTracker/ReadingTracker.module.scss");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_TeacherReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../../../node_modules/sass-loader/dist/cjs.js!../../../node_modules/postcss-loader/dist/cjs.js!./TeacherReadingTracker.module.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/TeacherReadingTracker/TeacherReadingTracker.module.scss");
 
       
       
@@ -2475,12 +3868,12 @@ options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWi
 options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
 options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
 
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_TeacherReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
 
 
 
 
-       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_TeacherReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_TeacherReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_TeacherReadingTracker_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),
@@ -2999,9 +4392,9 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["vendors-node_modules_css-loader_dist_runtime_api_js-node_modules_css-loader_dist_runtime_getU-daac32"], () => (__webpack_require__("./src/index.js")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["vendors-node_modules_css-loader_dist_runtime_api_js-node_modules_css-loader_dist_runtime_getU-b3b137"], () => (__webpack_require__("./src/index.js")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.3edea1cdc490d605ea3c89ed2b632103.js.map
+//# sourceMappingURL=App.6dbcac8effbfc0df922b2cbbee1f1891.js.map
