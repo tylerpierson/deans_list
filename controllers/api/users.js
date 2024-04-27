@@ -61,16 +61,22 @@ async function createAdmin(req, res, next) {
 
         // If campus exists, proceed with creating the user
         const user = await User.create(req.body);
+        await user.save()
+        const token = await user.generateAuthToken()
+        res.json({ user, token })
 
         // Push the user's ID into the corresponding campus array
         if (user.role === 'admin') {
             campus.admins.push(user._id);
         }
 
+        if (!req.body.firstName || !req.body.lastName || !req.body.email || !req.body.password || !req.body.campusNum) {
+            return res.status(400).json({ msg: "Missing required fields" });
+        }
         // Save the campus document after pushing the user's ID
         await campus.save();
 
-        console.log('User created:', user);
+        console.log('Request body:', req.body);
         res.locals.data.user = user;
         next();
     } catch (error) {

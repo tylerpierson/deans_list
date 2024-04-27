@@ -4,6 +4,7 @@ import styles from './App.module.scss'
 
 import NavBar from './components/NavBar/NavBar'
 import HomePage from './pages/HomePage/HomePage'
+import AuthPage from './pages/AuthPage/AuthPage'
 import DataPage from './pages/DataPage/DataPage'
 import AdminPage from './pages/AdminPage/AdminPage'
 import TeacherPage from './pages/TeacherPage/TeacherPage'
@@ -103,6 +104,7 @@ export default function App(){
         <div className={styles.App}>
             <Routes>
                 <Route path='/' element={<HomePage />} />
+                <Route path='/auth' element={<AuthPage />} />
                 <Route path='/data' element={<DataPage />} />
                 <Route path='/admin' element={<AdminPage />} />
                 <Route path='/teacher' element={<TeacherPage />} />
