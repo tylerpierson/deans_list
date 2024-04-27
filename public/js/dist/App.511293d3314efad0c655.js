@@ -24,11 +24,6 @@
 /* harmony import */ var _pages_StudentPage_StudentPage__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./pages/StudentPage/StudentPage */ "./src/pages/StudentPage/StudentPage.js");
 /* harmony import */ var _pages_ParentPage_ParentPage__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pages/ParentPage/ParentPage */ "./src/pages/ParentPage/ParentPage.js");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 
 
@@ -42,83 +37,13 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
 
 function App() {
   const [users, setUsers] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
-  const [newUser, setNewUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
-    title: '',
-    completed: false
-  });
 
-  //createUsers
-  const createUser = async () => {
-    const body = _objectSpread({}, newUser);
-    try {
-      const response = await fetch('/api/users', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
-      });
-      const createdUser = await response.json();
-      const usersCopy = [createdUser, ...users];
-      setUsers(usersCopy);
-      setNewUser({
-        title: '',
-        completed: false
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  //deleteUsers
-  const deleteUser = async id => {
-    try {
-      const index = completedUsers.findIndex(user => user._id === id);
-      const completedUsersCopy = [...completedUsers];
-      const response = await fetch("/api/users/".concat(id), {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      await response.json();
-      completedUsersCopy.splice(index, 1);
-      setCompletedUsers(completedUsersCopy);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  //moveToCompleted
-  const moveToCompleted = async id => {
-    try {
-      const index = users.findIndex(user => user._id === id);
-      const usersCopy = [...users];
-      const subject = usersCopy[index];
-      subject.completed = true;
-      const response = await fetch("/api/users/".concat(id), {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(subject)
-      });
-      const updatedUser = await response.json();
-      const completedTDsCopy = [updatedUser, ...completedUsers];
-      setCompletedUsers(completedTDsCopy);
-      usersCopy.splice(index, 1);
-      setUsers(usersCopy);
-    } catch (error) {
-      console.error(error);
-    }
-  };
   //getUsers
   const getUsers = async () => {
     try {
       const response = await fetch('/api/users');
       const foundUsers = await response.json();
       setUsers(foundUsers.reverse());
-      const responseTwo = await fetch('/api/users/completed');
-      const foundCompletedUsers = await responseTwo.json();
-      setCompletedUsers(foundCompletedUsers.reverse());
     } catch (error) {
       console.error(error);
     }
@@ -1343,10 +1268,13 @@ class SignUpForm extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
   constructor() {
     super(...arguments);
     _defineProperty(this, "state", {
-      name: '',
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
       confirm: '',
+      campusNum: '',
+      role: '',
       error: ''
     });
     _defineProperty(this, "handleChange", evt => {
@@ -1385,10 +1313,16 @@ class SignUpForm extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
     }, /*#__PURE__*/React.createElement("form", {
       autoComplete: "off",
       onSubmit: this.handleSubmit
-    }, /*#__PURE__*/React.createElement("label", null, "Name"), /*#__PURE__*/React.createElement("input", {
+    }, /*#__PURE__*/React.createElement("label", null, "First Name"), /*#__PURE__*/React.createElement("input", {
       type: "text",
-      name: "name",
-      value: this.state.name,
+      name: "firstName",
+      value: this.state.firstName,
+      onChange: this.handleChange,
+      required: true
+    }), /*#__PURE__*/React.createElement("label", null, "Last Name"), /*#__PURE__*/React.createElement("input", {
+      type: "text",
+      name: "lastName",
+      value: this.state.lastName,
       onChange: this.handleChange,
       required: true
     }), /*#__PURE__*/React.createElement("label", null, "Email"), /*#__PURE__*/React.createElement("input", {
@@ -1407,6 +1341,18 @@ class SignUpForm extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       type: "password",
       name: "confirm",
       value: this.state.confirm,
+      onChange: this.handleChange,
+      required: true
+    }), /*#__PURE__*/React.createElement("label", null, "Campus ID"), /*#__PURE__*/React.createElement("input", {
+      type: "text",
+      name: "campusNum",
+      value: this.state.campusNum,
+      onChange: this.handleChange,
+      required: true
+    }), /*#__PURE__*/React.createElement("label", null, "Role"), /*#__PURE__*/React.createElement("input", {
+      type: "text",
+      name: "role",
+      value: this.state.role,
       onChange: this.handleChange,
       required: true
     }), /*#__PURE__*/React.createElement("button", {
@@ -5388,4 +5334,4 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.2803697f09021faaaa6e58a7bde9adfe.js.map
+//# sourceMappingURL=App.92b5b31ac2e524d5780a0644b5d2aa0e.js.map
