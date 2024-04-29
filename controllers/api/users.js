@@ -51,7 +51,9 @@ async function createAdmin(req, res, next) {
         }
 
         // Check if there are any existing administrators in the campus
-        if (campus.admins && campus.admins.length > 0) {
+        if (!campus.admins) {
+            campus.admins = []; // Initialize admins array if it's undefined
+        } else if (campus.admins.length > 0) {
             return res.status(400).json({ msg: "Initial Administrator already exists" });
         }
 
@@ -61,9 +63,12 @@ async function createAdmin(req, res, next) {
 
         // If campus exists, proceed with creating the user
         const user = await User.create(req.body);
-        await user.save()
-        const token = await user.generateAuthToken()
-        res.json({ user, token })
+
+        // Generate authentication token
+        const token = await user.generateAuthToken();
+
+        // Save the user object with the token
+        await user.save();
 
         // Push the user's ID into the corresponding campus array
         if (user.role === 'admin') {
@@ -78,11 +83,14 @@ async function createAdmin(req, res, next) {
 
         console.log('Request body:', req.body);
         res.locals.data.user = user;
-        next();
+
+        res.json({ user, token })
+        return
     } catch (error) {
         res.status(400).json({ msg: error.message });
     }
 }
+
 
 async function createUser(req, res, next) {
     try {
@@ -224,12 +232,13 @@ async function login(req, res, next) {
             return res.status(400).json({ error: 'Invalid email or password' });
         }
 
-        const token = createJWT(user);
+        const token = await user.generateAuthToken()
+        res.json({ user, token })
 
         console.log('Login successful for user:', user, token);
         res.locals.data.user = user;
-        res.locals.data.token = createJWT(user);
-        next();
+        res.locals.data.token = token;
+        return
     } catch (error) {
         console.error('Error during login:', error);
         res.status(500).json({ error: 'Internal Server Error' });

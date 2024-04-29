@@ -4,9 +4,13 @@ import { createRoot } from "react-dom/client";
 import App from './App';
 import styles from './index.module.scss'
 const root = createRoot(document.getElementById("app"))
+import { AuthProvider } from './context/AuthProvider';
+
 root.render(
 <StrictMode>
     <Router>
-        <App/>
+        <AuthProvider>
+            <App/>
+        </AuthProvider>
     </Router>
 </StrictMode>)
