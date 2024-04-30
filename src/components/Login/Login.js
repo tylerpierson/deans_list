@@ -5,7 +5,7 @@ import styles from './Login.module.scss';
 const LOGIN_URL = '/api/users/login';
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const Login = ({ toggleLoginForm }) => {
+const Login = ({ toggleLoginForm, setUser }) => {
     const navigateTo = useNavigate()
     const emailRef = useRef();
     const passwordRef = useRef();
@@ -47,18 +47,47 @@ const Login = ({ toggleLoginForm }) => {
             }
     
             const responseData = await response.json();
-            const accessToken = responseData?.token; // Assuming the token key is 'token'
-            
+            const accessToken = responseData?.token;
+    
             // Save the token in localStorage
             localStorage.setItem('token', accessToken);
-            navigateTo('/')
+    
+            // Fetch user data based on email
+            const userResponse = await fetch(`/api/users?email=${email}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                },
+            });
+    
+            if (!userResponse.ok) {
+                throw new Error('Failed to fetch user data');
+            }
+    
+            const userData = await userResponse.json();
+    
+            // Set user data
+            setUser({
+                firstName: userData.firstName,
+                email: userData.email,
+                // Add other user data properties if needed
+            });
+    
+            // Log the user data
+            console.log(userData);
+    
+            // Navigate to the home page
+            navigateTo('/');
+    
             // Handle authentication logic here
             setSuccess(true);
         } catch (err) {
             setErrMsg(err.message || 'Login Failed');
             errRef.current.focus();
-        }
+        }        
     };
+    
+    
     
 
     return (

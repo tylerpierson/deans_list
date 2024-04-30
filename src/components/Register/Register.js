@@ -7,7 +7,7 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const REGISTER_URL = '/api/users/admin';
 
-const Register = ({ toggleLoginForm }) => {
+const Register = ({ toggleLoginForm, setUser }) => {
     const firstNameRef = useRef();
     const lastNameRef = useRef();
     const emailRef = useRef();
@@ -109,6 +109,16 @@ const Register = ({ toggleLoginForm }) => {
             // Save the token in localStorage
             localStorage.setItem('token', responseData.token);
     
+            // Set user data
+            const userData = {
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                campusNum: campusNum,
+                role: role
+            };
+            setUser(userData);
+    
             setSuccess(true);
     
             // Clear form fields
@@ -123,7 +133,7 @@ const Register = ({ toggleLoginForm }) => {
             setErrMsg(err.message || 'Registration Failed');
             errRef.current.focus();
         }
-    };        
+    };      
 
     return (
         <>

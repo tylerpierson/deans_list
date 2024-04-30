@@ -13,8 +13,9 @@
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _App_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./App.module.scss */ "./src/App.module.scss");
+/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./utilities/users-service */ "./src/utilities/users-service.js");
 /* harmony import */ var _components_NavBar_NavBar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/NavBar/NavBar */ "./src/components/NavBar/NavBar.js");
 /* harmony import */ var _pages_HomePage_HomePage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/HomePage/HomePage */ "./src/pages/HomePage/HomePage.js");
 /* harmony import */ var _pages_AuthPage_AuthPage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/AuthPage/AuthPage */ "./src/pages/AuthPage/AuthPage.js");
@@ -35,43 +36,78 @@
 
 
 
-function App() {
-  const [users, setUsers] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
 
-  //getUsers
-  const getUsers = async () => {
+function App() {
+  const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)((0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_10__.getUser)());
+  const [users, setUsers] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const updateUser = async userData => {
+    const userId = user._id; // Assuming you have the user's ID in your state
+    const token = localStorage.getItem('token'); // Retrieve the token from local storage or your state management
     try {
-      const response = await fetch('/api/users');
-      const foundUsers = await response.json();
-      setUsers(foundUsers.reverse());
+      const response = await fetch("/api/users/".concat(userId), {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': "Bearer ".concat(token) // Include the authorization token in the request
+        },
+        body: JSON.stringify(userData)
+      });
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(error || 'Profile update failed');
+      }
+      const updatedUser = await response.json();
+      setUser(updatedUser); // Update user state with the updated data
+      return updatedUser;
     } catch (error) {
-      console.error(error);
+      console.error('Update failed:', error);
+      return null;
+    }
+  };
+  const fetchUsers = async () => {
+    try {
+      const foundUsers = await (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_10__.indexUsers)();
+      setUsers(foundUsers);
+    } catch (error) {
+      console.error('Error finding users', error);
     }
   };
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    getUsers();
+    fetchUsers();
   }, []);
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_components_NavBar_NavBar__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_components_NavBar_NavBar__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    setUser: setUser,
+    user: user,
+    users: users
+  }), /*#__PURE__*/React.createElement("div", {
     className: _App_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].App
-  }, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Routes, null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
+  }, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Routes, null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
     path: "/",
-    element: /*#__PURE__*/React.createElement(_pages_HomePage_HomePage__WEBPACK_IMPORTED_MODULE_3__["default"], null)
-  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
+    element: /*#__PURE__*/React.createElement(_pages_HomePage_HomePage__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      user: user,
+      setUser: setUser,
+      users: users,
+      setUsers: setUsers
+    })
+  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
     path: "/auth",
-    element: /*#__PURE__*/React.createElement(_pages_AuthPage_AuthPage__WEBPACK_IMPORTED_MODULE_4__["default"], null)
-  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
+    element: /*#__PURE__*/React.createElement(_pages_AuthPage_AuthPage__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      user: user,
+      setUser: setUser
+    })
+  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
     path: "/data",
     element: /*#__PURE__*/React.createElement(_pages_DataPage_DataPage__WEBPACK_IMPORTED_MODULE_5__["default"], null)
-  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
+  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
     path: "/admin",
     element: /*#__PURE__*/React.createElement(_pages_AdminPage_AdminPage__WEBPACK_IMPORTED_MODULE_6__["default"], null)
-  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
+  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
     path: "/teacher",
     element: /*#__PURE__*/React.createElement(_pages_TeacherPage_TeacherPage__WEBPACK_IMPORTED_MODULE_7__["default"], null)
-  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
+  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
     path: "/student",
     element: /*#__PURE__*/React.createElement(_pages_StudentPage_StudentPage__WEBPACK_IMPORTED_MODULE_8__["default"], null)
-  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
+  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
     path: "/parent",
     element: /*#__PURE__*/React.createElement(_pages_ParentPage_ParentPage__WEBPACK_IMPORTED_MODULE_9__["default"], null)
   }))));
@@ -1086,7 +1122,8 @@ const LOGIN_URL = '/api/users/login';
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const Login = _ref => {
   let {
-    toggleLoginForm
+    toggleLoginForm,
+    setUser
   } = _ref;
   const navigateTo = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
   const emailRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
@@ -1124,11 +1161,36 @@ const Login = _ref => {
         throw new Error('Login Failed');
       }
       const responseData = await response.json();
-      const accessToken = responseData === null || responseData === void 0 ? void 0 : responseData.token; // Assuming the token key is 'token'
+      const accessToken = responseData === null || responseData === void 0 ? void 0 : responseData.token;
 
       // Save the token in localStorage
       localStorage.setItem('token', accessToken);
+
+      // Fetch user data based on email
+      const userResponse = await fetch("/api/users?email=".concat(email), {
+        method: 'GET',
+        headers: {
+          'Authorization': "Bearer ".concat(accessToken)
+        }
+      });
+      if (!userResponse.ok) {
+        throw new Error('Failed to fetch user data');
+      }
+      const userData = await userResponse.json();
+
+      // Set user data
+      setUser({
+        firstName: userData.firstName,
+        email: userData.email
+        // Add other user data properties if needed
+      });
+
+      // Log the user data
+      console.log(userData);
+
+      // Navigate to the home page
       navigateTo('/');
+
       // Handle authentication logic here
       setSuccess(true);
     } catch (err) {
@@ -1201,12 +1263,21 @@ const Login = _ref => {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
 /* harmony import */ var _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NavBar.module.scss */ "./src/components/NavBar/NavBar.module.scss");
+/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
 
 
 
-function NavBar() {
+
+function NavBar(_ref) {
+  let {
+    logOut,
+    setUser,
+    user,
+    users
+  } = _ref;
+  // Combine all props into a single object
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     const navbar = document.querySelector(".".concat(_NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].NavBar));
     let lastScrollTop = 0;
@@ -1224,6 +1295,10 @@ function NavBar() {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+  function handleLogOut() {
+    _utilities_users_service__WEBPACK_IMPORTED_MODULE_2__.logOut();
+    setUser(null);
+  }
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].NavBar
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -1233,7 +1308,7 @@ function NavBar() {
   }, "Search", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].search,
     type: "text"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].LogoLink,
     to: "/"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -1246,7 +1321,7 @@ function NavBar() {
     alt: "Dean's Logo"
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].navList
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Link,
     to: "/"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -1259,7 +1334,7 @@ function NavBar() {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].outerIcon,
     src: "/img/outer-circle.png",
     alt: "Outer Circle"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Link,
     to: "/profile"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -1272,7 +1347,7 @@ function NavBar() {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].outerIcon,
     src: "/img/outer-circle.png",
     alt: "Outer Circle"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Link,
     to: "/data"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -1285,7 +1360,16 @@ function NavBar() {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].outerIcon,
     src: "/img/outer-circle.png",
     alt: "Outer Circle"
-  }))))));
+  }))), !user ? '' : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].UserLogOut
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].name
+  }, user.firstName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].email
+  }, user.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "btn-sm",
+    onClick: handleLogOut
+  }, "LOG OUT")))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NavBar);
 
@@ -1316,7 +1400,8 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const REGISTER_URL = '/api/users/admin';
 const Register = _ref => {
   let {
-    toggleLoginForm
+    toggleLoginForm,
+    setUser
   } = _ref;
   const firstNameRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   const lastNameRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
@@ -1404,6 +1489,16 @@ const Register = _ref => {
 
       // Save the token in localStorage
       localStorage.setItem('token', responseData.token);
+
+      // Set user data
+      const userData = {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        campusNum: campusNum,
+        role: role
+      };
+      setUser(userData);
       setSuccess(true);
 
       // Clear form fields
@@ -2744,6 +2839,131 @@ function TeacherPage() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_AssignmentCollapsible_AssignmentCollapsible__WEBPACK_IMPORTED_MODULE_4__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ClassCollapsible_ClassCollapsible__WEBPACK_IMPORTED_MODULE_5__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_TeamCollapsible_TeamCollapsible__WEBPACK_IMPORTED_MODULE_6__["default"], null))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TeacherPage);
+
+/***/ }),
+
+/***/ "./src/utilities/send-request.js":
+/*!***************************************!*\
+  !*** ./src/utilities/send-request.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ sendRequest)
+/* harmony export */ });
+/* harmony import */ var _users_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./users-service */ "./src/utilities/users-service.js");
+
+async function sendRequest(url) {
+  let method = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'GET';
+  let payload = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+  const options = {
+    method
+  };
+  if (payload) {
+    options.headers = {
+      'Content-Type': 'application/json'
+    };
+    options.body = JSON.stringify(payload);
+  }
+  const token = (0,_users_service__WEBPACK_IMPORTED_MODULE_0__.getToken)();
+  if (token) {
+    // Ensure options.headers is initialized if it doesn't exist
+    options.headers = options.headers || {};
+    options.headers.Authorization = "Bearer ".concat(token);
+  }
+  const res = await fetch(url, options);
+  if (res.ok) return res.json();
+  throw new Error('Bad Request');
+}
+
+/***/ }),
+
+/***/ "./src/utilities/users-api.js":
+/*!************************************!*\
+  !*** ./src/utilities/users-api.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   index: () => (/* binding */ index)
+/* harmony export */ });
+/* unused harmony exports signUp, login, resetPassword, findUser */
+/* harmony import */ var _send_request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./send-request */ "./src/utilities/send-request.js");
+
+const BASE_URL = '/api/users';
+function signUp(userData) {
+  return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])(BASE_URL, 'POST', userData);
+}
+function login(credentials) {
+  return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/login"), 'POST', credentials);
+}
+function resetPassword(emailData) {
+  return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/reset-password"), 'POST', emailData);
+}
+function findUser(userId) {
+  return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/").concat(userId));
+}
+function index() {
+  return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/"));
+}
+
+// export async function customerSupportRequest(name, email, message, attachment) {
+//   return sendRequest(`${BASE_URL}/support`, 'POST', { name, email, message, attachment });
+// }
+
+/***/ }),
+
+/***/ "./src/utilities/users-service.js":
+/*!****************************************!*\
+  !*** ./src/utilities/users-service.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getToken: () => (/* binding */ getToken),
+/* harmony export */   getUser: () => (/* binding */ getUser),
+/* harmony export */   indexUsers: () => (/* binding */ indexUsers),
+/* harmony export */   logOut: () => (/* binding */ logOut)
+/* harmony export */ });
+/* harmony import */ var _users_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./users-api */ "./src/utilities/users-api.js");
+
+const BASE_URL = '/api/users';
+async function getToken() {
+  const token = localStorage.getItem('token');
+  // getItem will return null if no key
+  if (!token) return null;
+  const payload = JSON.parse(atob(token.split('.')[1]));
+  // A JWT's expiration is expressed in seconds, not miliseconds
+  if (payload.exp < Date.now() / 1000) {
+    // Token has expired
+    localStorage.removeItem('token');
+    return null;
+  }
+  return token;
+}
+async function getUser() {
+  const token = await getToken();
+  if (!token) return null; // Return null if token is missing
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.user; // Return user object from token payload
+  } catch (error) {
+    console.error("Error parsing user from token:", error);
+    return null; // Return null if there's an error parsing the token
+  }
+}
+function logOut() {
+  localStorage.removeItem('token');
+}
+async function indexUsers() {
+  console.log('indexing users');
+  try {
+    const foundUsers = await _users_api__WEBPACK_IMPORTED_MODULE_0__.index();
+    return foundUsers;
+  } catch (error) {
+    console.error("Error finding users", error);
+  }
+}
 
 /***/ }),
 
@@ -5798,4 +6018,4 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.227b92a02b8f15d552d048d3bc255427.js.map
+//# sourceMappingURL=App.55c7c1c50fda13b6eaf93cd9fc5e2295.js.map

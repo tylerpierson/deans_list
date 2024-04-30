@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './NavBar.module.scss';
+import * as userService from '../../utilities/users-service';
 
-function NavBar() {
+function NavBar({ logOut, setUser, user, users }) { // Combine all props into a single object
     useEffect(() => {
         const navbar = document.querySelector(`.${styles.NavBar}`);
 
@@ -26,6 +27,11 @@ function NavBar() {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
+
+    function handleLogOut() {
+        userService.logOut();
+        setUser(null)
+    }
 
     return (
         <div className={styles.NavBar}>
@@ -60,6 +66,13 @@ function NavBar() {
                             <img className={styles.outerIcon} src="/img/outer-circle.png" alt="Outer Circle" />
                         </div>
                     </Link>
+                    { !user ? '' :
+                        <div className={styles.UserLogOut}>
+                            <div className={styles.name}>{user.firstName}</div>
+                            <div className={styles.email}>{user.email}</div>
+                            <button className="btn-sm" onClick={handleLogOut}>LOG OUT</button>
+                        </div>
+                    }
                 </ul>
             </div>
         </div>
@@ -67,4 +80,3 @@ function NavBar() {
 }
 
 export default NavBar;
-
