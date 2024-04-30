@@ -66,10 +66,10 @@ export default function App(){
                 <Route path='/' element={<HomePage user={user} setUser={setUser} users={users} setUsers={setUsers}/>} />
                 <Route path='/auth' element={<AuthPage user={user} setUser={setUser}/>} />
                 <Route path='/data' element={<DataPage />} />
-                <Route path='/admin' element={<AdminPage />} />
-                <Route path='/teacher' element={<TeacherPage />} />
-                <Route path='/student' element={<StudentPage />} />
-                <Route path='/parent' element={<ParentPage />} />
+                <Route path='/admin/:userId' element={<AdminPage />} />
+                <Route path='/teacher:userId' element={<TeacherPage />} />
+                <Route path='/student:userId' element={<StudentPage />} />
+                <Route path='/parent:userId' element={<ParentPage />} />
             </Routes>
         </div>
         </>
