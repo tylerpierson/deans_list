@@ -86,10 +86,6 @@ const Login = ({ toggleLoginForm, setUser }) => {
             errRef.current.focus();
         }        
     };
-    
-    
-    
-
     return (
         <>
             {success ? (
