@@ -1076,13 +1076,19 @@ function Collapsible() {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _Login_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Login.module.scss */ "./src/components/Login/Login.module.scss");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 
+
 const LOGIN_URL = '/api/users/login';
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const Login = () => {
+const Login = _ref => {
+  let {
+    toggleLoginForm
+  } = _ref;
+  const navigateTo = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
   const emailRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   const passwordRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   const errRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
@@ -1122,7 +1128,7 @@ const Login = () => {
 
       // Save the token in localStorage
       localStorage.setItem('token', accessToken);
-
+      navigateTo('/');
       // Handle authentication logic here
       setSuccess(true);
     } catch (err) {
@@ -1130,15 +1136,22 @@ const Login = () => {
       errRef.current.focus();
     }
   };
-  return /*#__PURE__*/React.createElement(React.Fragment, null, success ? /*#__PURE__*/React.createElement("section", null, /*#__PURE__*/React.createElement("h1", null, "You are logged in!"), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("a", {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, success ? /*#__PURE__*/React.createElement("section", {
+    className: _Login_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].section
+  }, /*#__PURE__*/React.createElement("h1", null, "You are logged in!"), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("a", {
+    className: _Login_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].a,
     href: "#"
-  }, "Go to Home"))) : /*#__PURE__*/React.createElement("section", null, /*#__PURE__*/React.createElement("p", {
+  }, "Go to Home"))) : /*#__PURE__*/React.createElement("section", {
+    className: _Login_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].section
+  }, /*#__PURE__*/React.createElement("p", {
     ref: errRef,
     className: errMsg ? _Login_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].errmsg : _Login_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].offscreen,
     "aria-live": "assertive"
   }, errMsg), /*#__PURE__*/React.createElement("h1", null, "Sign In"), /*#__PURE__*/React.createElement("form", {
+    className: _Login_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].form,
     onSubmit: handleSubmit
   }, /*#__PURE__*/React.createElement("label", {
+    className: _Login_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].label,
     htmlFor: "email"
   }, "Email:"), /*#__PURE__*/React.createElement("input", {
     type: "email",
@@ -1150,6 +1163,7 @@ const Login = () => {
     required: true,
     className: _Login_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].input
   }), /*#__PURE__*/React.createElement("label", {
+    className: _Login_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].label,
     htmlFor: "password"
   }, "Password:"), /*#__PURE__*/React.createElement("input", {
     type: "password",
@@ -1162,9 +1176,13 @@ const Login = () => {
     className: _Login_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].input
   }), /*#__PURE__*/React.createElement("button", {
     className: _Login_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].button
-  }, "Sign In")), /*#__PURE__*/React.createElement("p", null, "Need an Account?", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
-    className: _Login_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].line
+  }, "Sign In")), /*#__PURE__*/React.createElement("p", {
+    className: _Login_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].togglePara
+  }, "Need an Account?", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
+    className: _Login_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].line,
+    onClick: toggleLoginForm
   }, /*#__PURE__*/React.createElement("a", {
+    className: _Login_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].a,
     href: "#"
   }, "Sign Up")))));
 };
@@ -1296,7 +1314,10 @@ function NavBar() {
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const REGISTER_URL = '/api/users/admin';
-const Register = () => {
+const Register = _ref => {
+  let {
+    toggleLoginForm
+  } = _ref;
   const firstNameRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   const lastNameRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   const emailRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
@@ -1398,14 +1419,24 @@ const Register = () => {
       errRef.current.focus();
     }
   };
-  return /*#__PURE__*/React.createElement(React.Fragment, null, success ? /*#__PURE__*/React.createElement("section", null, /*#__PURE__*/React.createElement("h1", null, "Success!"), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("a", {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, success ? /*#__PURE__*/React.createElement("section", {
+    className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].section
+  }, /*#__PURE__*/React.createElement("h1", null, "Success!"), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("a", {
+    className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].a,
     href: "#"
-  }, "Sign In"))) : /*#__PURE__*/React.createElement("section", null, /*#__PURE__*/React.createElement("p", {
+  }, "Sign In"))) : /*#__PURE__*/React.createElement("section", {
+    className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].section
+  }, /*#__PURE__*/React.createElement("p", {
     ref: errRef,
     className: errMsg ? _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].errmsg : _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen,
     "aria-live": "assertive"
   }, errMsg), /*#__PURE__*/React.createElement("h1", null, "Register"), /*#__PURE__*/React.createElement("form", {
+    className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].form,
     onSubmit: handleSubmit
+  }, /*#__PURE__*/React.createElement("div", {
+    className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].nameContainer
+  }, /*#__PURE__*/React.createElement("div", {
+    className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].fName
   }, /*#__PURE__*/React.createElement("label", {
     htmlFor: "firstName",
     className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].label
@@ -1427,12 +1458,9 @@ const Register = () => {
     className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].input,
     onFocus: () => setFirstNameFocus(true),
     onBlur: () => setFirstNameFocus(false)
-  }), /*#__PURE__*/React.createElement("p", {
-    id: "firstNameNote",
-    className: firstNameFocus && !validFirstName ? _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].instructions : _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen
-  }, /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
-    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faInfoCircle
-  }), "Please enter your first name."), /*#__PURE__*/React.createElement("label", {
+  })), /*#__PURE__*/React.createElement("div", {
+    className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].lName
+  }, /*#__PURE__*/React.createElement("label", {
     htmlFor: "lastName",
     className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].label
   }, "Last Name:", /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
@@ -1453,12 +1481,21 @@ const Register = () => {
     className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].input,
     onFocus: () => setLastNameFocus(true),
     onBlur: () => setLastNameFocus(false)
-  }), /*#__PURE__*/React.createElement("p", {
+  }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", {
+    id: "firstNameNote",
+    className: firstNameFocus && !validFirstName ? _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].instructions : _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen
+  }, /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faInfoCircle
+  }), "Please enter your first name."), /*#__PURE__*/React.createElement("p", {
     id: "lastNameNote",
     className: lastNameFocus && !validLastName ? _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].instructions : _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen
   }, /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
     icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faInfoCircle
-  }), "Please enter your last name."), /*#__PURE__*/React.createElement("label", {
+  }), "Please enter your last name.")), /*#__PURE__*/React.createElement("div", {
+    className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].emailAndCampusContainer
+  }, /*#__PURE__*/React.createElement("div", {
+    className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].email
+  }, /*#__PURE__*/React.createElement("label", {
     htmlFor: "email",
     className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].label
   }, "Email:", /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
@@ -1479,64 +1516,9 @@ const Register = () => {
     className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].input,
     onFocus: () => setEmailFocus(true),
     onBlur: () => setEmailFocus(false)
-  }), /*#__PURE__*/React.createElement("p", {
-    id: "emailNote",
-    className: emailFocus && !validEmail ? _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].instructions : _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen
-  }, /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
-    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faInfoCircle
-  }), "Please enter a valid email address."), /*#__PURE__*/React.createElement("label", {
-    htmlFor: "password",
-    className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].label
-  }, "Password:", /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
-    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faCheck,
-    className: validPassword ? _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].valid : _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide
-  }), /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
-    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faTimes,
-    className: validPassword || !password ? _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide : _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].invalid
-  })), /*#__PURE__*/React.createElement("input", {
-    type: "password",
-    id: "password",
-    ref: passwordRef,
-    autoComplete: "off",
-    onChange: e => setPassword(e.target.value),
-    value: password,
-    required: true,
-    "aria-invalid": validPassword ? "false" : "true",
-    className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].input,
-    onFocus: () => setPasswordFocus(true),
-    onBlur: () => setPasswordFocus(false)
-  }), /*#__PURE__*/React.createElement("p", {
-    id: "passwordNote",
-    className: passwordFocus && !validPassword ? _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].instructions : _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen
-  }, /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
-    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faInfoCircle
-  }), "Password must be 8 to 24 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character."), /*#__PURE__*/React.createElement("label", {
-    htmlFor: "confirmPassword",
-    className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].label
-  }, "Confirm Password:", /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
-    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faCheck,
-    className: validConfirmPassword ? _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].valid : _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide
-  }), /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
-    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faTimes,
-    className: validConfirmPassword || !confirmPassword ? _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide : _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].invalid
-  })), /*#__PURE__*/React.createElement("input", {
-    type: "password",
-    id: "confirmPassword",
-    ref: confirmPasswordRef,
-    autoComplete: "off",
-    onChange: e => setConfirmPassword(e.target.value),
-    value: confirmPassword,
-    required: true,
-    "aria-invalid": validConfirmPassword ? "false" : "true",
-    className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].input,
-    onFocus: () => setConfirmPasswordFocus(true),
-    onBlur: () => setConfirmPasswordFocus(false)
-  }), /*#__PURE__*/React.createElement("p", {
-    id: "confirmPasswordNote",
-    className: confirmPasswordFocus && !validConfirmPassword ? _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].instructions : _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen
-  }, /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
-    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faInfoCircle
-  }), "Please confirm your password."), /*#__PURE__*/React.createElement("label", {
+  })), /*#__PURE__*/React.createElement("div", {
+    className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].campusNum
+  }, /*#__PURE__*/React.createElement("label", {
     htmlFor: "campusNum",
     className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].label
   }, "Campus Number:", /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
@@ -1557,12 +1539,77 @@ const Register = () => {
     className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].input,
     onFocus: () => setCampusNumFocus(true),
     onBlur: () => setCampusNumFocus(false)
-  }), /*#__PURE__*/React.createElement("p", {
+  }))), /*#__PURE__*/React.createElement("p", {
+    id: "emailNote",
+    className: emailFocus && !validEmail ? _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].instructions : _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen
+  }, /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faInfoCircle
+  }), "Please enter a valid email address."), /*#__PURE__*/React.createElement("p", {
     id: "campusNumNote",
     className: campusNumFocus && !validCampusNum ? _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].instructions : _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen
   }, /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
     icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faInfoCircle
-  }), "Please enter your campus number."), /*#__PURE__*/React.createElement("label", {
+  }), "Please enter your campus number."), /*#__PURE__*/React.createElement("div", {
+    className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].passwordContainer
+  }, /*#__PURE__*/React.createElement("div", {
+    className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].pwd
+  }, /*#__PURE__*/React.createElement("label", {
+    htmlFor: "password",
+    className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].label
+  }, "Password:", /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faCheck,
+    className: validPassword ? _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].valid : _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide
+  }), /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faTimes,
+    className: validPassword || !password ? _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide : _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].invalid
+  })), /*#__PURE__*/React.createElement("input", {
+    type: "password",
+    id: "password",
+    ref: passwordRef,
+    autoComplete: "off",
+    onChange: e => setPassword(e.target.value),
+    value: password,
+    required: true,
+    "aria-invalid": validPassword ? "false" : "true",
+    className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].input,
+    onFocus: () => setPasswordFocus(true),
+    onBlur: () => setPasswordFocus(false)
+  })), /*#__PURE__*/React.createElement("div", {
+    className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].confirmPwd
+  }, /*#__PURE__*/React.createElement("label", {
+    htmlFor: "confirmPassword",
+    className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].label
+  }, "Confirm Password:", /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faCheck,
+    className: confirmPassword && validConfirmPassword ? _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].valid : _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide
+  }), /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faTimes,
+    className: validConfirmPassword || !confirmPassword ? _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide : _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].invalid
+  })), /*#__PURE__*/React.createElement("input", {
+    type: "password",
+    id: "confirmPassword",
+    ref: confirmPasswordRef,
+    autoComplete: "off",
+    onChange: e => setConfirmPassword(e.target.value),
+    value: confirmPassword,
+    required: true,
+    "aria-invalid": validConfirmPassword ? "false" : "true",
+    className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].input,
+    onFocus: () => setConfirmPasswordFocus(true),
+    onBlur: () => setConfirmPasswordFocus(false)
+  }))), /*#__PURE__*/React.createElement("p", {
+    id: "passwordNote",
+    className: passwordFocus && !validPassword ? _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].instructions : _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen
+  }, /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faInfoCircle
+  }), "Password must be 8 to 24 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character."), /*#__PURE__*/React.createElement("p", {
+    id: "confirmPasswordNote",
+    className: confirmPasswordFocus && !validConfirmPassword ? _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].instructions : _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen
+  }, /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faInfoCircle
+  }), "Please confirm your password."), /*#__PURE__*/React.createElement("div", {
+    className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].roleContainer
+  }, /*#__PURE__*/React.createElement("label", {
     htmlFor: "role",
     className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].label
   }, "Role:", /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
@@ -1583,12 +1630,16 @@ const Register = () => {
     className: roleFocus ? _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].instructions : _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen
   }, /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
     icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faInfoCircle
-  }), "Role is set to 'admin'."), /*#__PURE__*/React.createElement("button", {
+  }), "Role is set to 'admin'.")), /*#__PURE__*/React.createElement("button", {
     disabled: !validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword || !validCampusNum,
-    className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].button
-  }, "Sign Up")), /*#__PURE__*/React.createElement("p", null, "Already registered?", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
-    className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].line
+    className: !validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword || !validCampusNum ? _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].disabledButton : _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].button
+  }, "Sign Up")), /*#__PURE__*/React.createElement("p", {
+    className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].togglePara
+  }, "Already registered?", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
+    className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].line,
+    onClick: toggleLoginForm
   }, /*#__PURE__*/React.createElement("a", {
+    className: _Register_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].a,
     href: "#"
   }, "Sign In")))));
 };
@@ -2500,14 +2551,17 @@ function AuthPage(_ref) {
     setUser
   } = _ref;
   const [showLogin, setShowLogin] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
+  const toggleLoginForm = () => {
+    setShowLogin(!showLogin);
+  };
   return /*#__PURE__*/React.createElement("main", {
     className: _AuthPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].AuthPage
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", {
-    onClick: () => setShowLogin(!showLogin)
-  }, showLogin ? 'SIGN UP' : 'LOG IN')), showLogin ? /*#__PURE__*/React.createElement(_components_Login_Login__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    setUser: setUser
+  }, showLogin ? /*#__PURE__*/React.createElement(_components_Login_Login__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    setUser: setUser,
+    toggleLoginForm: toggleLoginForm
   }) : /*#__PURE__*/React.createElement(_components_Register_Register__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    setUser: setUser
+    setUser: setUser,
+    toggleLoginForm: toggleLoginForm
   }));
 }
 
@@ -2550,7 +2604,7 @@ function HomePage() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].HomePage
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    class: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].introContainer
+    className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].introContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
     className: _HomePage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].heading
   }, "The next step forward in ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
@@ -3221,46 +3275,22 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
-___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Nunito&display=swap);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  font-family: "Nunito", sans-serif;
-  font-size: 22px;
-  color: #fff;
-}
-
-body {
-  min-height: 100vh;
-  background-color: dodgerblue;
-}
-
-.PjDNgHZiZXA7Cc8z9KQV {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 1rem 0.5rem;
-}
-
-section {
+___CSS_LOADER_EXPORT___.push([module.id, `.ezzqWhyjafzLobjTxKvN {
   width: 100%;
   max-width: 420px;
   min-height: 400px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  align-items: center;
   padding: 1rem;
-  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 3rem;
+  border: 0.3rem solid var(--text-dark);
+  background-color: var(--text-light);
 }
 
-form {
+.Q7lalbpQ0P96QaVlILom {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -3268,27 +3298,34 @@ form {
   padding-bottom: 1rem;
 }
 
-a, a:visited {
+.aINFe_lpRHBUc8CvPw5B, .aINFe_lpRHBUc8CvPw5B:visited {
   color: #fff;
 }
 
-input[type=text],
-input[type=password],
-button,
-textarea {
-  font-family: "Nunito", sans-serif;
+.NPmqIZEoOZvOJwwkCWoP,
+.UT8Z2N1fiZTOLkSvByyt {
   font-size: 22px;
   padding: 0.25rem;
   border-radius: 0.5rem;
 }
 
-label,
-button {
+.ReMmHGnawzd9hmr1fwVA,
+.UT8Z2N1fiZTOLkSvByyt {
   margin-top: 1rem;
 }
 
-button {
+.UT8Z2N1fiZTOLkSvByyt {
   padding: 0.5rem;
+  border: none;
+  background-color: var(--text-dark);
+  color: white;
+}
+.UT8Z2N1fiZTOLkSvByyt:hover {
+  cursor: pointer;
+}
+
+.qw2ThsCNur9t1Nr4VQFB {
+  text-align: center;
 }
 
 .VhPfie1lquL3ClqLcdBf {
@@ -3334,10 +3371,16 @@ button {
 
 .M_68A33V2MtFkAHRM_td {
   display: inline-block;
-}`, "",{"version":3,"sources":["webpack://./src/components/Login/Login.module.scss"],"names":[],"mappings":"AAGA;EACI,SAAA;EACA,UAAA;EACA,sBAAA;AADJ;;AAIA;EACI,iCAAA;EACA,eAAA;EACA,WAAA;AADJ;;AAIA;EACI,iBAAA;EACA,4BAAA;AADJ;;AAIA;EACE,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;EACA,iBAAA;EACA,oBAAA;AADF;;AAIA;EACI,WAAA;EACA,gBAAA;EACA,iBAAA;EACA,aAAA;EACA,sBAAA;EACA,2BAAA;EACA,aAAA;EACA,oCAAA;AADJ;;AAIA;EACI,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,YAAA;EACA,oBAAA;AADJ;;AAIA;EACI,WAAA;AADJ;;AAIA;;;;EAIE,iCAAA;EACA,eAAA;EACA,gBAAA;EACA,qBAAA;AADF;;AAIA;;EAEE,gBAAA;AADF;;AAIA;EACE,eAAA;AADF;;AAIA;EACI,kBAAA;EACA,qBAAA;EACA,gBAAA;EACA,WAAA;EACA,gBAAA;EACA,kBAAA;EACA,aAAA;AADJ;;AAIA;EACI,qBAAA;AADJ;;AAIA;EACI,kBAAA;EACA,aAAA;AADJ;;AAIA;EACI,aAAA;AADJ;;AAIA;EACI,gBAAA;EACA,oBAAA;AADJ;;AAIA;EACI,UAAA;EACA,oBAAA;AADJ;;AAIA;EACI,2BAAA;EACA,gBAAA;EACA,iBAAA;EACA,eAAA;EACA,qBAAA;AADJ;;AAIA;EACI,qBAAA;AADJ","sourcesContent":["\n@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');\n\n* {\n    margin: 0;\n    padding: 0;\n    box-sizing: border-box;\n}\n\nhtml {\n    font-family: 'Nunito', sans-serif;\n    font-size: 22px;\n    color: #fff;\n}\n\nbody {\n    min-height: 100vh;\n    background-color: dodgerblue;\n}\n\n.App {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  min-height: 100vh; \n  padding: 1rem 0.5rem;\n}\n\nsection {\n    width: 100%;\n    max-width: 420px;\n    min-height: 400px;\n    display: flex;\n    flex-direction: column;\n    justify-content: flex-start;\n    padding: 1rem;\n    background-color: rgba(0,0,0,0.4);\n}\n\nform {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-evenly;\n    flex-grow: 1;\n    padding-bottom: 1rem;\n}\n\na, a:visited {\n    color: #fff;\n}\n\ninput[type=\"text\"],\ninput[type=\"password\"],\nbutton,\ntextarea {\n  font-family: 'Nunito', sans-serif;\n  font-size: 22px;\n  padding: 0.25rem;\n  border-radius: 0.5rem;\n}\n\nlabel,\nbutton {\n  margin-top: 1rem;\n}\n\nbutton {\n  padding: 0.5rem;\n}\n\n.instructions {\n    font-size: 0.75rem;\n    border-radius: 0.5rem;\n    background: #000;\n    color: #fff;\n    padding: 0.25rem;\n    position: relative;\n    bottom: -10px;\n}\n\n.instructions > svg {\n    margin-right: 0.25rem;\n}\n\n.offscreen {\n    position: absolute;\n    left: -9999px;\n}\n\n.hide {\n    display: none;\n}\n\n.valid {\n    color: limegreen;\n    margin-left: 0.25rem;\n}\n\n.invalid {\n    color: red;\n    margin-left: 0.25rem;\n}\n\n.errmsg {\n    background-color: lightpink;\n    color: firebrick;\n    font-weight: bold;\n    padding: 0.5rem;\n    margin-bottom: 0.5rem;\n}\n\n.line {\n    display: inline-block;\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/Login/Login.module.scss"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,gBAAA;EACA,iBAAA;EACA,aAAA;EACA,sBAAA;EACA,2BAAA;EACA,mBAAA;EACA,aAAA;EACA,mBAAA;EACA,qCAAA;EACA,mCAAA;AACJ;;AAEA;EACI,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,YAAA;EACA,oBAAA;AACJ;;AAEA;EACI,WAAA;AACJ;;AAEA;;EAEE,eAAA;EACA,gBAAA;EACA,qBAAA;AACF;;AAGA;;EAEE,gBAAA;AAAF;;AAGA;EACE,eAAA;EACA,YAAA;EACA,kCAAA;EACA,YAAA;AAAF;AACE;EACE,eAAA;AACJ;;AAGA;EACI,kBAAA;AAAJ;;AAGA;EACI,kBAAA;EACA,qBAAA;EACA,gBAAA;EACA,WAAA;EACA,gBAAA;EACA,kBAAA;EACA,aAAA;AAAJ;;AAGA;EACI,qBAAA;AAAJ;;AAGA;EACI,kBAAA;EACA,aAAA;AAAJ;;AAGA;EACI,aAAA;AAAJ;;AAGA;EACI,gBAAA;EACA,oBAAA;AAAJ;;AAGA;EACI,UAAA;EACA,oBAAA;AAAJ;;AAGA;EACI,2BAAA;EACA,gBAAA;EACA,iBAAA;EACA,eAAA;EACA,qBAAA;AAAJ;;AAGA;EACI,qBAAA;AAAJ","sourcesContent":[".section {\n    width: 100%;\n    max-width: 420px;\n    min-height: 400px;\n    display: flex;\n    flex-direction: column;\n    justify-content: flex-start;\n    align-items: center;\n    padding: 1rem;\n    border-radius: 3rem;\n    border: .3rem solid var(--text-dark);\n    background-color: var(--text-light);\n}\n\n.form {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-evenly;\n    flex-grow: 1;\n    padding-bottom: 1rem;\n}\n\n.a, .a:visited {\n    color: #fff;\n}\n\n.input,\n.button {\n  font-size: 22px;\n  padding: 0.25rem;\n  border-radius: 0.5rem;\n}\n  \n\n.label,\n.button {\n  margin-top: 1rem;\n}\n\n.button {\n  padding: 0.5rem;\n  border: none;\n  background-color: var(--text-dark);\n  color: white;\n  &:hover {\n    cursor: pointer;\n  }\n}\n\n.togglePara {\n    text-align: center;\n}\n\n.instructions {\n    font-size: 0.75rem;\n    border-radius: 0.5rem;\n    background: #000;\n    color: #fff;\n    padding: 0.25rem;\n    position: relative;\n    bottom: -10px;\n}\n\n.instructions > svg {\n    margin-right: 0.25rem;\n}\n\n.offscreen {\n    position: absolute;\n    left: -9999px;\n}\n\n.hide {\n    display: none;\n}\n\n.valid {\n    color: limegreen;\n    margin-left: 0.25rem;\n}\n\n.invalid {\n    color: red;\n    margin-left: 0.25rem;\n}\n\n.errmsg {\n    background-color: lightpink;\n    color: firebrick;\n    font-weight: bold;\n    padding: 0.5rem;\n    margin-bottom: 0.5rem;\n}\n\n.line {\n    display: inline-block;\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"App": `PjDNgHZiZXA7Cc8z9KQV`,
+	"section": `ezzqWhyjafzLobjTxKvN`,
+	"form": `Q7lalbpQ0P96QaVlILom`,
+	"a": `aINFe_lpRHBUc8CvPw5B`,
+	"input": `NPmqIZEoOZvOJwwkCWoP`,
+	"button": `UT8Z2N1fiZTOLkSvByyt`,
+	"label": `ReMmHGnawzd9hmr1fwVA`,
+	"togglePara": `qw2ThsCNur9t1Nr4VQFB`,
 	"instructions": `VhPfie1lquL3ClqLcdBf`,
 	"offscreen": `TtMUi1H2qf1QXivbUlCO`,
 	"hide": `bzmmQobqr_mvKKGmdTub`,
@@ -3550,46 +3593,34 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
-___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Nunito&display=swap);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  font-family: "Nunito", sans-serif;
-  font-size: 22px;
-  color: #fff;
-}
-
-body {
-  min-height: 100vh;
-  background-color: dodgerblue;
-}
-
-.V947e8bTo36CQHcA_qWI {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 1rem 0.5rem;
-}
-
-section {
+___CSS_LOADER_EXPORT___.push([module.id, `.Idu7boV5emT3tpI63EsN {
   width: 100%;
-  max-width: 420px;
   min-height: 400px;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  align-items: center;
   padding: 1rem;
-  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 3rem;
+  border: 0.3rem solid var(--text-dark);
+  background-color: var(--text-light);
 }
 
-form {
+.XokUkjbAB13UudNelspL, ._VTjxJAcByR5MCln33Zs, .XgxRt1_ViXHNSccWAUFj {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+}
+.XokUkjbAB13UudNelspL .RetK5OOXX270zhvIW6V2, .XokUkjbAB13UudNelspL .bAEoNFIygNlfquMD7N_K, .XokUkjbAB13UudNelspL .UH9TUnzqPKVSuaK3Z9AR, .XokUkjbAB13UudNelspL .Fmnt2VkAZ46eJwNyGadb, .XokUkjbAB13UudNelspL .pCXj_WHoS1qTAOSyNREA, .XokUkjbAB13UudNelspL .JJ4P5xbGbfsAihDey0Am, ._VTjxJAcByR5MCln33Zs .RetK5OOXX270zhvIW6V2, ._VTjxJAcByR5MCln33Zs .bAEoNFIygNlfquMD7N_K, ._VTjxJAcByR5MCln33Zs .UH9TUnzqPKVSuaK3Z9AR, ._VTjxJAcByR5MCln33Zs .Fmnt2VkAZ46eJwNyGadb, ._VTjxJAcByR5MCln33Zs .pCXj_WHoS1qTAOSyNREA, ._VTjxJAcByR5MCln33Zs .JJ4P5xbGbfsAihDey0Am, .XgxRt1_ViXHNSccWAUFj .RetK5OOXX270zhvIW6V2, .XgxRt1_ViXHNSccWAUFj .bAEoNFIygNlfquMD7N_K, .XgxRt1_ViXHNSccWAUFj .UH9TUnzqPKVSuaK3Z9AR, .XgxRt1_ViXHNSccWAUFj .Fmnt2VkAZ46eJwNyGadb, .XgxRt1_ViXHNSccWAUFj .pCXj_WHoS1qTAOSyNREA, .XgxRt1_ViXHNSccWAUFj .JJ4P5xbGbfsAihDey0Am {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0 0.5rem;
+}
+
+.AnppXxQ0e4kYTK9oHecP {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -3597,27 +3628,43 @@ form {
   padding-bottom: 1rem;
 }
 
-a, a:visited {
+.eVorpnz1Bkyc_o2MqVzs, .eVorpnz1Bkyc_o2MqVzs:visited {
   color: #fff;
 }
 
-input[type=text],
-input[type=password],
-button,
-textarea {
-  font-family: "Nunito", sans-serif;
+.rMo8qUvx6E5jcjWTHxQm,
+.K9R5yzZjO1mUAvrEywog, .Lb_3qXz_D_RV0UGUhFI0 {
   font-size: 22px;
   padding: 0.25rem;
   border-radius: 0.5rem;
 }
 
-label,
-button {
+.xHCDL1OAZQMxJs0mIYBj,
+.K9R5yzZjO1mUAvrEywog, .Lb_3qXz_D_RV0UGUhFI0 {
   margin-top: 1rem;
+  margin: 0;
 }
 
-button {
+.K9R5yzZjO1mUAvrEywog, .Lb_3qXz_D_RV0UGUhFI0 {
   padding: 0.5rem;
+}
+
+.K9R5yzZjO1mUAvrEywog {
+  border: none;
+  background-color: var(--text-dark);
+  color: white;
+  transition: 0.3s ease;
+}
+.K9R5yzZjO1mUAvrEywog:hover {
+  cursor: pointer;
+  padding: 0.7rem;
+  font-size: 20px;
+  background-color: #1a1c2a;
+  transition: 0.3s ease;
+}
+
+.uAohF3j0eT3FN8a_dzcI {
+  text-align: center;
 }
 
 .SIGWuEXn8kcv7IJ_0fUU {
@@ -3663,17 +3710,38 @@ button {
 
 .PwGfkZn5LtYOVvDEODfW {
   display: inline-block;
-}`, "",{"version":3,"sources":["webpack://./src/components/Register/Register.module.scss"],"names":[],"mappings":"AAGA;EACI,SAAA;EACA,UAAA;EACA,sBAAA;AADJ;;AAIA;EACI,iCAAA;EACA,eAAA;EACA,WAAA;AADJ;;AAIA;EACI,iBAAA;EACA,4BAAA;AADJ;;AAIA;EACE,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;EACA,iBAAA;EACA,oBAAA;AADF;;AAIA;EACI,WAAA;EACA,gBAAA;EACA,iBAAA;EACA,aAAA;EACA,sBAAA;EACA,2BAAA;EACA,aAAA;EACA,oCAAA;AADJ;;AAIA;EACI,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,YAAA;EACA,oBAAA;AADJ;;AAIA;EACI,WAAA;AADJ;;AAIA;;;;EAIE,iCAAA;EACA,eAAA;EACA,gBAAA;EACA,qBAAA;AADF;;AAIA;;EAEE,gBAAA;AADF;;AAIA;EACE,eAAA;AADF;;AAIA;EACI,kBAAA;EACA,qBAAA;EACA,gBAAA;EACA,WAAA;EACA,gBAAA;EACA,kBAAA;EACA,aAAA;AADJ;;AAIA;EACI,qBAAA;AADJ;;AAIA;EACI,kBAAA;EACA,aAAA;AADJ;;AAIA;EACI,aAAA;AADJ;;AAIA;EACI,gBAAA;EACA,oBAAA;AADJ;;AAIA;EACI,UAAA;EACA,oBAAA;AADJ;;AAIA;EACI,2BAAA;EACA,gBAAA;EACA,iBAAA;EACA,eAAA;EACA,qBAAA;AADJ;;AAIA;EACI,qBAAA;AADJ","sourcesContent":["\n@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');\n\n* {\n    margin: 0;\n    padding: 0;\n    box-sizing: border-box;\n}\n\nhtml {\n    font-family: 'Nunito', sans-serif;\n    font-size: 22px;\n    color: #fff;\n}\n\nbody {\n    min-height: 100vh;\n    background-color: dodgerblue;\n}\n\n.App {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  min-height: 100vh; \n  padding: 1rem 0.5rem;\n}\n\nsection {\n    width: 100%;\n    max-width: 420px;\n    min-height: 400px;\n    display: flex;\n    flex-direction: column;\n    justify-content: flex-start;\n    padding: 1rem;\n    background-color: rgba(0,0,0,0.4);\n}\n\nform {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-evenly;\n    flex-grow: 1;\n    padding-bottom: 1rem;\n}\n\na, a:visited {\n    color: #fff;\n}\n\ninput[type=\"text\"],\ninput[type=\"password\"],\nbutton,\ntextarea {\n  font-family: 'Nunito', sans-serif;\n  font-size: 22px;\n  padding: 0.25rem;\n  border-radius: 0.5rem;\n}\n\nlabel,\nbutton {\n  margin-top: 1rem;\n}\n\nbutton {\n  padding: 0.5rem;\n}\n\n.instructions {\n    font-size: 0.75rem;\n    border-radius: 0.5rem;\n    background: #000;\n    color: #fff;\n    padding: 0.25rem;\n    position: relative;\n    bottom: -10px;\n}\n\n.instructions > svg {\n    margin-right: 0.25rem;\n}\n\n.offscreen {\n    position: absolute;\n    left: -9999px;\n}\n\n.hide {\n    display: none;\n}\n\n.valid {\n    color: limegreen;\n    margin-left: 0.25rem;\n}\n\n.invalid {\n    color: red;\n    margin-left: 0.25rem;\n}\n\n.errmsg {\n    background-color: lightpink;\n    color: firebrick;\n    font-weight: bold;\n    padding: 0.5rem;\n    margin-bottom: 0.5rem;\n}\n\n.line {\n    display: inline-block;\n}"],"sourceRoot":""}]);
+}
+
+.oRRzNa5fzjPNydmeE0TQ {
+  visibility: hidden;
+}`, "",{"version":3,"sources":["webpack://./src/components/Register/Register.module.scss"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,iBAAA;EACA,gBAAA;EACA,aAAA;EACA,sBAAA;EACA,2BAAA;EACA,mBAAA;EACA,aAAA;EACA,mBAAA;EACA,qCAAA;EACA,mCAAA;AACJ;;AAEA;EACI,aAAA;EACA,8BAAA;EACA,cAAA;AACJ;AAAI;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,gBAAA;AAER;;AAEA;EACI,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,YAAA;EACA,oBAAA;AACJ;;AAEA;EACI,WAAA;AACJ;;AAEA;;EAEE,eAAA;EACA,gBAAA;EACA,qBAAA;AACF;;AAEA;;EAEE,gBAAA;EACA,SAAA;AACF;;AAEA;EACE,eAAA;AACF;;AAEA;EACI,YAAA;EACA,kCAAA;EACA,YAAA;EACA,qBAAA;AACJ;AAAI;EACI,eAAA;EACA,eAAA;EACA,eAAA;EACA,yBAAA;EACA,qBAAA;AAER;;AAEA;EACI,kBAAA;AACJ;;AAEA;EACI,kBAAA;EACA,qBAAA;EACA,gBAAA;EACA,WAAA;EACA,gBAAA;EACA,kBAAA;EACA,aAAA;AACJ;;AAEA;EACI,qBAAA;AACJ;;AAEA;EACI,kBAAA;EACA,aAAA;AACJ;;AAEA;EACI,aAAA;AACJ;;AAEA;EACI,gBAAA;EACA,oBAAA;AACJ;;AAEA;EACI,UAAA;EACA,oBAAA;AACJ;;AAEA;EACI,2BAAA;EACA,gBAAA;EACA,iBAAA;EACA,eAAA;EACA,qBAAA;AACJ;;AAEA;EACI,qBAAA;AACJ;;AAEA;EACI,kBAAA;AACJ","sourcesContent":[".section {\n    width: 100%;\n    min-height: 400px;\n    max-width: 600px;\n    display: flex;\n    flex-direction: column;\n    justify-content: flex-start;\n    align-items: center;\n    padding: 1rem;\n    border-radius: 3rem;\n    border: .3rem solid var(--text-dark);\n    background-color: var(--text-light);\n}\n\n.nameContainer, .emailAndCampusContainer, .passwordContainer {\n    display: flex;\n    justify-content: space-between;\n    margin: 1rem 0;\n    .fName, .lName, .email, .campusNum, .pwd, .confirmPwd {\n        display: flex;\n        flex-direction: column;\n        align-items: flex-start;\n        margin: 0 .5rem;\n    }\n}\n\n.form {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-evenly;\n    flex-grow: 1;\n    padding-bottom: 1rem;\n}\n\n.a, .a:visited {\n    color: #fff;\n}\n\n.input,\n.button, .disabledButton {\n  font-size: 22px;\n  padding: 0.25rem;\n  border-radius: 0.5rem;\n}\n\n.label,\n.button, .disabledButton {\n  margin-top: 1rem;\n  margin: 0;\n}\n\n.button, .disabledButton {\n  padding: 0.5rem;\n}\n\n.button {\n    border: none;\n    background-color: var(--text-dark);\n    color: white;\n    transition: .3s ease;\n    &:hover {\n        cursor: pointer;\n        padding: 0.7rem;\n        font-size: 20px;\n        background-color: #1a1c2a;\n        transition: .3s ease;\n    }\n}\n\n.togglePara {\n    text-align: center;\n}\n\n.instructions {\n    font-size: 0.75rem;\n    border-radius: 0.5rem;\n    background: #000;\n    color: #fff;\n    padding: 0.25rem;\n    position: relative;\n    bottom: -10px;\n}\n\n.instructions > svg {\n    margin-right: 0.25rem;\n}\n\n.offscreen {\n    position: absolute;\n    left: -9999px;\n}\n\n.hide {\n    display: none;\n}\n\n.valid {\n    color: limegreen;\n    margin-left: 0.25rem;\n}\n\n.invalid {\n    color: red;\n    margin-left: 0.25rem;\n}\n\n.errmsg {\n    background-color: lightpink;\n    color: firebrick;\n    font-weight: bold;\n    padding: 0.5rem;\n    margin-bottom: 0.5rem;\n}\n\n.line {\n    display: inline-block;\n}\n\n.roleContainer {\n    visibility: hidden;\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"App": `V947e8bTo36CQHcA_qWI`,
+	"section": `Idu7boV5emT3tpI63EsN`,
+	"nameContainer": `XokUkjbAB13UudNelspL`,
+	"emailAndCampusContainer": `_VTjxJAcByR5MCln33Zs`,
+	"passwordContainer": `XgxRt1_ViXHNSccWAUFj`,
+	"fName": `RetK5OOXX270zhvIW6V2`,
+	"lName": `bAEoNFIygNlfquMD7N_K`,
+	"email": `UH9TUnzqPKVSuaK3Z9AR`,
+	"campusNum": `Fmnt2VkAZ46eJwNyGadb`,
+	"pwd": `pCXj_WHoS1qTAOSyNREA`,
+	"confirmPwd": `JJ4P5xbGbfsAihDey0Am`,
+	"form": `AnppXxQ0e4kYTK9oHecP`,
+	"a": `eVorpnz1Bkyc_o2MqVzs`,
+	"input": `rMo8qUvx6E5jcjWTHxQm`,
+	"button": `K9R5yzZjO1mUAvrEywog`,
+	"disabledButton": `Lb_3qXz_D_RV0UGUhFI0`,
+	"label": `xHCDL1OAZQMxJs0mIYBj`,
+	"togglePara": `uAohF3j0eT3FN8a_dzcI`,
 	"instructions": `SIGWuEXn8kcv7IJ_0fUU`,
 	"offscreen": `X107B9JCKaXeJJSBfgO4`,
 	"hide": `A88SY1Hdz_nrnYJa4fh1`,
 	"valid": `X7aN1ereRnEeP7e8IUn_`,
 	"invalid": `y_SivBDR7ZEi57d2CZYF`,
 	"errmsg": `gdSVM8yEV8IG4ZAbo_NT`,
-	"line": `PwGfkZn5LtYOVvDEODfW`
+	"line": `PwGfkZn5LtYOVvDEODfW`,
+	"roleContainer": `oRRzNa5fzjPNydmeE0TQ`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -4197,9 +4265,16 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ``, "",{"version":3,"sources":[],"names":[],"mappings":"","sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, `.RygkJgZmBHTETlLP3C3i {
+  padding-top: 5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}`, "",{"version":3,"sources":["webpack://./src/pages/AuthPage/AuthPage.module.scss"],"names":[],"mappings":"AAAA;EACI,gBAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;AACJ","sourcesContent":[".AuthPage {\n    padding-top: 5vh;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}"],"sourceRoot":""}]);
 // Exports
-___CSS_LOADER_EXPORT___.locals = {};
+___CSS_LOADER_EXPORT___.locals = {
+	"AuthPage": `RygkJgZmBHTETlLP3C3i`
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
@@ -5723,4 +5798,4 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.3c6efd78555f4116d7cb50fa2f73d197.js.map
+//# sourceMappingURL=App.227b92a02b8f15d552d048d3bc255427.js.map

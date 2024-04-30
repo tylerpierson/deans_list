@@ -1,10 +1,12 @@
 import { useRef, useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import styles from './Login.module.scss';
 
 const LOGIN_URL = '/api/users/login';
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const Login = () => {
+const Login = ({ toggleLoginForm }) => {
+    const navigateTo = useNavigate()
     const emailRef = useRef();
     const passwordRef = useRef();
     const errRef = useRef();
@@ -49,7 +51,7 @@ const Login = () => {
             
             // Save the token in localStorage
             localStorage.setItem('token', accessToken);
-    
+            navigateTo('/')
             // Handle authentication logic here
             setSuccess(true);
         } catch (err) {
@@ -62,21 +64,21 @@ const Login = () => {
     return (
         <>
             {success ? (
-                <section>
+                <section className={styles.section}>
                     <h1>You are logged in!</h1>
                     <br />
                     <p>
-                        <a href="#">Go to Home</a>
+                        <a className={styles.a} href="#">Go to Home</a>
                     </p>
                 </section>
             ) : (
-                <section>
+                <section className={styles.section}>
                     <p ref={errRef} className={errMsg ? styles.errmsg : styles.offscreen} aria-live="assertive">
                         {errMsg}
                     </p>
                     <h1>Sign In</h1>
-                    <form onSubmit={handleSubmit}>
-                        <label htmlFor="email">Email:</label>
+                    <form className={styles.form} onSubmit={handleSubmit}>
+                        <label className={styles.label} htmlFor="email">Email:</label>
                         <input
                             type="email"
                             id="email"
@@ -87,7 +89,7 @@ const Login = () => {
                             required
                             className={styles.input}
                         />
-                        <label htmlFor="password">Password:</label>
+                        <label className={styles.label} htmlFor="password">Password:</label>
                         <input
                             type="password"
                             id="password"
@@ -100,11 +102,11 @@ const Login = () => {
                         />
                         <button className={styles.button}>Sign In</button>
                     </form>
-                    <p>
+                    <p className={styles.togglePara}>
                         Need an Account?<br />
-                        <span className={styles.line}>
+                        <span className={styles.line} onClick={toggleLoginForm}>
                             {/*put router link here*/}
-                            <a href="#">Sign Up</a>
+                            <a className={styles.a} href="#">Sign Up</a>
                         </span>
                     </p>
                 </section>

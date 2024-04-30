@@ -4,7 +4,7 @@ import styles from './HomePage.module.scss'
 function HomePage() {
   return (
     <div className={styles.HomePage}>
-      <div class={styles.introContainer}>
+      <div className={styles.introContainer}>
         <h2 className={styles.heading}>The next step forward in <span className={styles.span}>RTI</span></h2>
         <div className={styles.introAndImgContainer}>
           <p className={styles.intro}>Welcome to <span className={styles.titleSpan}>Dean's List</span>! We are a dedicated team passionate about transforming Response to Intervention (RTI) and improving educational outcomes for all students.

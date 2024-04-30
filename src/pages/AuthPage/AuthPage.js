@@ -6,12 +6,13 @@ import Register from '../../components/Register/Register';
 export default function AuthPage({ setUser }) {
   const [showLogin, setShowLogin] = useState(true);
 
+  const toggleLoginForm = () => {
+    setShowLogin(!showLogin);
+  };
+
   return (
     <main className={styles.AuthPage}>
-      <div>
-        <h3 onClick={() => setShowLogin(!showLogin)}>{showLogin ? 'SIGN UP' : 'LOG IN'}</h3>
-      </div>
-      {showLogin ? <Login setUser={setUser} /> : <Register setUser={setUser} />}
+      {showLogin ? <Login setUser={setUser} toggleLoginForm={toggleLoginForm} /> : <Register setUser={setUser} toggleLoginForm={toggleLoginForm} />}
     </main>
   );
 }

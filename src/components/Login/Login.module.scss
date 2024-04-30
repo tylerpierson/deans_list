@@ -1,44 +1,18 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    font-family: 'Nunito', sans-serif;
-    font-size: 22px;
-    color: #fff;
-}
-
-body {
-    min-height: 100vh;
-    background-color: dodgerblue;
-}
-
-.App {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh; 
-  padding: 1rem 0.5rem;
-}
-
-section {
+.section {
     width: 100%;
     max-width: 420px;
     min-height: 400px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    align-items: center;
     padding: 1rem;
-    background-color: rgba(0,0,0,0.4);
+    border-radius: 3rem;
+    border: .3rem solid var(--text-dark);
+    background-color: var(--text-light);
 }
 
-form {
+.form {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -46,27 +20,35 @@ form {
     padding-bottom: 1rem;
 }
 
-a, a:visited {
+.a, .a:visited {
     color: #fff;
 }
 
-input[type="text"],
-input[type="password"],
-button,
-textarea {
-  font-family: 'Nunito', sans-serif;
+.input,
+.button {
   font-size: 22px;
   padding: 0.25rem;
   border-radius: 0.5rem;
 }
+  
 
-label,
-button {
+.label,
+.button {
   margin-top: 1rem;
 }
 
-button {
+.button {
   padding: 0.5rem;
+  border: none;
+  background-color: var(--text-dark);
+  color: white;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.togglePara {
+    text-align: center;
 }
 
 .instructions {

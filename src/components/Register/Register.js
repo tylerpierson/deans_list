@@ -7,7 +7,7 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const REGISTER_URL = '/api/users/admin';
 
-const Register = () => {
+const Register = ({ toggleLoginForm }) => {
     const firstNameRef = useRef();
     const lastNameRef = useRef();
     const emailRef = useRef();
@@ -128,189 +128,213 @@ const Register = () => {
     return (
         <>
             {success ? (
-                <section>
+                <section className={styles.section}>
                     <h1>Success!</h1>
                     <p>
-                        <a href="#">Sign In</a>
+                        <a className={styles.a} href="#">Sign In</a>
                     </p>
                 </section>
             ) : (
-                <section>
+                <section className={styles.section}>
                     <p ref={errRef} className={errMsg ? styles.errmsg : styles.offscreen} aria-live="assertive">{errMsg}</p>
                     <h1>Register</h1>
-                    <form onSubmit={handleSubmit}>
+                    <form className={styles.form} onSubmit={handleSubmit}>
                         {/* First Name */}
-                        <label htmlFor="firstName" className={styles.label}>
-                            First Name:
-                            <FontAwesomeIcon icon={faCheck} className={validFirstName ? styles.valid : styles.hide} />
-                            <FontAwesomeIcon icon={faTimes} className={validFirstName || !firstName ? styles.hide : styles.invalid} />
-                        </label>
-                        <input
-                            type="text"
-                            id="firstName"
-                            ref={firstNameRef}
-                            autoComplete="off"
-                            onChange={(e) => setFirstName(e.target.value)}
-                            value={firstName}
-                            required
-                            aria-invalid={validFirstName ? "false" : "true"}
-                            className={styles.input}
-                            onFocus={() => setFirstNameFocus(true)}
-                            onBlur={() => setFirstNameFocus(false)}
-                        />
-                        <p id="firstNameNote" className={firstNameFocus && !validFirstName ? styles.instructions : styles.offscreen}>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                            Please enter your first name.
-                        </p>
+                        <div className={styles.nameContainer}>
+                            <div className={styles.fName}>
+                                <label htmlFor="firstName" className={styles.label}>
+                                    First Name:
+                                    <FontAwesomeIcon icon={faCheck} className={validFirstName ? styles.valid : styles.hide} />
+                                    <FontAwesomeIcon icon={faTimes} className={validFirstName || !firstName ? styles.hide : styles.invalid} />
+                                </label>
+                                <input
+                                    type="text"
+                                    id="firstName"
+                                    ref={firstNameRef}
+                                    autoComplete="off"
+                                    onChange={(e) => setFirstName(e.target.value)}
+                                    value={firstName}
+                                    required
+                                    aria-invalid={validFirstName ? "false" : "true"}
+                                    className={styles.input}
+                                    onFocus={() => setFirstNameFocus(true)}
+                                    onBlur={() => setFirstNameFocus(false)}
+                                />
+                            </div>
+                            <div className={styles.lName}>
+                                {/* Last Name */}
+                                <label htmlFor="lastName" className={styles.label}>
+                                    Last Name:
+                                    <FontAwesomeIcon icon={faCheck} className={validLastName ? styles.valid : styles.hide} />
+                                    <FontAwesomeIcon icon={faTimes} className={validLastName || !lastName ? styles.hide : styles.invalid} />
+                                </label>
+                                <input
+                                    type="text"
+                                    id="lastName"
+                                    ref={lastNameRef}
+                                    autoComplete="off"
+                                    onChange={(e) => setLastName(e.target.value)}
+                                    value={lastName}
+                                    required
+                                    aria-invalid={validLastName ? "false" : "true"}
+                                    className={styles.input}
+                                    onFocus={() => setLastNameFocus(true)}
+                                    onBlur={() => setLastNameFocus(false)}
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            <p id="firstNameNote" className={firstNameFocus && !validFirstName ? styles.instructions : styles.offscreen}>
+                                <FontAwesomeIcon icon={faInfoCircle} />
+                                Please enter your first name.
+                            </p>
+                            <p id="lastNameNote" className={lastNameFocus && !validLastName ? styles.instructions : styles.offscreen}>
+                                <FontAwesomeIcon icon={faInfoCircle} />
+                                Please enter your last name.
+                            </p>
+                        </div>
 
-                        {/* Last Name */}
-                        <label htmlFor="lastName" className={styles.label}>
-                            Last Name:
-                            <FontAwesomeIcon icon={faCheck} className={validLastName ? styles.valid : styles.hide} />
-                            <FontAwesomeIcon icon={faTimes} className={validLastName || !lastName ? styles.hide : styles.invalid} />
-                        </label>
-                        <input
-                            type="text"
-                            id="lastName"
-                            ref={lastNameRef}
-                            autoComplete="off"
-                            onChange={(e) => setLastName(e.target.value)}
-                            value={lastName}
-                            required
-                            aria-invalid={validLastName ? "false" : "true"}
-                            className={styles.input}
-                            onFocus={() => setLastNameFocus(true)}
-                            onBlur={() => setLastNameFocus(false)}
-                        />
-                        <p id="lastNameNote" className={lastNameFocus && !validLastName ? styles.instructions : styles.offscreen}>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                            Please enter your last name.
-                        </p>
-
-                        {/* Email */}
-                        <label htmlFor="email" className={styles.label}>
-                            Email:
-                            <FontAwesomeIcon icon={faCheck} className={validEmail ? styles.valid : styles.hide} />
-                            <FontAwesomeIcon icon={faTimes} className={validEmail || !email ? styles.hide : styles.invalid} />
-                        </label>
-                        <input
-                            type="email"
-                            id="email"
-                            ref={emailRef}
-                            autoComplete="off"
-                            onChange={(e) => setEmail(e.target.value)}
-                            value={email}
-                            required
-                            aria-invalid={validEmail ? "false" : "true"}
-                            className={styles.input}
-                            onFocus={() => setEmailFocus(true)}
-                            onBlur={() => setEmailFocus(false)}
-                        />
+                        <div className={styles.emailAndCampusContainer}>
+                            <div className={styles.email}>
+                                {/* Email */}
+                                <label htmlFor="email" className={styles.label}>
+                                    Email:
+                                    <FontAwesomeIcon icon={faCheck} className={validEmail ? styles.valid : styles.hide} />
+                                    <FontAwesomeIcon icon={faTimes} className={validEmail || !email ? styles.hide : styles.invalid} />
+                                </label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    ref={emailRef}
+                                    autoComplete="off"
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    value={email}
+                                    required
+                                    aria-invalid={validEmail ? "false" : "true"}
+                                    className={styles.input}
+                                    onFocus={() => setEmailFocus(true)}
+                                    onBlur={() => setEmailFocus(false)}
+                                />
+                            </div>
+                            <div className={styles.campusNum}>
+                                {/* Campus Number */}
+                                <label htmlFor="campusNum" className={styles.label}>
+                                    Campus Number:
+                                    <FontAwesomeIcon icon={faCheck} className={validCampusNum ? styles.valid : styles.hide} />
+                                    <FontAwesomeIcon icon={faTimes} className={validCampusNum || !campusNum ? styles.hide : styles.invalid} />
+                                </label>
+                                <input
+                                    type="text"
+                                    id="campusNum"
+                                    ref={campusNumRef}
+                                    autoComplete="off"
+                                    onChange={(e) => setCampusNum(e.target.value)}
+                                    value={campusNum}
+                                    required
+                                    aria-invalid={validCampusNum ? "false" : "true"}
+                                    className={styles.input}
+                                    onFocus={() => setCampusNumFocus(true)}
+                                    onBlur={() => setCampusNumFocus(false)}
+                                />
+                            </div>
+                        </div>
                         <p id="emailNote" className={emailFocus && !validEmail ? styles.instructions : styles.offscreen}>
                             <FontAwesomeIcon icon={faInfoCircle} />
                             Please enter a valid email address.
                         </p>
+                        <p id="campusNumNote" className={campusNumFocus && !validCampusNum ? styles.instructions : styles.offscreen}>
+                                <FontAwesomeIcon icon={faInfoCircle} />
+                                Please enter your campus number.
+                        </p>
 
-                        {/* Password */}
-                        <label htmlFor="password" className={styles.label}>
-                            Password:
-                            <FontAwesomeIcon icon={faCheck} className={validPassword ? styles.valid : styles.hide} />
-                            <FontAwesomeIcon icon={faTimes} className={validPassword || !password ? styles.hide : styles.invalid} />
-                        </label>
-                        <input
-                            type="password"
-                            id="password"
-                            ref={passwordRef}
-                            autoComplete="off"
-                            onChange={(e) => setPassword(e.target.value)}
-                            value={password}
-                            required
-                            aria-invalid={validPassword ? "false" : "true"}
-                            className={styles.input}
-                            onFocus={() => setPasswordFocus(true)}
-                            onBlur={() => setPasswordFocus(false)}
-                        />
+                        <div className={styles.passwordContainer}>
+                            <div className={styles.pwd}>
+                                {/* Password */}
+                                <label htmlFor="password" className={styles.label}>
+                                    Password:
+                                    <FontAwesomeIcon icon={faCheck} className={validPassword ? styles.valid : styles.hide} />
+                                    <FontAwesomeIcon icon={faTimes} className={validPassword || !password ? styles.hide : styles.invalid} />
+                                </label>
+                                <input
+                                    type="password"
+                                    id="password"
+                                    ref={passwordRef}
+                                    autoComplete="off"
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    value={password}
+                                    required
+                                    aria-invalid={validPassword ? "false" : "true"}
+                                    className={styles.input}
+                                    onFocus={() => setPasswordFocus(true)}
+                                    onBlur={() => setPasswordFocus(false)}
+                                />
+                            </div>
+                            <div className={styles.confirmPwd}>
+                                {/* Confirm Password */}
+                                <label htmlFor="confirmPassword" className={styles.label}>
+                                    Confirm Password:
+                                    <FontAwesomeIcon icon={faCheck} className={confirmPassword && validConfirmPassword ? styles.valid : styles.hide} />
+                                    <FontAwesomeIcon icon={faTimes} className={validConfirmPassword || !confirmPassword ? styles.hide : styles.invalid} />
+                                </label>
+                                <input
+                                    type="password"
+                                    id="confirmPassword"
+                                    ref={confirmPasswordRef}
+                                    autoComplete="off"
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    value={confirmPassword}
+                                    required
+                                    aria-invalid={validConfirmPassword ? "false" : "true"}
+                                    className={styles.input}
+                                    onFocus={() => setConfirmPasswordFocus(true)}
+                                    onBlur={() => setConfirmPasswordFocus(false)}
+                                />
+                            </div>
+                        </div>
                         <p id="passwordNote" className={passwordFocus && !validPassword ? styles.instructions : styles.offscreen}>
                             <FontAwesomeIcon icon={faInfoCircle} />
                             Password must be 8 to 24 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.
                         </p>
-
-                        {/* Confirm Password */}
-                        <label htmlFor="confirmPassword" className={styles.label}>
-                            Confirm Password:
-                            <FontAwesomeIcon icon={faCheck} className={validConfirmPassword ? styles.valid : styles.hide} />
-                            <FontAwesomeIcon icon={faTimes} className={validConfirmPassword || !confirmPassword ? styles.hide : styles.invalid} />
-                        </label>
-                        <input
-                            type="password"
-                            id="confirmPassword"
-                            ref={confirmPasswordRef}
-                            autoComplete="off"
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            value={confirmPassword}
-                            required
-                            aria-invalid={validConfirmPassword ? "false" : "true"}
-                            className={styles.input}
-                            onFocus={() => setConfirmPasswordFocus(true)}
-                            onBlur={() => setConfirmPasswordFocus(false)}
-                        />
                         <p id="confirmPasswordNote" className={confirmPasswordFocus && !validConfirmPassword ? styles.instructions : styles.offscreen}>
                             <FontAwesomeIcon icon={faInfoCircle} />
                             Please confirm your password.
                         </p>
 
-                        {/* Campus Number */}
-                        <label htmlFor="campusNum" className={styles.label}>
-                            Campus Number:
-                            <FontAwesomeIcon icon={faCheck} className={validCampusNum ? styles.valid : styles.hide} />
-                            <FontAwesomeIcon icon={faTimes} className={validCampusNum || !campusNum ? styles.hide : styles.invalid} />
-                        </label>
-                        <input
-                            type="text"
-                            id="campusNum"
-                            ref={campusNumRef}
-                            autoComplete="off"
-                            onChange={(e) => setCampusNum(e.target.value)}
-                            value={campusNum}
-                            required
-                            aria-invalid={validCampusNum ? "false" : "true"}
-                            className={styles.input}
-                            onFocus={() => setCampusNumFocus(true)}
-                            onBlur={() => setCampusNumFocus(false)}
-                        />
-                        <p id="campusNumNote" className={campusNumFocus && !validCampusNum ? styles.instructions : styles.offscreen}>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                            Please enter your campus number.
-                        </p>
-
                         {/* Role */}
-                        <label htmlFor="role" className={styles.label}>
-                            Role:
-                            <FontAwesomeIcon icon={faCheck} className={styles.valid} /> {/* Always valid */}
-                            <input
-                                type="text"
-                                id="role"
-                                ref={roleRef}
-                                autoComplete="off"
-                                value={role}
-                                readOnly
-                                className={styles.input}
-                                onFocus={() => setRoleFocus(true)}
-                                onBlur={() => setRoleFocus(false)}
-                            />
-                        </label>
-                        <p id="roleNote" className={roleFocus ? styles.instructions : styles.offscreen}>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                            Role is set to 'admin'.
-                        </p>
+                        <div className={styles.roleContainer}>
+                            <label htmlFor="role" className={styles.label}>
+                                Role:
+                                <FontAwesomeIcon icon={faCheck} className={styles.valid} /> {/* Always valid */}
+                                <input
+                                    type="text"
+                                    id="role"
+                                    ref={roleRef}
+                                    autoComplete="off"
+                                    value={role}
+                                    readOnly
+                                    className={styles.input}
+                                    onFocus={() => setRoleFocus(true)}
+                                    onBlur={() => setRoleFocus(false)}
+                                />
+                            </label>
+                            <p id="roleNote" className={roleFocus ? styles.instructions : styles.offscreen}>
+                                <FontAwesomeIcon icon={faInfoCircle} />
+                                Role is set to 'admin'.
+                            </p>
+                        </div>
 
-                        <button disabled={!validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword || !validCampusNum} className={styles.button}>Sign Up</button>
+                        <button
+                            disabled={!validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword || !validCampusNum}
+                            className={(!validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword || !validCampusNum) ? styles.disabledButton : styles.button}
+                        >
+                            Sign Up
+                        </button>
+
                     </form>
-                    <p>
+                    <p className={styles.togglePara}>
                         Already registered?<br />
-                        <span className={styles.line}>
-                            {/*put router link here*/}
-                            <a href="#">Sign In</a>
+                        <span className={styles.line} onClick={toggleLoginForm}>
+                            <a className={styles.a} href="#">Sign In</a>
                         </span>
                     </p>
                 </section>
