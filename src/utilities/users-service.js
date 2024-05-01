@@ -32,7 +32,6 @@ export function logOut() {
   }
 
   export async function indexUsers() {
-    console.log('indexing users')
     try {
       const foundUsers = await usersAPI.index()
       return foundUsers

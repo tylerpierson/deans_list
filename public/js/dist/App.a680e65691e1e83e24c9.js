@@ -64,21 +64,9 @@ function App() {
       return null;
     }
   };
-  const fetchUsers = async () => {
-    try {
-      const foundUsers = await (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_10__.indexUsers)();
-      setUsers(foundUsers);
-    } catch (error) {
-      console.error('Error finding users', error);
-    }
-  };
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    fetchUsers();
-  }, []);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_components_NavBar_NavBar__WEBPACK_IMPORTED_MODULE_2__["default"], {
     setUser: setUser,
-    user: user,
-    users: users
+    user: user
   }), /*#__PURE__*/React.createElement("div", {
     className: _App_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].App
   }, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Routes, null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
@@ -99,16 +87,16 @@ function App() {
     path: "/data",
     element: /*#__PURE__*/React.createElement(_pages_DataPage_DataPage__WEBPACK_IMPORTED_MODULE_5__["default"], null)
   }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
-    path: "/admin",
+    path: "/admin/:userId",
     element: /*#__PURE__*/React.createElement(_pages_AdminPage_AdminPage__WEBPACK_IMPORTED_MODULE_6__["default"], null)
   }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
-    path: "/teacher",
+    path: "/teacher:userId",
     element: /*#__PURE__*/React.createElement(_pages_TeacherPage_TeacherPage__WEBPACK_IMPORTED_MODULE_7__["default"], null)
   }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
-    path: "/student",
+    path: "/student:userId",
     element: /*#__PURE__*/React.createElement(_pages_StudentPage_StudentPage__WEBPACK_IMPORTED_MODULE_8__["default"], null)
   }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
-    path: "/parent",
+    path: "/parent:userId",
     element: /*#__PURE__*/React.createElement(_pages_ParentPage_ParentPage__WEBPACK_IMPORTED_MODULE_9__["default"], null)
   }))));
 }
@@ -1123,7 +1111,8 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const Login = _ref => {
   let {
     toggleLoginForm,
-    setUser
+    setUser,
+    user
   } = _ref;
   const navigateTo = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
   const emailRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
@@ -1179,14 +1168,7 @@ const Login = _ref => {
       const userData = await userResponse.json();
 
       // Set user data
-      setUser({
-        firstName: userData.firstName,
-        email: userData.email
-        // Add other user data properties if needed
-      });
-
-      // Log the user data
-      console.log(userData);
+      setUser(userData);
 
       // Navigate to the home page
       navigateTo('/');
@@ -1198,6 +1180,7 @@ const Login = _ref => {
       errRef.current.focus();
     }
   };
+  console.log(user);
   return /*#__PURE__*/React.createElement(React.Fragment, null, success ? /*#__PURE__*/React.createElement("section", {
     className: _Login_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].section
   }, /*#__PURE__*/React.createElement("h1", null, "You are logged in!"), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("a", {
@@ -1263,21 +1246,21 @@ const Login = _ref => {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
 /* harmony import */ var _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NavBar.module.scss */ "./src/components/NavBar/NavBar.module.scss");
-/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
+/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
 
 
 
 
 function NavBar(_ref) {
   let {
-    logOut,
-    setUser,
     user,
-    users
+    setUser
   } = _ref;
   // Combine all props into a single object
+  const navigateTo = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     const navbar = document.querySelector(".".concat(_NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].NavBar));
     let lastScrollTop = 0;
@@ -1296,9 +1279,11 @@ function NavBar(_ref) {
     };
   }, []);
   function handleLogOut() {
-    _utilities_users_service__WEBPACK_IMPORTED_MODULE_2__.logOut();
+    _utilities_users_service__WEBPACK_IMPORTED_MODULE_3__.logOut();
     setUser(null);
+    navigateTo('/');
   }
+  console.log(user);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].NavBar
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -1308,7 +1293,7 @@ function NavBar(_ref) {
   }, "Search", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].search,
     type: "text"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].LogoLink,
     to: "/"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -1321,7 +1306,7 @@ function NavBar(_ref) {
     alt: "Dean's Logo"
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].navList
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Link,
     to: "/"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -1334,9 +1319,9 @@ function NavBar(_ref) {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].outerIcon,
     src: "/img/outer-circle.png",
     alt: "Outer Circle"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Link,
-    to: "/profile"
+    to: "/auth"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].iconContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
@@ -1347,7 +1332,7 @@ function NavBar(_ref) {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].outerIcon,
     src: "/img/outer-circle.png",
     alt: "Outer Circle"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Link,
     to: "/data"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -1367,7 +1352,6 @@ function NavBar(_ref) {
   }, user.firstName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].email
   }, user.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: "btn-sm",
     onClick: handleLogOut
   }, "LOG OUT")))));
 }
@@ -2922,9 +2906,9 @@ function index() {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   getToken: () => (/* binding */ getToken),
 /* harmony export */   getUser: () => (/* binding */ getUser),
-/* harmony export */   indexUsers: () => (/* binding */ indexUsers),
 /* harmony export */   logOut: () => (/* binding */ logOut)
 /* harmony export */ });
+/* unused harmony export indexUsers */
 /* harmony import */ var _users_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./users-api */ "./src/utilities/users-api.js");
 
 const BASE_URL = '/api/users';
@@ -2956,7 +2940,6 @@ function logOut() {
   localStorage.removeItem('token');
 }
 async function indexUsers() {
-  console.log('indexing users');
   try {
     const foundUsers = await _users_api__WEBPACK_IMPORTED_MODULE_0__.index();
     return foundUsers;
@@ -6018,4 +6001,4 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.55c7c1c50fda13b6eaf93cd9fc5e2295.js.map
+//# sourceMappingURL=App.73eb8e8457aa198770c3695b2ef86633.js.map

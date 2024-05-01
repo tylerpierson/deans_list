@@ -5,7 +5,7 @@ import styles from './Login.module.scss';
 const LOGIN_URL = '/api/users/login';
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const Login = ({ toggleLoginForm, setUser }) => {
+const Login = ({ toggleLoginForm, setUser, user }) => {
     const navigateTo = useNavigate()
     const emailRef = useRef();
     const passwordRef = useRef();
@@ -67,14 +67,7 @@ const Login = ({ toggleLoginForm, setUser }) => {
             const userData = await userResponse.json();
     
             // Set user data
-            setUser({
-                firstName: userData.firstName,
-                email: userData.email,
-                // Add other user data properties if needed
-            });
-    
-            // Log the user data
-            console.log(userData);
+            setUser(userData);
     
             // Navigate to the home page
             navigateTo('/');
@@ -87,6 +80,8 @@ const Login = ({ toggleLoginForm, setUser }) => {
         }        
     };
     
+    console.log(user);
+
     return (
         <>
             {success ? (

@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './NavBar.module.scss';
 import * as userService from '../../utilities/users-service';
 
-function NavBar({ logOut, setUser, user, users }) { // Combine all props into a single object
+function NavBar({ user, setUser }) { // Combine all props into a single object
+    const navigateTo = useNavigate()
+
     useEffect(() => {
         const navbar = document.querySelector(`.${styles.NavBar}`);
 
@@ -31,7 +33,10 @@ function NavBar({ logOut, setUser, user, users }) { // Combine all props into a 
     function handleLogOut() {
         userService.logOut();
         setUser(null)
+        navigateTo('/')
     }
+
+    console.log(user)
 
     return (
         <div className={styles.NavBar}>
@@ -54,7 +59,7 @@ function NavBar({ logOut, setUser, user, users }) { // Combine all props into a 
                             <img className={styles.outerIcon} src="/img/outer-circle.png" alt="Outer Circle" />
                         </div>
                     </Link>
-                    <Link className={styles.Link} to="/profile">
+                    <Link className={styles.Link} to="/auth">
                         <div className={styles.iconContainer}>
                             <img className={styles.homeIcon} src="/img/profile-logo-navy.png" alt="Profile Icon" />
                             <img className={styles.outerIcon} src="/img/outer-circle.png" alt="Outer Circle" />
@@ -70,7 +75,7 @@ function NavBar({ logOut, setUser, user, users }) { // Combine all props into a 
                         <div className={styles.UserLogOut}>
                             <div className={styles.name}>{user.firstName}</div>
                             <div className={styles.email}>{user.email}</div>
-                            <button className="btn-sm" onClick={handleLogOut}>LOG OUT</button>
+                            <button onClick={handleLogOut}>LOG OUT</button>
                         </div>
                     }
                 </ul>

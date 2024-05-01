@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import styles from './App.module.scss'
-import { indexUsers, getUser } from './utilities/users-service'
+import { indexUsers, getUser, getToken } from './utilities/users-service'
 
 import NavBar from './components/NavBar/NavBar'
 import HomePage from './pages/HomePage/HomePage'
@@ -41,25 +41,12 @@ export default function App(){
             return null;
         }
     };
-      
-      const fetchUsers = async () => {
-        try {
-            const foundUsers = await indexUsers();
-            setUsers(foundUsers);
-        } catch (error) {
-            console.error('Error finding users', error);
-        }
-    }
-    useEffect(() => {
-        fetchUsers();
-    }, []);
 
     return(
         <>
         <NavBar 
             setUser={setUser}
             user={user}
-            users={users}
         />
         <div className={styles.App}>
             <Routes>
