@@ -6,10 +6,10 @@ import AssignmentCollapsible from '../../components/AssignmentCollapsible/Assign
 import ClassCollapsible from '../../components/ClassCollapsible/ClassCollapsible'
 import TeamCollapsible from '../../components/TeamCollapsible/TeamCollapsible'
 
-function TeacherPage() {
+function TeacherPage({ user }) {
   return (
     <div className={styles.TeacherPage}>
-        <h1 className={styles.Header}>Welcome, <span className={styles.span}>Teacher</span>!</h1>
+        <h1 className={styles.Header}>Welcome, <span className={styles.span}>{user.firstName}</span>!</h1>
         <div className={styles.mainContainer}>
           <div className={styles.leftContainer}>
             <BarGraph />

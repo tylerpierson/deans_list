@@ -59,24 +59,63 @@ function NavBar({ user, setUser }) { // Combine all props into a single object
                             <img className={styles.outerIcon} src="/img/outer-circle.png" alt="Outer Circle" />
                         </div>
                     </Link>
-                    <Link className={styles.Link} to="/auth">
-                        <div className={styles.iconContainer}>
-                            <img className={styles.homeIcon} src="/img/profile-logo-navy.png" alt="Profile Icon" />
-                            <img className={styles.outerIcon} src="/img/outer-circle.png" alt="Outer Circle" />
+                    {
+                        user && user.role === 'admin' ? 
+                        <Link className={styles.Link} to="/admin">
+                            <div className={styles.iconContainer}>
+                                <img className={styles.homeIcon} src="/img/profile-logo-navy.png" alt="Profile Icon" />
+                                <img className={styles.outerIcon} src="/img/outer-circle.png" alt="Outer Circle" />
+                            </div>
+                        </Link> : 
+                        user && user.role === 'teacher' ? 
+                        <Link className={styles.Link} to="/teacher">
+                            <div className={styles.iconContainer}>
+                                <img className={styles.homeIcon} src="/img/profile-logo-navy.png" alt="Profile Icon" />
+                                <img className={styles.outerIcon} src="/img/outer-circle.png" alt="Outer Circle" />
+                            </div>
+                        </Link> : 
+                        user && user.role === 'parent' ? 
+                        <Link className={styles.Link} to="/parent">
+                            <div className={styles.iconContainer}>
+                                <img className={styles.homeIcon} src="/img/profile-logo-navy.png" alt="Profile Icon" />
+                                <img className={styles.outerIcon} src="/img/outer-circle.png" alt="Outer Circle" />
+                            </div>
+                        </Link> :
+                        user && user.role === 'student' ? 
+                        <Link className={styles.Link} to="/student">
+                            <div className={styles.iconContainer}>
+                                <img className={styles.homeIcon} src="/img/profile-logo-navy.png" alt="Profile Icon" />
+                                <img className={styles.outerIcon} src="/img/outer-circle.png" alt="Outer Circle" />
+                            </div>
+                        </Link> : ''                     
+                    }
+                    { !user ? '' :                    
+                        <Link className={styles.Link} to="/data">
+                            <div className={styles.iconContainer}>
+                                <img className={styles.homeIcon} src="/img/data-logo-navy.png" alt="Data Icon" />
+                                <img className={styles.outerIcon} src="/img/outer-circle.png" alt="Outer Circle" />
+                            </div>
+                        </Link>
+                    }
+                    { !user ? 
+                        <Link className={styles.Link} to="/auth">
+                            <div className={styles.iconContainer}>
+                                <img className={styles.homeIcon} src="/img/login-navy.png" alt="Login Icon" />
+                                <img className={styles.outerIcon} src="/img/outer-circle.png" alt="Outer Circle" />
+                            </div>
+                        </Link> : 
+                    <>        
+                        <Link className={styles.Link} to="/" onClick={handleLogOut}>
+                            <div className={styles.iconContainer}>
+                                <img className={styles.homeIcon} src="/img/logout-navy.png" alt="Login Icon" />
+                                <img className={styles.outerIcon} src="/img/outer-circle.png" alt="Outer Circle" />
+                            </div>
+                        </Link>            
+                        <div className={styles.userInfo}>
+                            <div className={styles.name}>{user.firstName} {user.lastName}</div>
+                            <div className={styles.email}>{user.role}</div>
                         </div>
-                    </Link>
-                    <Link className={styles.Link} to="/data">
-                        <div className={styles.iconContainer}>
-                            <img className={styles.homeIcon} src="/img/data-logo-navy.png" alt="Data Icon" />
-                            <img className={styles.outerIcon} src="/img/outer-circle.png" alt="Outer Circle" />
-                        </div>
-                    </Link>
-                    { !user ? '' :
-                        <div className={styles.UserLogOut}>
-                            <div className={styles.name}>{user.firstName}</div>
-                            <div className={styles.email}>{user.email}</div>
-                            <button onClick={handleLogOut}>LOG OUT</button>
-                        </div>
+                    </>
                     }
                 </ul>
             </div>

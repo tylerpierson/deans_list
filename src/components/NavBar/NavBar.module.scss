@@ -113,7 +113,19 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
             }
+            .UserLogOut {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
         }
+    }
+    .userInfo {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+        margin-left: 1rem;
     }
 }
 

@@ -41,7 +41,6 @@ function App() {
   const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)((0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_10__.getUser)());
   const [users, setUsers] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const updateUser = async userData => {
-    const userId = user._id; // Assuming you have the user's ID in your state
     const token = localStorage.getItem('token'); // Retrieve the token from local storage or your state management
     try {
       const response = await fetch("/api/users/".concat(userId), {
@@ -87,17 +86,25 @@ function App() {
     path: "/data",
     element: /*#__PURE__*/React.createElement(_pages_DataPage_DataPage__WEBPACK_IMPORTED_MODULE_5__["default"], null)
   }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
-    path: "/admin/:userId",
-    element: /*#__PURE__*/React.createElement(_pages_AdminPage_AdminPage__WEBPACK_IMPORTED_MODULE_6__["default"], null)
+    path: "/admin",
+    element: /*#__PURE__*/React.createElement(_pages_AdminPage_AdminPage__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      user: user
+    })
   }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
-    path: "/teacher:userId",
-    element: /*#__PURE__*/React.createElement(_pages_TeacherPage_TeacherPage__WEBPACK_IMPORTED_MODULE_7__["default"], null)
+    path: "/teacher",
+    element: /*#__PURE__*/React.createElement(_pages_TeacherPage_TeacherPage__WEBPACK_IMPORTED_MODULE_7__["default"], {
+      user: user
+    })
   }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
-    path: "/student:userId",
-    element: /*#__PURE__*/React.createElement(_pages_StudentPage_StudentPage__WEBPACK_IMPORTED_MODULE_8__["default"], null)
+    path: "/student",
+    element: /*#__PURE__*/React.createElement(_pages_StudentPage_StudentPage__WEBPACK_IMPORTED_MODULE_8__["default"], {
+      user: user
+    })
   }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
-    path: "/parent:userId",
-    element: /*#__PURE__*/React.createElement(_pages_ParentPage_ParentPage__WEBPACK_IMPORTED_MODULE_9__["default"], null)
+    path: "/parent",
+    element: /*#__PURE__*/React.createElement(_pages_ParentPage_ParentPage__WEBPACK_IMPORTED_MODULE_9__["default"], {
+      user: user
+    })
   }))));
 }
 
@@ -1170,8 +1177,14 @@ const Login = _ref => {
       // Set user data
       setUser(userData);
 
-      // Navigate to the home page
-      navigateTo('/');
+      // Check if the user has admin role
+      if (userData.role === 'admin') {
+        // Navigate to the admin page
+        navigateTo('/admin');
+      } else {
+        // Navigate to the home page
+        navigateTo('/');
+      }
 
       // Handle authentication logic here
       setSuccess(true);
@@ -1319,9 +1332,9 @@ function NavBar(_ref) {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].outerIcon,
     src: "/img/outer-circle.png",
     alt: "Outer Circle"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+  }))), user && user.role === 'admin' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Link,
-    to: "/auth"
+    to: "/admin"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].iconContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
@@ -1332,7 +1345,46 @@ function NavBar(_ref) {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].outerIcon,
     src: "/img/outer-circle.png",
     alt: "Outer Circle"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+  }))) : user && user.role === 'teacher' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Link,
+    to: "/teacher"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].iconContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].homeIcon,
+    src: "/img/profile-logo-navy.png",
+    alt: "Profile Icon"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].outerIcon,
+    src: "/img/outer-circle.png",
+    alt: "Outer Circle"
+  }))) : user && user.role === 'parent' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Link,
+    to: "/parent"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].iconContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].homeIcon,
+    src: "/img/profile-logo-navy.png",
+    alt: "Profile Icon"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].outerIcon,
+    src: "/img/outer-circle.png",
+    alt: "Outer Circle"
+  }))) : user && user.role === 'student' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Link,
+    to: "/student"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].iconContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].homeIcon,
+    src: "/img/profile-logo-navy.png",
+    alt: "Profile Icon"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].outerIcon,
+    src: "/img/outer-circle.png",
+    alt: "Outer Circle"
+  }))) : '', !user ? '' : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Link,
     to: "/data"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -1345,15 +1397,40 @@ function NavBar(_ref) {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].outerIcon,
     src: "/img/outer-circle.png",
     alt: "Outer Circle"
-  }))), !user ? '' : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].UserLogOut
+  }))), !user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Link,
+    to: "/auth"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].iconContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].homeIcon,
+    src: "/img/login-navy.png",
+    alt: "Login Icon"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].outerIcon,
+    src: "/img/outer-circle.png",
+    alt: "Outer Circle"
+  }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Link,
+    to: "/",
+    onClick: handleLogOut
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].iconContainer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].homeIcon,
+    src: "/img/logout-navy.png",
+    alt: "Login Icon"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].outerIcon,
+    src: "/img/outer-circle.png",
+    alt: "Outer Circle"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].userInfo
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].name
-  }, user.firstName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, user.firstName, " ", user.lastName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].email
-  }, user.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    onClick: handleLogOut
-  }, "LOG OUT")))));
+  }, user.role))))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NavBar);
 
@@ -2587,14 +2664,17 @@ root.render( /*#__PURE__*/React.createElement(react__WEBPACK_IMPORTED_MODULE_0__
 
 
 
-function AdminPage() {
+function AdminPage(_ref) {
+  let {
+    user
+  } = _ref;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].AdminPage
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", {
     className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Header
   }, "Welcome, ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
     className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].span
-  }, "Admin"), "!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, user.firstName), "!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].mainContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].leftContainer
@@ -2764,14 +2844,17 @@ function ParentPage() {
 
 
 
-function StudentPage() {
+function StudentPage(_ref) {
+  let {
+    user
+  } = _ref;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _StudentPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].StudentPage
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", {
     className: _StudentPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Header
   }, "Welcome, ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
     className: _StudentPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].span
-  }, "Student"), "!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, user.firstName), "!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _StudentPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].mainContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _StudentPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].leftContainer
@@ -2807,14 +2890,17 @@ function StudentPage() {
 
 
 
-function TeacherPage() {
+function TeacherPage(_ref) {
+  let {
+    user
+  } = _ref;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].TeacherPage
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", {
     className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Header
   }, "Welcome, ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
     className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].span
-  }, "Teacher"), "!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, user.firstName), "!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].mainContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].leftContainer
@@ -3825,6 +3911,18 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.QpVD3qAS0nYBtoQqAYoe {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+.QpVD3qAS0nYBtoQqAYoe .Yzgk56lCq7Zq2IQkbBwB .VpziURjVmNZneeuBgj0D .XzvV08AY_k7fSADJCZ5g {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.QpVD3qAS0nYBtoQqAYoe .Ka_kuJxU2amEo3dhYkNz {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  margin-left: 1rem;
+}
 
 /* Use interpolation to reference the local class */
 .liy9XL89GoQRXss4enyt {
@@ -3849,7 +3947,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.QpVD3qAS0nYBtoQqAYoe {
 }
 .vdLcfAWwu7EJ_DwEISFz:not(:hover) .ai30QR49p4EdcdnoKw0m {
   animation: QmwfkIbRCzKk7YE6JPVX 1s ease-out;
-}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,WAAA;EACA,uBAAA;EACA,eAAA;EACA,MAAA;EACA,OAAA;EACA,6BAAA;EACA,UAAA,EAAA,oBAAA;EACA,6BAAA,EAAA,+BAAA;EACA,aAAA,EAAA,oCAAA;AACJ;AAAI;EACI,YAAA;EACA,WAAA;EACA,eAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;AAER;AADQ;EACI,cAAA;EACA,yBAAA;EACA,iBAAA;AAGZ;AADQ;EACI,2BAAA;EACA,mBAAA;EACA,oBAAA;EACA,qBAAA;EACA,cAAA;EACA,YAAA;EACA,qBAAA;AAGZ;AAFY;EACI,aAAA;EACA,4BAAA;EACA,2BAAA;EACA,qBAAA;AAIhB;AADQ;EACI,qBAAA;EACA,cAAA;AAGZ;AADQ;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;EACA,yBAAA;AAGZ;AAFY;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,WAAA;EACA,gBAAA;AAIhB;AAFY;EACI,gBAAA;EACA,WAAA;AAIhB;AADQ;EACI,aAAA;EACA,yBAAA;EACA,qBAAA;EACA,YAAA;EACA,SAAA;AAGZ;AAFY;EACI,qBAAA;EACA,cAAA;EACA,YAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA,EAAA,0BAAA;EACA,mBAAA;EACA,cAAA;AAIhB;AAFY;EACI,2CAAA;AAIhB;AADY;EACI,oBAAA;EACA,mBAAA;AAGhB;AAAY;EACI,yBAAA;EACA,mBAAA;AAEhB;AAAY;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,YAAA;EACA,WAAA;EACA,mBAAA;EACA,kBAAA;EACA,mBAAA;AAEhB;AAAY;EACI,mBAAA;AAEhB;AAAY;EACI,WAAA;EACA,YAAA,EAAA,kBAAA;AAEhB;AACY;EACI,WAAA;EACA,kBAAA;EACA,QAAA;EACA,SAAA;EACA,gCAAA;AAChB;;AAKA,mDAAA;AACA;EACI,UAAA,EAAA,wCAAA;AAFJ;;AAMA;EACI;IAAO,uBAAA;EAFT;EAGE;IAAK,yBAAA;EAAP;AACF;AAEA;EACI;IAAO,yBAAA;EACT;EAAE;IAAK,uBAAA;EAGP;AACF;AADA;EACI,2CAAA;AAGJ","sourcesContent":[".NavBar {\n    width: 100%;\n    height: 8vh;\n    background-color: white;\n    position: fixed;\n    top: 0;\n    left: 0;\n    box-shadow: 0 0 10px darkgray;\n    opacity: 1; /* Initial opacity */\n    transition: opacity 0.3s ease; /* Add transition for opacity */\n    z-index: 1000; /* Ensure it's above other content */\n    .innerNav {\n        height: 100%;\n        width: 100%;\n        padding: 0 2rem;\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        .label {\n            color: #232946;\n            text-transform: uppercase;\n            font-weight: bold;\n        }\n        .search {\n            border: 1px solid lightgrey;\n            margin-left: .5rem;\n            padding-left: .5rem;\n            border-radius: .3rem;\n            height: 1.7rem;\n            width: 15rem;\n            transition: .2s ease;\n            &:focus {\n                outline: none;\n                border: .1rem solid #232946;\n                box-shadow: 0 0 5px #232946;\n                transition: .2s ease;\n            }\n        }\n        .LogoLink {\n            text-decoration: none;\n            color: #232946;\n        }\n        .LogoContainer {\n            display: flex;\n            flex-direction: column;\n            justify-content: center;\n            align-items: center;\n            text-transform: uppercase;\n            .LogoInnerContainer {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                width: 100%;\n                max-height: 40px;\n            }\n            .Logo {\n                margin: 0 .5rem;\n                width: 15vw;\n            }\n        }\n        .navList {\n            display: flex;\n            justify-content: flex-end;\n            text-decoration: none;\n            height: 100%;\n            margin: 0;\n            .Link {\n                text-decoration: none;\n                color: #232946;\n                height: 100%;\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                position: relative; /* Add position relative */\n                transition: 1s ease;\n                margin: 0 2rem;\n            }\n            .Link:hover .outerIcon {\n                animation: spin 1s ease-out;\n            }\n            \n            .Link:hover .outerIcon, .Link:hover .homeIcon {\n                filter: invert(100%);\n                transition: 1s ease;\n            }\n            \n            .Link:hover .iconContainer {\n                background-color: #232946;\n                transition: 1s ease;\n            }\n            .iconContainer {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                height: 40px;\n                width: 40px;\n                border-radius: 100%;\n                position: relative;\n                transition: 1s ease;\n            }\n            .outerIcon, .homeIcon {\n                transition: 1s ease;\n            }\n            .outerIcon {\n                width: 35px;\n                color: black; /* Initial color */\n            }\n            \n            .homeIcon {\n                width: 30px;\n                position: absolute;\n                top: 50%;\n                left: 50%;\n                transform: translate(-50%, -50%);\n            }\n        }\n    }\n}\n\n/* Use interpolation to reference the local class */\n.scrollDown {\n    opacity: 0; /* Set opacity to 0 when scrolled down */\n}\n\n\n@keyframes spin {\n    from { transform: rotate(0deg); }\n    to { transform: rotate(360deg); }\n}\n\n@keyframes spinReverse {\n    from { transform: rotate(360deg); }\n    to { transform: rotate(0deg); }\n}\n\n.Link:not(:hover) .outerIcon {\n    animation: spinReverse 1s ease-out;\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,WAAA;EACA,uBAAA;EACA,eAAA;EACA,MAAA;EACA,OAAA;EACA,6BAAA;EACA,UAAA,EAAA,oBAAA;EACA,6BAAA,EAAA,+BAAA;EACA,aAAA,EAAA,oCAAA;AACJ;AAAI;EACI,YAAA;EACA,WAAA;EACA,eAAA;EACA,aAAA;EACA,8BAAA;EACA,mBAAA;AAER;AADQ;EACI,cAAA;EACA,yBAAA;EACA,iBAAA;AAGZ;AADQ;EACI,2BAAA;EACA,mBAAA;EACA,oBAAA;EACA,qBAAA;EACA,cAAA;EACA,YAAA;EACA,qBAAA;AAGZ;AAFY;EACI,aAAA;EACA,4BAAA;EACA,2BAAA;EACA,qBAAA;AAIhB;AADQ;EACI,qBAAA;EACA,cAAA;AAGZ;AADQ;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,mBAAA;EACA,yBAAA;AAGZ;AAFY;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,WAAA;EACA,gBAAA;AAIhB;AAFY;EACI,gBAAA;EACA,WAAA;AAIhB;AADQ;EACI,aAAA;EACA,yBAAA;EACA,qBAAA;EACA,YAAA;EACA,SAAA;AAGZ;AAFY;EACI,qBAAA;EACA,cAAA;EACA,YAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,kBAAA,EAAA,0BAAA;EACA,mBAAA;EACA,cAAA;AAIhB;AAFY;EACI,2CAAA;AAIhB;AADY;EACI,oBAAA;EACA,mBAAA;AAGhB;AAAY;EACI,yBAAA;EACA,mBAAA;AAEhB;AAAY;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,YAAA;EACA,WAAA;EACA,mBAAA;EACA,kBAAA;EACA,mBAAA;AAEhB;AAAY;EACI,mBAAA;AAEhB;AAAY;EACI,WAAA;EACA,YAAA,EAAA,kBAAA;AAEhB;AACY;EACI,WAAA;EACA,kBAAA;EACA,QAAA;EACA,SAAA;EACA,gCAAA;AAChB;AACY;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;AAChB;AAGI;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,qBAAA;EACA,iBAAA;AADR;;AAKA,mDAAA;AACA;EACI,UAAA,EAAA,wCAAA;AAFJ;;AAMA;EACI;IAAO,uBAAA;EAFT;EAGE;IAAK,yBAAA;EAAP;AACF;AAEA;EACI;IAAO,yBAAA;EACT;EAAE;IAAK,uBAAA;EAGP;AACF;AADA;EACI,2CAAA;AAGJ","sourcesContent":[".NavBar {\n    width: 100%;\n    height: 8vh;\n    background-color: white;\n    position: fixed;\n    top: 0;\n    left: 0;\n    box-shadow: 0 0 10px darkgray;\n    opacity: 1; /* Initial opacity */\n    transition: opacity 0.3s ease; /* Add transition for opacity */\n    z-index: 1000; /* Ensure it's above other content */\n    .innerNav {\n        height: 100%;\n        width: 100%;\n        padding: 0 2rem;\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        .label {\n            color: #232946;\n            text-transform: uppercase;\n            font-weight: bold;\n        }\n        .search {\n            border: 1px solid lightgrey;\n            margin-left: .5rem;\n            padding-left: .5rem;\n            border-radius: .3rem;\n            height: 1.7rem;\n            width: 15rem;\n            transition: .2s ease;\n            &:focus {\n                outline: none;\n                border: .1rem solid #232946;\n                box-shadow: 0 0 5px #232946;\n                transition: .2s ease;\n            }\n        }\n        .LogoLink {\n            text-decoration: none;\n            color: #232946;\n        }\n        .LogoContainer {\n            display: flex;\n            flex-direction: column;\n            justify-content: center;\n            align-items: center;\n            text-transform: uppercase;\n            .LogoInnerContainer {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                width: 100%;\n                max-height: 40px;\n            }\n            .Logo {\n                margin: 0 .5rem;\n                width: 15vw;\n            }\n        }\n        .navList {\n            display: flex;\n            justify-content: flex-end;\n            text-decoration: none;\n            height: 100%;\n            margin: 0;\n            .Link {\n                text-decoration: none;\n                color: #232946;\n                height: 100%;\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                position: relative; /* Add position relative */\n                transition: 1s ease;\n                margin: 0 2rem;\n            }\n            .Link:hover .outerIcon {\n                animation: spin 1s ease-out;\n            }\n            \n            .Link:hover .outerIcon, .Link:hover .homeIcon {\n                filter: invert(100%);\n                transition: 1s ease;\n            }\n            \n            .Link:hover .iconContainer {\n                background-color: #232946;\n                transition: 1s ease;\n            }\n            .iconContainer {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                height: 40px;\n                width: 40px;\n                border-radius: 100%;\n                position: relative;\n                transition: 1s ease;\n            }\n            .outerIcon, .homeIcon {\n                transition: 1s ease;\n            }\n            .outerIcon {\n                width: 35px;\n                color: black; /* Initial color */\n            }\n            \n            .homeIcon {\n                width: 30px;\n                position: absolute;\n                top: 50%;\n                left: 50%;\n                transform: translate(-50%, -50%);\n            }\n            .UserLogOut {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n            }\n        }\n    }\n    .userInfo {\n        display: flex;\n        flex-direction: column;\n        justify-content: center;\n        align-items: flex-end;\n        margin-left: 1rem;\n    }\n}\n\n/* Use interpolation to reference the local class */\n.scrollDown {\n    opacity: 0; /* Set opacity to 0 when scrolled down */\n}\n\n\n@keyframes spin {\n    from { transform: rotate(0deg); }\n    to { transform: rotate(360deg); }\n}\n\n@keyframes spinReverse {\n    from { transform: rotate(360deg); }\n    to { transform: rotate(0deg); }\n}\n\n.Link:not(:hover) .outerIcon {\n    animation: spinReverse 1s ease-out;\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"NavBar": `QpVD3qAS0nYBtoQqAYoe`,
@@ -3866,6 +3964,8 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"spin": `YcxuCAlSHlcDjncnqx2w`,
 	"homeIcon": `yDVXG9hfMpn86dnxe0SG`,
 	"iconContainer": `v6PjNb4PGtuGvzHIU_ty`,
+	"UserLogOut": `XzvV08AY_k7fSADJCZ5g`,
+	"userInfo": `Ka_kuJxU2amEo3dhYkNz`,
 	"scrollDown": `liy9XL89GoQRXss4enyt`,
 	"spinReverse": `QmwfkIbRCzKk7YE6JPVX`
 };
@@ -6096,4 +6196,4 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.b1f6247e042eabca934fd84ceb2a091e.js.map
+//# sourceMappingURL=App.261446689373ba76ffadf29b312675a0.js.map

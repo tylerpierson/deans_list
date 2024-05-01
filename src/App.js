@@ -18,7 +18,6 @@ export default function App(){
     const [users, setUsers] = useState([]);
 
     const updateUser = async (userData) => {
-        const userId = user._id; // Assuming you have the user's ID in your state
         const token = localStorage.getItem('token'); // Retrieve the token from local storage or your state management
         try {
             const response = await fetch(`/api/users/${userId}`, {
@@ -53,10 +52,10 @@ export default function App(){
                 <Route path='/' element={<HomePage user={user} setUser={setUser} users={users} setUsers={setUsers}/>} />
                 <Route path='/auth' element={<AuthPage user={user} setUser={setUser}/>} />
                 <Route path='/data' element={<DataPage />} />
-                <Route path='/admin/:userId' element={<AdminPage />} />
-                <Route path='/teacher:userId' element={<TeacherPage />} />
-                <Route path='/student:userId' element={<StudentPage />} />
-                <Route path='/parent:userId' element={<ParentPage />} />
+                <Route path='/admin' element={<AdminPage user={user} />} />
+                <Route path='/teacher' element={<TeacherPage user={user} />} />
+                <Route path='/student' element={<StudentPage user={user} />} />
+                <Route path='/parent' element={<ParentPage user={user} />} />
             </Routes>
         </div>
         </>

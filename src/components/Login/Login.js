@@ -69,16 +69,23 @@ const Login = ({ toggleLoginForm, setUser, user }) => {
             // Set user data
             setUser(userData);
     
-            // Navigate to the home page
-            navigateTo('/');
+            // Check if the user has admin role
+            if (userData.role === 'admin') {
+                // Navigate to the admin page
+                navigateTo('/admin');
+            } else {
+                // Navigate to the home page
+                navigateTo('/');
+            }
     
             // Handle authentication logic here
             setSuccess(true);
         } catch (err) {
             setErrMsg(err.message || 'Login Failed');
             errRef.current.focus();
-        }        
+        }
     };
+    
     
     console.log(user);
 
