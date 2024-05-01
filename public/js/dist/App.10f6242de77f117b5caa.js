@@ -2869,12 +2869,19 @@ async function sendRequest(url) {
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   index: () => (/* binding */ index)
+/* harmony export */   findUser: () => (/* binding */ findUser),
+/* harmony export */   index: () => (/* binding */ index),
+/* harmony export */   initialSignUp: () => (/* binding */ initialSignUp),
+/* harmony export */   login: () => (/* binding */ login),
+/* harmony export */   resetPassword: () => (/* binding */ resetPassword)
 /* harmony export */ });
-/* unused harmony exports signUp, login, resetPassword, findUser */
+/* unused harmony export signUp */
 /* harmony import */ var _send_request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./send-request */ "./src/utilities/send-request.js");
 
 const BASE_URL = '/api/users';
+function initialSignUp(userData) {
+  return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/admin"), 'POST', userData);
+}
 function signUp(userData) {
   return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])(BASE_URL, 'POST', userData);
 }
@@ -2908,25 +2915,51 @@ function index() {
 /* harmony export */   getUser: () => (/* binding */ getUser),
 /* harmony export */   logOut: () => (/* binding */ logOut)
 /* harmony export */ });
-/* unused harmony export indexUsers */
+/* unused harmony exports initialSignUp, login, getProfileUser, indexUsers, resetPassword, updatePasswordWithToken, customerSupportRequest */
 /* harmony import */ var _users_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./users-api */ "./src/utilities/users-api.js");
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 const BASE_URL = '/api/users';
-async function getToken() {
+async function initialSignUp(userData) {
+  const token = await _users_api__WEBPACK_IMPORTED_MODULE_0__.initialSignUp(userData);
+  localStorage.setItem('token', token);
+  return getUser();
+}
+async function login(credentials, rememberMe, navigate) {
+  try {
+    // Pass credentials and rememberMe option to the API call
+    const token = await _users_api__WEBPACK_IMPORTED_MODULE_0__.login(_objectSpread(_objectSpread({}, credentials), {}, {
+      rememberMe
+    }));
+    localStorage.setItem('token', token);
+    const user = getUser();
+    console.log("User:", user);
+
+    // Redirect to homepage upon successful login
+    navigate('/'); // Replace '/' with the path of your homepage
+
+    return user;
+  } catch (error) {
+    console.error("Login Error:", error);
+    throw error;
+  }
+}
+function getToken() {
   const token = localStorage.getItem('token');
-  // getItem will return null if no key
   if (!token) return null;
   const payload = JSON.parse(atob(token.split('.')[1]));
-  // A JWT's expiration is expressed in seconds, not miliseconds
   if (payload.exp < Date.now() / 1000) {
-    // Token has expired
     localStorage.removeItem('token');
     return null;
   }
   return token;
 }
-async function getUser() {
-  const token = await getToken();
+function getUser() {
+  const token = getToken();
   if (!token) return null; // Return null if token is missing
   try {
     const payload = JSON.parse(atob(token.split('.')[1]));
@@ -2936,15 +2969,77 @@ async function getUser() {
     return null; // Return null if there's an error parsing the token
   }
 }
-function logOut() {
-  localStorage.removeItem('token');
+async function getProfileUser(userId) {
+  try {
+    const foundUser = await _users_api__WEBPACK_IMPORTED_MODULE_0__.findUser(userId);
+    return foundUser;
+  } catch (error) {
+    console.error("Error finding users", error);
+  }
 }
 async function indexUsers() {
+  console.log('indexing users');
   try {
     const foundUsers = await _users_api__WEBPACK_IMPORTED_MODULE_0__.index();
     return foundUsers;
   } catch (error) {
     console.error("Error finding users", error);
+  }
+}
+function logOut() {
+  localStorage.removeItem('token');
+}
+
+// Password reset functions
+async function resetPassword(emailData) {
+  try {
+    await _users_api__WEBPACK_IMPORTED_MODULE_0__.resetPassword(emailData);
+    return true;
+  } catch (error) {
+    console.error("Password Reset Error:", error);
+    throw new Error("Failed to reset password.");
+  }
+}
+async function updatePasswordWithToken(token, passwordData) {
+  try {
+    const response = await fetch("/api/users/reset-password/".concat(token), {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(passwordData)
+    });
+    if (!response.ok) {
+      throw new Error('Failed to update password');
+    }
+    return true; // Password update successful
+  } catch (error) {
+    console.error('Password Update Error:', error);
+    throw new Error('Failed to update password.');
+  }
+}
+
+// New function for support ticket request
+async function customerSupportRequest(formData) {
+  try {
+    // Log FormData entries
+    for (const entry of formData.entries()) {
+      console.log(entry);
+    }
+
+    // Make POST request for support ticket using FormData
+    const response = await fetch("".concat(BASE_URL, "/support"), {
+      method: 'POST',
+      body: formData // Pass formData directly as the body
+    });
+    if (response.ok) {
+      return true; // Support ticket request successful
+    } else {
+      throw new Error('Failed to submit support ticket');
+    }
+  } catch (error) {
+    console.error('Support Ticket Request Error:', error);
+    throw new Error('Failed to submit support ticket.');
   }
 }
 
@@ -6001,4 +6096,4 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.73eb8e8457aa198770c3695b2ef86633.js.map
+//# sourceMappingURL=App.b1f6247e042eabca934fd84ceb2a091e.js.map
