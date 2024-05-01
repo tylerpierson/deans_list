@@ -4,6 +4,12 @@ const path = require('path')
 const favicon = require('serve-favicon')
 const logger = require('morgan')
 
+const usersRouter = require('./routes/api/users');
+const assignmentsRouter = require('./routes/api/assignments');
+const campusesRouter = require('./routes/api/campuses');
+const checkTokenMiddleware = require('./config/checkToken');
+const ensureLoggedInMiddleware = require('./config/ensureLoggedIn');
+
 
 app.use(express.json()) // req.body
 app.use((req, res, next) => {
@@ -13,9 +19,11 @@ app.use((req, res, next) => {
 app.use(logger('dev'))
 app.use(favicon(path.join(__dirname, 'public', 'img','logo.png')))
 app.use(express.static(path.join(__dirname, 'public')))
-app.use('/api/users', require('./routes/api/users'))
-app.use('/api/assignments', require('./routes/api/assignments'))
-app.use('/api/campuses', require('./routes/api/campuses'))
+app.use(checkTokenMiddleware);
+app.use('/api/users', usersRouter);
+// app.use(ensureLoggedInMiddleware);
+app.use('/api/assignments', assignmentsRouter);
+app.use('/api/campuses', campusesRouter);
 app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname, 'public', 'index.html'))
 })
