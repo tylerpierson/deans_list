@@ -8,7 +8,6 @@ const usersRouter = require('./routes/api/users');
 const assignmentsRouter = require('./routes/api/assignments');
 const campusesRouter = require('./routes/api/campuses');
 const checkTokenMiddleware = require('./config/checkToken');
-const ensureLoggedInMiddleware = require('./config/ensureLoggedIn');
 
 
 app.use(express.json()) // req.body
