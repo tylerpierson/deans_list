@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import styles from './App.module.scss'
-import { indexUsers, getUser, getToken } from './utilities/users-service'
+import { indexUsers, getUser } from './utilities/users-service'
 
 import NavBar from './components/NavBar/NavBar'
 import HomePage from './pages/HomePage/HomePage'
@@ -18,6 +18,7 @@ export default function App(){
     const [users, setUsers] = useState([]);
 
     const updateUser = async (userData) => {
+        const userId = user._id; // Assuming you have the user's ID in your state
         const token = localStorage.getItem('token'); // Retrieve the token from local storage or your state management
         try {
             const response = await fetch(`/api/users/${userId}`, {
@@ -40,12 +41,27 @@ export default function App(){
             return null;
         }
     };
+      
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const fetchedUser = await getUser();
+                setUser(fetchedUser);
+            } catch (error) {
+                console.error('Failed to fetch user:', error);
+                setUser(null);
+            }
+        };
+
+        fetchUser();
+    }, [user]);
 
     return(
         <>
-        <NavBar 
+    <NavBar 
             setUser={setUser}
             user={user}
+            users={users}
         />
         <div className={styles.App}>
             <Routes>

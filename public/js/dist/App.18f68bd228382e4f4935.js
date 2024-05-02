@@ -41,6 +41,7 @@ function App() {
   const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)((0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_10__.getUser)());
   const [users, setUsers] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const updateUser = async userData => {
+    const userId = user._id; // Assuming you have the user's ID in your state
     const token = localStorage.getItem('token'); // Retrieve the token from local storage or your state management
     try {
       const response = await fetch("/api/users/".concat(userId), {
@@ -63,9 +64,22 @@ function App() {
       return null;
     }
   };
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    const fetchUser = async () => {
+      try {
+        const fetchedUser = await (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_10__.getUser)();
+        setUser(fetchedUser);
+      } catch (error) {
+        console.error('Failed to fetch user:', error);
+        setUser(null);
+      }
+    };
+    fetchUser();
+  }, [user]);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_components_NavBar_NavBar__WEBPACK_IMPORTED_MODULE_2__["default"], {
     setUser: setUser,
-    user: user
+    user: user,
+    users: users
   }), /*#__PURE__*/React.createElement("div", {
     className: _App_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].App
   }, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Routes, null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
@@ -6196,4 +6210,4 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.3e14451e8c9e3383f12721b6879a1433.js.map
+//# sourceMappingURL=App.714692b135a251d767fdb609ce7eb546.js.map
