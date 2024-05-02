@@ -64,13 +64,13 @@ const Login = ({ toggleLoginForm, setUser, user }) => {
                 throw new Error('Failed to fetch user data');
             }
     
-            const userData = await userResponse.json();
+            const user = await userResponse.json();
     
             // Set user data
-            setUser(userData);
+            setUser(user);
     
             // Check if the user has admin role
-            if (userData.role === 'admin') {
+            if (user.role === 'admin') {
                 // Navigate to the admin page
                 navigateTo('/admin');
             } else {

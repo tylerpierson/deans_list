@@ -1172,13 +1172,13 @@ const Login = _ref => {
       if (!userResponse.ok) {
         throw new Error('Failed to fetch user data');
       }
-      const userData = await userResponse.json();
+      const user = await userResponse.json();
 
       // Set user data
-      setUser(userData);
+      setUser(user);
 
       // Check if the user has admin role
-      if (userData.role === 'admin') {
+      if (user.role === 'admin') {
         // Navigate to the admin page
         navigateTo('/admin');
       } else {
@@ -6196,4 +6196,4 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.261446689373ba76ffadf29b312675a0.js.map
+//# sourceMappingURL=App.3e14451e8c9e3383f12721b6879a1433.js.map
