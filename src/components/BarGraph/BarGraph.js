@@ -91,7 +91,7 @@ const data = [
   },
 ];
 
-export default function BarGraph() {
+export default function BarGraph({ user }) {
   return (
     <BarChart
       width={550}

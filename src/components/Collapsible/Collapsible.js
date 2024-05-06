@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styles from './Collapsible.module.scss';
 
-function Collapsible() {
+function Collapsible({ user }) {
     const [selected, setSelected] = useState(null)
 
     const data = [
