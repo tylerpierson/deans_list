@@ -59,7 +59,7 @@ function AdminPage({ user }) {
       )}
       {showTeacherCreateForm && (
         <div className={styles.createForm}>
-          <TeacherCreateForm />
+          <TeacherCreateForm user={user} setShowAdminCreateForm={setShowTeacherCreateForm} />
         </div>
       )}
       {showParentCreateForm && (

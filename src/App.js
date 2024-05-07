@@ -52,9 +52,10 @@ export default function App(){
                 setUser(null);
             }
         };
-
+    
         fetchUser();
-    }, [user]);
+    }, []); // Removed 'user' from the dependency array because it was running an endless loop which was breaking the page
+    
 
     return(
         <>

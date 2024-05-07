@@ -75,7 +75,8 @@ function App() {
       }
     };
     fetchUser();
-  }, [user]);
+  }, []); // Removed 'user' from the dependency array because it was running an endless loop which was breaking the page
+
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_components_NavBar_NavBar__WEBPACK_IMPORTED_MODULE_2__["default"], {
     setUser: setUser,
     user: user,
@@ -2275,10 +2276,292 @@ function SubjectCollapsible() {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.mjs");
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TeacherCreateForm.module.scss */ "./src/components/TeacherCreateForm/TeacherCreateForm.module.scss");
+/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
+/* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
-function TeacherCreateForm() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "TeacherCreateForm");
-}
+
+
+ // Import your CSS module
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const REGISTER_URL = '/api/users';
+const TeacherCreateForm = _ref => {
+  let {
+    user,
+    setShowTeacherCreateForm
+  } = _ref;
+  const token = (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_3__.getToken)();
+  const firstNameRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  const lastNameRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  const emailRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  const passwordRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  const confirmPasswordRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  const campusNumRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  const roleRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(); // Ref for role input
+  const errRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  const [firstName, setFirstName] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [lastName, setLastName] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [email, setEmail] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [password, setPassword] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [confirmPassword, setConfirmPassword] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [campusNum, setCampusNum] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("".concat(user.campusNum));
+  const [role, setRole] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('teacher'); // State for role
+
+  const [validFirstName, setValidFirstName] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [validLastName, setValidLastName] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [validEmail, setValidEmail] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [validPassword, setValidPassword] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [validConfirmPassword, setValidConfirmPassword] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [validCampusNum, setValidCampusNum] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
+  const [validRole, setValidRole] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true); // Always valid for hard-coded role
+
+  const [firstNameFocus, setFirstNameFocus] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [lastNameFocus, setLastNameFocus] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [emailFocus, setEmailFocus] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [passwordFocus, setPasswordFocus] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [confirmPasswordFocus, setConfirmPasswordFocus] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [errMsg, setErrMsg] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [success, setSuccess] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    firstNameRef.current.focus();
+  }, []);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    setValidFirstName(firstName.trim() !== '');
+  }, [firstName]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    setValidLastName(lastName.trim() !== '');
+  }, [lastName]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    setValidEmail(EMAIL_REGEX.test(email));
+  }, [email]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    setValidPassword(PWD_REGEX.test(password));
+  }, [password]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    setValidConfirmPassword(confirmPassword === password);
+  }, [confirmPassword, password]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    setErrMsg('');
+  }, [firstName, lastName, email, password, confirmPassword]);
+  const handleSubmit = async e => {
+    e.preventDefault();
+    if (!validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword) {
+      setErrMsg("Invalid Entry");
+      return;
+    }
+    try {
+      const response = await fetch(REGISTER_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': "Bearer ".concat(token)
+        },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          password,
+          campusNum,
+          role // Include role in the request body
+        })
+      });
+      if (!response.ok) {
+        throw new Error('Registration Failed');
+      }
+      const responseData = await response.json();
+      setSuccess(true);
+
+      // Clear form fields
+      setFirstName('');
+      setLastName('');
+      setEmail('');
+      setPassword('');
+      setConfirmPassword('');
+      // Role is hard-coded, no need to reset
+    } catch (err) {
+      console.error(err); // Log the error to the console
+      setErrMsg(err.message || 'Registration Failed');
+      errRef.current.focus();
+    }
+  };
+  const handleExit = async e => {
+    e.preventDefault();
+    setShowTeacherCreateForm(false);
+  };
+  return /*#__PURE__*/React.createElement(React.Fragment, null, success ? /*#__PURE__*/React.createElement("section", {
+    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].section
+  }, /*#__PURE__*/React.createElement("h1", null, "Success!"), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("a", {
+    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].a,
+    href: "#"
+  }, "Sign In"))) : /*#__PURE__*/React.createElement("section", {
+    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].section
+  }, /*#__PURE__*/React.createElement("p", {
+    ref: errRef,
+    className: errMsg ? _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].errmsg : _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen,
+    "aria-live": "assertive"
+  }, errMsg), /*#__PURE__*/React.createElement("h1", null, "Register"), /*#__PURE__*/React.createElement("form", {
+    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].form,
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/React.createElement("div", {
+    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].nameContainer
+  }, /*#__PURE__*/React.createElement("div", {
+    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].fName
+  }, /*#__PURE__*/React.createElement("label", {
+    htmlFor: "firstName",
+    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].label
+  }, "First Name:", /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faCheck,
+    className: validFirstName ? _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].valid : _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide
+  }), /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faTimes,
+    className: validFirstName || !firstName ? _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide : _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].invalid
+  })), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    id: "firstName",
+    ref: firstNameRef,
+    autoComplete: "off",
+    onChange: e => setFirstName(e.target.value),
+    value: firstName,
+    required: true,
+    "aria-invalid": validFirstName ? "false" : "true",
+    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].input,
+    onFocus: () => setFirstNameFocus(true),
+    onBlur: () => setFirstNameFocus(false)
+  })), /*#__PURE__*/React.createElement("div", {
+    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].lName
+  }, /*#__PURE__*/React.createElement("label", {
+    htmlFor: "lastName",
+    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].label
+  }, "Last Name:", /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faCheck,
+    className: validLastName ? _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].valid : _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide
+  }), /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faTimes,
+    className: validLastName || !lastName ? _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide : _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].invalid
+  })), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    id: "lastName",
+    ref: lastNameRef,
+    autoComplete: "off",
+    onChange: e => setLastName(e.target.value),
+    value: lastName,
+    required: true,
+    "aria-invalid": validLastName ? "false" : "true",
+    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].input,
+    onFocus: () => setLastNameFocus(true),
+    onBlur: () => setLastNameFocus(false)
+  }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", {
+    id: "firstNameNote",
+    className: firstNameFocus && !validFirstName ? _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].instructions : _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen
+  }, /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faInfoCircle
+  }), "Please enter your first name."), /*#__PURE__*/React.createElement("p", {
+    id: "lastNameNote",
+    className: lastNameFocus && !validLastName ? _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].instructions : _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen
+  }, /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faInfoCircle
+  }), "Please enter your last name.")), /*#__PURE__*/React.createElement("div", {
+    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].emailAndCampusContainer
+  }, /*#__PURE__*/React.createElement("div", {
+    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].email
+  }, /*#__PURE__*/React.createElement("label", {
+    htmlFor: "email",
+    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].label
+  }, "Email:", /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faCheck,
+    className: validEmail ? _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].valid : _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide
+  }), /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faTimes,
+    className: validEmail || !email ? _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide : _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].invalid
+  })), /*#__PURE__*/React.createElement("input", {
+    type: "email",
+    id: "email",
+    ref: emailRef,
+    autoComplete: "off",
+    onChange: e => setEmail(e.target.value),
+    value: email,
+    required: true,
+    "aria-invalid": validEmail ? "false" : "true",
+    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].input,
+    onFocus: () => setEmailFocus(true),
+    onBlur: () => setEmailFocus(false)
+  }))), /*#__PURE__*/React.createElement("p", {
+    id: "emailNote",
+    className: emailFocus && !validEmail ? _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].instructions : _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen
+  }, /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faInfoCircle
+  }), "Please enter a valid email address."), /*#__PURE__*/React.createElement("div", {
+    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].passwordContainer
+  }, /*#__PURE__*/React.createElement("div", {
+    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].pwd
+  }, /*#__PURE__*/React.createElement("label", {
+    htmlFor: "password",
+    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].label
+  }, "Password:", /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faCheck,
+    className: validPassword ? _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].valid : _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide
+  }), /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faTimes,
+    className: validPassword || !password ? _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide : _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].invalid
+  })), /*#__PURE__*/React.createElement("input", {
+    type: "password",
+    id: "password",
+    ref: passwordRef,
+    autoComplete: "off",
+    onChange: e => setPassword(e.target.value),
+    value: password,
+    required: true,
+    "aria-invalid": validPassword ? "false" : "true",
+    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].input,
+    onFocus: () => setPasswordFocus(true),
+    onBlur: () => setPasswordFocus(false)
+  })), /*#__PURE__*/React.createElement("div", {
+    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].confirmPwd
+  }, /*#__PURE__*/React.createElement("label", {
+    htmlFor: "confirmPassword",
+    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].label
+  }, "Confirm Password:", /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faCheck,
+    className: confirmPassword && validConfirmPassword ? _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].valid : _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide
+  }), /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faTimes,
+    className: validConfirmPassword || !confirmPassword ? _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide : _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].invalid
+  })), /*#__PURE__*/React.createElement("input", {
+    type: "password",
+    id: "confirmPassword",
+    ref: confirmPasswordRef,
+    autoComplete: "off",
+    onChange: e => setConfirmPassword(e.target.value),
+    value: confirmPassword,
+    required: true,
+    "aria-invalid": validConfirmPassword ? "false" : "true",
+    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].input,
+    onFocus: () => setConfirmPasswordFocus(true),
+    onBlur: () => setConfirmPasswordFocus(false)
+  }))), /*#__PURE__*/React.createElement("p", {
+    id: "passwordNote",
+    className: passwordFocus && !validPassword ? _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].instructions : _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen
+  }, /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faInfoCircle
+  }), "Password must be 8 to 24 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character."), /*#__PURE__*/React.createElement("p", {
+    id: "confirmPasswordNote",
+    className: confirmPasswordFocus && !validConfirmPassword ? _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].instructions : _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen
+  }, /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faInfoCircle
+  }), "Please confirm your password."), /*#__PURE__*/React.createElement("button", {
+    disabled: !validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword,
+    className: !validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword ? _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].disabledButton : _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].button
+  }, "Create Teacher User")), /*#__PURE__*/React.createElement("img", {
+    onClick: handleExit,
+    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].closeBtn,
+    src: "/img/window-close.png",
+    alt: "window-close"
+  })));
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TeacherCreateForm);
 
 /***/ }),
@@ -3101,7 +3384,10 @@ function AdminPage(_ref) {
     setShowAdminCreateForm: setShowAdminCreateForm
   })), showTeacherCreateForm && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].createForm
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_TeacherCreateForm_TeacherCreateForm__WEBPACK_IMPORTED_MODULE_6__["default"], null)), showParentCreateForm && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_TeacherCreateForm_TeacherCreateForm__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    user: user,
+    setShowAdminCreateForm: setShowTeacherCreateForm
+  })), showParentCreateForm && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].createForm
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ParentCreateForm_ParentCreateForm__WEBPACK_IMPORTED_MODULE_7__["default"], null)), showStudentCreateForm && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].createForm
@@ -4899,6 +5185,195 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/TeacherCreateForm/TeacherCreateForm.module.scss":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/TeacherCreateForm/TeacherCreateForm.module.scss ***!
+  \***************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `.Okeg9GYyrjOtFQ_EVEP_ {
+  width: 100%;
+  min-height: 400px;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 3rem;
+  border: 0.3rem solid var(--text-dark);
+  background-color: var(--text-light);
+  position: fixed;
+  z-index: 1000;
+}
+
+.eKhc3kc6nzvUuc8oIyN6, .e8k_VnMu4bnHVGf4n8hq, .OQTMbFb7JCUGLNrjjurX {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+}
+.eKhc3kc6nzvUuc8oIyN6 .DE2D06ruLAN4yZrE94Wf, .eKhc3kc6nzvUuc8oIyN6 .xHZQnrQWkiOdMceg4ssN, .eKhc3kc6nzvUuc8oIyN6 .MPBFNjMqJFuG93qA6zxg, .eKhc3kc6nzvUuc8oIyN6 .CJp8CbZt27U_aQK14rfl, .eKhc3kc6nzvUuc8oIyN6 .k6LsVoVZbprHgxkdGB3A, .eKhc3kc6nzvUuc8oIyN6 .k8SrRS1khPFHGxEr3wL1, .e8k_VnMu4bnHVGf4n8hq .DE2D06ruLAN4yZrE94Wf, .e8k_VnMu4bnHVGf4n8hq .xHZQnrQWkiOdMceg4ssN, .e8k_VnMu4bnHVGf4n8hq .MPBFNjMqJFuG93qA6zxg, .e8k_VnMu4bnHVGf4n8hq .CJp8CbZt27U_aQK14rfl, .e8k_VnMu4bnHVGf4n8hq .k6LsVoVZbprHgxkdGB3A, .e8k_VnMu4bnHVGf4n8hq .k8SrRS1khPFHGxEr3wL1, .OQTMbFb7JCUGLNrjjurX .DE2D06ruLAN4yZrE94Wf, .OQTMbFb7JCUGLNrjjurX .xHZQnrQWkiOdMceg4ssN, .OQTMbFb7JCUGLNrjjurX .MPBFNjMqJFuG93qA6zxg, .OQTMbFb7JCUGLNrjjurX .CJp8CbZt27U_aQK14rfl, .OQTMbFb7JCUGLNrjjurX .k6LsVoVZbprHgxkdGB3A, .OQTMbFb7JCUGLNrjjurX .k8SrRS1khPFHGxEr3wL1 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0 0.5rem;
+}
+
+.O7Ir3xQsZ_p9AtHLWxHg {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  flex-grow: 1;
+  padding-bottom: 1rem;
+}
+
+.pLIq6JF6urGLbyaCYVO1, .pLIq6JF6urGLbyaCYVO1:visited {
+  color: #fff;
+}
+
+.AvAr22UIcwBpNVrQwqaF,
+.J0TqLrSoWsv8pS0zMf_8, .nbNIAOawaLfRwP37fb89 {
+  font-size: 22px;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+}
+
+.R1vIW7pOdJDAx7CpocGP,
+.J0TqLrSoWsv8pS0zMf_8, .nbNIAOawaLfRwP37fb89 {
+  margin-top: 1rem;
+  margin: 0;
+}
+
+.J0TqLrSoWsv8pS0zMf_8, .nbNIAOawaLfRwP37fb89 {
+  padding: 0.5rem;
+}
+
+.J0TqLrSoWsv8pS0zMf_8 {
+  border: none;
+  background-color: var(--text-dark);
+  color: white;
+  transition: 0.3s ease;
+}
+.J0TqLrSoWsv8pS0zMf_8:hover {
+  cursor: pointer;
+  padding: 0.7rem;
+  font-size: 20px;
+  background-color: #1a1c2a;
+  transition: 0.3s ease;
+}
+
+.jQzlWvccGjJVQ7Zst2z2 {
+  text-align: center;
+}
+
+.sEsWrs_2hT6SDLJpXjYp {
+  font-size: 0.75rem;
+  border-radius: 0.5rem;
+  background: #000;
+  color: #fff;
+  padding: 0.25rem;
+  position: relative;
+  bottom: -10px;
+}
+
+.sEsWrs_2hT6SDLJpXjYp > svg {
+  margin-right: 0.25rem;
+}
+
+.i6BrsMtQaBiq7aB_iHRr {
+  position: absolute;
+  left: -9999px;
+}
+
+.Gn2atSoyYKUTbFWTmd9L {
+  display: none;
+}
+
+.iC41RiJyYOAeOffRm8l2 {
+  color: limegreen;
+  margin-left: 0.25rem;
+}
+
+.PQeFcEiePJyRIN4ecpTU {
+  color: red;
+  margin-left: 0.25rem;
+}
+
+.EI7T2f428F6RyXhiOfgQ {
+  background-color: lightpink;
+  color: firebrick;
+  font-weight: bold;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.nc5LdhWeQTZ5N02xQZth {
+  display: inline-block;
+}
+
+.SYXZ4LjY4pzR14_iHcrg {
+  visibility: hidden;
+}
+
+.JMbwUm9Xx6c3xfHJEWNv {
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  border-radius: 100%;
+  border: none;
+  background-color: var(--text-dark);
+  color: white;
+  font-size: 1.5rem;
+  text-align: center;
+}`, "",{"version":3,"sources":["webpack://./src/components/TeacherCreateForm/TeacherCreateForm.module.scss"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,iBAAA;EACA,gBAAA;EACA,aAAA;EACA,sBAAA;EACA,2BAAA;EACA,mBAAA;EACA,aAAA;EACA,mBAAA;EACA,qCAAA;EACA,mCAAA;EACA,eAAA;EACA,aAAA;AACJ;;AAEA;EACI,aAAA;EACA,8BAAA;EACA,cAAA;AACJ;AAAI;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,gBAAA;AAER;;AAEA;EACI,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,YAAA;EACA,oBAAA;AACJ;;AAEA;EACI,WAAA;AACJ;;AAEA;;EAEE,eAAA;EACA,gBAAA;EACA,qBAAA;AACF;;AAEA;;EAEE,gBAAA;EACA,SAAA;AACF;;AAEA;EACE,eAAA;AACF;;AAEA;EACI,YAAA;EACA,kCAAA;EACA,YAAA;EACA,qBAAA;AACJ;AAAI;EACI,eAAA;EACA,eAAA;EACA,eAAA;EACA,yBAAA;EACA,qBAAA;AAER;;AAEA;EACI,kBAAA;AACJ;;AAEA;EACI,kBAAA;EACA,qBAAA;EACA,gBAAA;EACA,WAAA;EACA,gBAAA;EACA,kBAAA;EACA,aAAA;AACJ;;AAEA;EACI,qBAAA;AACJ;;AAEA;EACI,kBAAA;EACA,aAAA;AACJ;;AAEA;EACI,aAAA;AACJ;;AAEA;EACI,gBAAA;EACA,oBAAA;AACJ;;AAEA;EACI,UAAA;EACA,oBAAA;AACJ;;AAEA;EACI,2BAAA;EACA,gBAAA;EACA,iBAAA;EACA,eAAA;EACA,qBAAA;AACJ;;AAEA;EACI,qBAAA;AACJ;;AAEA;EACI,kBAAA;AACJ;;AAEA;EACI,WAAA;EACA,YAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;EACA,mBAAA;EACA,YAAA;EACA,kCAAA;EACA,YAAA;EACA,iBAAA;EACA,kBAAA;AACJ","sourcesContent":[".section {\n    width: 100%;\n    min-height: 400px;\n    max-width: 600px;\n    display: flex;\n    flex-direction: column;\n    justify-content: flex-start;\n    align-items: center;\n    padding: 1rem;\n    border-radius: 3rem;\n    border: .3rem solid var(--text-dark);\n    background-color: var(--text-light);\n    position: fixed;\n    z-index: 1000;\n}\n\n.nameContainer, .emailAndCampusContainer, .passwordContainer {\n    display: flex;\n    justify-content: space-between;\n    margin: 1rem 0;\n    .fName, .lName, .email, .campusNum, .pwd, .confirmPwd {\n        display: flex;\n        flex-direction: column;\n        align-items: flex-start;\n        margin: 0 .5rem;\n    }\n}\n\n.form {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-evenly;\n    flex-grow: 1;\n    padding-bottom: 1rem;\n}\n\n.a, .a:visited {\n    color: #fff;\n}\n\n.input,\n.button, .disabledButton {\n  font-size: 22px;\n  padding: 0.25rem;\n  border-radius: 0.5rem;\n}\n\n.label,\n.button, .disabledButton {\n  margin-top: 1rem;\n  margin: 0;\n}\n\n.button, .disabledButton {\n  padding: 0.5rem;\n}\n\n.button {\n    border: none;\n    background-color: var(--text-dark);\n    color: white;\n    transition: .3s ease;\n    &:hover {\n        cursor: pointer;\n        padding: 0.7rem;\n        font-size: 20px;\n        background-color: #1a1c2a;\n        transition: .3s ease;\n    }\n}\n\n.togglePara {\n    text-align: center;\n}\n\n.instructions {\n    font-size: 0.75rem;\n    border-radius: 0.5rem;\n    background: #000;\n    color: #fff;\n    padding: 0.25rem;\n    position: relative;\n    bottom: -10px;\n}\n\n.instructions > svg {\n    margin-right: 0.25rem;\n}\n\n.offscreen {\n    position: absolute;\n    left: -9999px;\n}\n\n.hide {\n    display: none;\n}\n\n.valid {\n    color: limegreen;\n    margin-left: 0.25rem;\n}\n\n.invalid {\n    color: red;\n    margin-left: 0.25rem;\n}\n\n.errmsg {\n    background-color: lightpink;\n    color: firebrick;\n    font-weight: bold;\n    padding: 0.5rem;\n    margin-bottom: 0.5rem;\n}\n\n.line {\n    display: inline-block;\n}\n\n.roleContainer {\n    visibility: hidden;\n}\n\n.closeBtn {\n    width: 2rem;\n    height: 2rem;\n    position: absolute;\n    top: 1.5rem;\n    right: 1.5rem;\n    border-radius: 100%;\n    border: none;\n    background-color: var(--text-dark);\n    color: white;\n    font-size: 1.5rem;\n    text-align: center;\n}"],"sourceRoot":""}]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"section": `Okeg9GYyrjOtFQ_EVEP_`,
+	"nameContainer": `eKhc3kc6nzvUuc8oIyN6`,
+	"emailAndCampusContainer": `e8k_VnMu4bnHVGf4n8hq`,
+	"passwordContainer": `OQTMbFb7JCUGLNrjjurX`,
+	"fName": `DE2D06ruLAN4yZrE94Wf`,
+	"lName": `xHZQnrQWkiOdMceg4ssN`,
+	"email": `MPBFNjMqJFuG93qA6zxg`,
+	"campusNum": `CJp8CbZt27U_aQK14rfl`,
+	"pwd": `k6LsVoVZbprHgxkdGB3A`,
+	"confirmPwd": `k8SrRS1khPFHGxEr3wL1`,
+	"form": `O7Ir3xQsZ_p9AtHLWxHg`,
+	"a": `pLIq6JF6urGLbyaCYVO1`,
+	"input": `AvAr22UIcwBpNVrQwqaF`,
+	"button": `J0TqLrSoWsv8pS0zMf_8`,
+	"disabledButton": `nbNIAOawaLfRwP37fb89`,
+	"label": `R1vIW7pOdJDAx7CpocGP`,
+	"togglePara": `jQzlWvccGjJVQ7Zst2z2`,
+	"instructions": `sEsWrs_2hT6SDLJpXjYp`,
+	"offscreen": `i6BrsMtQaBiq7aB_iHRr`,
+	"hide": `Gn2atSoyYKUTbFWTmd9L`,
+	"valid": `iC41RiJyYOAeOffRm8l2`,
+	"invalid": `PQeFcEiePJyRIN4ecpTU`,
+	"errmsg": `EI7T2f428F6RyXhiOfgQ`,
+	"line": `nc5LdhWeQTZ5N02xQZth`,
+	"roleContainer": `SYXZ4LjY4pzR14_iHcrg`,
+	"closeBtn": `JMbwUm9Xx6c3xfHJEWNv`
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/TeacherReadingTracker/TeacherReadingTracker.module.scss":
 /*!***********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/TeacherReadingTracker/TeacherReadingTracker.module.scss ***!
@@ -6197,6 +6672,59 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./src/components/TeacherCreateForm/TeacherCreateForm.module.scss":
+/*!************************************************************************!*\
+  !*** ./src/components/TeacherCreateForm/TeacherCreateForm.module.scss ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../../../node_modules/sass-loader/dist/cjs.js!../../../node_modules/postcss-loader/dist/cjs.js!./TeacherCreateForm.module.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/TeacherCreateForm/TeacherCreateForm.module.scss");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+
+      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+    
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
 /***/ "./src/components/TeacherReadingTracker/TeacherReadingTracker.module.scss":
 /*!********************************************************************************!*\
   !*** ./src/components/TeacherReadingTracker/TeacherReadingTracker.module.scss ***!
@@ -6875,4 +7403,4 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.e0a145c453a584cd4e24e4c70bac72a1.js.map
+//# sourceMappingURL=App.4160caf4dfd52d73ad3b995423471166.js.map
