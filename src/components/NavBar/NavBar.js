@@ -35,9 +35,6 @@ function NavBar({ user, setUser }) { // Combine all props into a single object
         setUser(null)
         navigateTo('/')
     }
-
-    console.log(user)
-
     return (
         <div className={styles.NavBar}>
             <div className={styles.innerNav}>

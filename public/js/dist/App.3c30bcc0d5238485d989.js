@@ -75,7 +75,7 @@ function App() {
       }
     };
     fetchUser();
-  }, []);
+  }, [user]);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_components_NavBar_NavBar__WEBPACK_IMPORTED_MODULE_2__["default"], {
     setUser: setUser,
     user: user,
@@ -135,9 +135,10 @@ function App() {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.mjs");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.mjs");
 /* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
 /* harmony import */ var _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AdminCreateForm.module.scss */ "./src/components/AdminCreateForm/AdminCreateForm.module.scss");
+/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 
@@ -146,12 +147,13 @@ function App() {
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = '/api/users/admin';
+const REGISTER_URL = '/api/users';
 const AdminCreateForm = _ref => {
   let {
     user,
     setShowAdminCreateForm
   } = _ref;
+  const token = (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_3__.getToken)();
   const firstNameRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   const lastNameRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   const emailRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
@@ -214,7 +216,8 @@ const AdminCreateForm = _ref => {
       const response = await fetch(REGISTER_URL, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': "Bearer ".concat(token)
         },
         body: JSON.stringify({
           firstName,
@@ -239,6 +242,7 @@ const AdminCreateForm = _ref => {
       setConfirmPassword('');
       // Role is hard-coded, no need to reset
     } catch (err) {
+      console.error(err); // Log the error to the console
       setErrMsg(err.message || 'Registration Failed');
       errRef.current.focus();
     }
@@ -269,10 +273,10 @@ const AdminCreateForm = _ref => {
     htmlFor: "firstName",
     className: _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].label
   }, "First Name:", /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
-    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faCheck,
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faCheck,
     className: validFirstName ? _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].valid : _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide
   }), /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
-    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faTimes,
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faTimes,
     className: validFirstName || !firstName ? _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide : _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].invalid
   })), /*#__PURE__*/React.createElement("input", {
     type: "text",
@@ -292,10 +296,10 @@ const AdminCreateForm = _ref => {
     htmlFor: "lastName",
     className: _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].label
   }, "Last Name:", /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
-    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faCheck,
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faCheck,
     className: validLastName ? _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].valid : _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide
   }), /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
-    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faTimes,
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faTimes,
     className: validLastName || !lastName ? _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide : _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].invalid
   })), /*#__PURE__*/React.createElement("input", {
     type: "text",
@@ -313,12 +317,12 @@ const AdminCreateForm = _ref => {
     id: "firstNameNote",
     className: firstNameFocus && !validFirstName ? _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].instructions : _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen
   }, /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
-    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faInfoCircle
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faInfoCircle
   }), "Please enter your first name."), /*#__PURE__*/React.createElement("p", {
     id: "lastNameNote",
     className: lastNameFocus && !validLastName ? _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].instructions : _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen
   }, /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
-    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faInfoCircle
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faInfoCircle
   }), "Please enter your last name.")), /*#__PURE__*/React.createElement("div", {
     className: _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].emailAndCampusContainer
   }, /*#__PURE__*/React.createElement("div", {
@@ -327,10 +331,10 @@ const AdminCreateForm = _ref => {
     htmlFor: "email",
     className: _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].label
   }, "Email:", /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
-    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faCheck,
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faCheck,
     className: validEmail ? _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].valid : _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide
   }), /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
-    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faTimes,
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faTimes,
     className: validEmail || !email ? _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide : _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].invalid
   })), /*#__PURE__*/React.createElement("input", {
     type: "email",
@@ -348,7 +352,7 @@ const AdminCreateForm = _ref => {
     id: "emailNote",
     className: emailFocus && !validEmail ? _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].instructions : _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen
   }, /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
-    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faInfoCircle
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faInfoCircle
   }), "Please enter a valid email address."), /*#__PURE__*/React.createElement("div", {
     className: _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].passwordContainer
   }, /*#__PURE__*/React.createElement("div", {
@@ -357,10 +361,10 @@ const AdminCreateForm = _ref => {
     htmlFor: "password",
     className: _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].label
   }, "Password:", /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
-    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faCheck,
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faCheck,
     className: validPassword ? _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].valid : _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide
   }), /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
-    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faTimes,
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faTimes,
     className: validPassword || !password ? _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide : _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].invalid
   })), /*#__PURE__*/React.createElement("input", {
     type: "password",
@@ -380,10 +384,10 @@ const AdminCreateForm = _ref => {
     htmlFor: "confirmPassword",
     className: _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].label
   }, "Confirm Password:", /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
-    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faCheck,
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faCheck,
     className: confirmPassword && validConfirmPassword ? _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].valid : _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide
   }), /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
-    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faTimes,
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faTimes,
     className: validConfirmPassword || !confirmPassword ? _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].hide : _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].invalid
   })), /*#__PURE__*/React.createElement("input", {
     type: "password",
@@ -401,12 +405,12 @@ const AdminCreateForm = _ref => {
     id: "passwordNote",
     className: passwordFocus && !validPassword ? _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].instructions : _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen
   }, /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
-    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faInfoCircle
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faInfoCircle
   }), "Password must be 8 to 24 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character."), /*#__PURE__*/React.createElement("p", {
     id: "confirmPasswordNote",
     className: confirmPasswordFocus && !validConfirmPassword ? _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].instructions : _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen
   }, /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
-    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faInfoCircle
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faInfoCircle
   }), "Please confirm your password."), /*#__PURE__*/React.createElement("button", {
     disabled: !validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword,
     className: !validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword ? _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].disabledButton : _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].button
@@ -1510,7 +1514,6 @@ const Login = _ref => {
       errRef.current.focus();
     }
   };
-  console.log(user);
   return /*#__PURE__*/React.createElement(React.Fragment, null, success ? /*#__PURE__*/React.createElement("section", {
     className: _Login_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].section
   }, /*#__PURE__*/React.createElement("h1", null, "You are logged in!"), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("a", {
@@ -1613,7 +1616,6 @@ function NavBar(_ref) {
     setUser(null);
     navigateTo('/');
   }
-  console.log(user);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].NavBar
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -3390,9 +3392,9 @@ async function sendRequest(url) {
 /* harmony export */   index: () => (/* binding */ index),
 /* harmony export */   initialSignUp: () => (/* binding */ initialSignUp),
 /* harmony export */   login: () => (/* binding */ login),
-/* harmony export */   resetPassword: () => (/* binding */ resetPassword)
+/* harmony export */   resetPassword: () => (/* binding */ resetPassword),
+/* harmony export */   signUp: () => (/* binding */ signUp)
 /* harmony export */ });
-/* unused harmony export signUp */
 /* harmony import */ var _send_request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./send-request */ "./src/utilities/send-request.js");
 
 const BASE_URL = '/api/users';
@@ -3432,7 +3434,7 @@ function index() {
 /* harmony export */   getUser: () => (/* binding */ getUser),
 /* harmony export */   logOut: () => (/* binding */ logOut)
 /* harmony export */ });
-/* unused harmony exports initialSignUp, login, getProfileUser, indexUsers, resetPassword, updatePasswordWithToken, customerSupportRequest */
+/* unused harmony exports initialSignUp, signUp, login, getProfileUser, indexUsers, resetPassword, updatePasswordWithToken, customerSupportRequest */
 /* harmony import */ var _users_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./users-api */ "./src/utilities/users-api.js");
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -3444,6 +3446,10 @@ const BASE_URL = '/api/users';
 async function initialSignUp(userData) {
   const token = await _users_api__WEBPACK_IMPORTED_MODULE_0__.initialSignUp(userData);
   localStorage.setItem('token', token);
+  return getUser();
+}
+async function signUp(userData) {
+  const token = await _users_api__WEBPACK_IMPORTED_MODULE_0__.signUp(userData);
   return getUser();
 }
 async function login(credentials, rememberMe, navigate) {
@@ -6869,4 +6875,4 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.11b32c52dbb7bef988ceb1cc01c18c27.js.map
+//# sourceMappingURL=App.e0a145c453a584cd4e24e4c70bac72a1.js.map

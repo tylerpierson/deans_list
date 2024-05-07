@@ -7,6 +7,11 @@ export async function initialSignUp(userData) {
   return getUser();
 }
 
+export async function signUp(userData) {
+  const token = await usersAPI.signUp(userData);
+  return getUser();
+}
+
 export async function login(credentials, rememberMe, navigate) {
   try {
     // Pass credentials and rememberMe option to the API call

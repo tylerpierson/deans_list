@@ -2,12 +2,15 @@ import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from './AdminCreateForm.module.scss'; // Import your CSS module
+import { getToken } from '../../utilities/users-service'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = '/api/users/admin';
+const REGISTER_URL = '/api/users';
 
 const AdminCreateForm = ({ user, setShowAdminCreateForm }) => {
+    const token = getToken()
+
     const firstNameRef = useRef();
     const lastNameRef = useRef();
     const emailRef = useRef();
@@ -72,17 +75,18 @@ const AdminCreateForm = ({ user, setShowAdminCreateForm }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+        
         if (!validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword ) {
             setErrMsg("Invalid Entry");
             return;
         }
-    
+        
         try {
             const response = await fetch(REGISTER_URL, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({
                     firstName,
@@ -110,10 +114,11 @@ const AdminCreateForm = ({ user, setShowAdminCreateForm }) => {
             setConfirmPassword('');
             // Role is hard-coded, no need to reset
         } catch (err) {
+            console.error(err); // Log the error to the console
             setErrMsg(err.message || 'Registration Failed');
             errRef.current.focus();
         }
-    }; 
+    };     
     
     const handleExit = async (e) => {
         e.preventDefault()
@@ -275,7 +280,6 @@ const AdminCreateForm = ({ user, setShowAdminCreateForm }) => {
                         >
                             Create Admin User
                         </button>
-
                     </form>
                     <img onClick={handleExit} className={styles.closeBtn} src="/img/window-close.png" alt="window-close" />
                 </section>

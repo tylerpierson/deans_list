@@ -86,9 +86,6 @@ const Login = ({ toggleLoginForm, setUser, user }) => {
         }
     };
     
-    
-    console.log(user);
-
     return (
         <>
             {success ? (
