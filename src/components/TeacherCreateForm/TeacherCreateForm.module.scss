@@ -134,4 +134,11 @@
     color: white;
     font-size: 1.5rem;
     text-align: center;
+    transition: .2s ease;
+    &:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+        border: .2rem solid white;
+        transition: .2s ease;
+    }
 }

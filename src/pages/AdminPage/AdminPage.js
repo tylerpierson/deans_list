@@ -45,13 +45,6 @@ function AdminPage({ user }) {
 
   return (
     <div className={styles.AdminPage}>
-      <h1 className={styles.Header}>
-        Welcome, <span className={styles.span}>{user.firstName}</span>!
-      </h1>
-      <button onClick={toggleAdminCreateForm}>Add Admin</button>
-      <button onClick={toggleTeacherCreateForm}>Add Teacher</button>
-      <button onClick={toggleParentCreateForm}>Add Parent</button>
-      <button onClick={toggleStudentCreateForm}>Add Student</button>
       {showAdminCreateForm && (
         <div className={styles.createForm}>
           <AdminCreateForm user={user} setShowAdminCreateForm={setShowAdminCreateForm} />
@@ -59,19 +52,28 @@ function AdminPage({ user }) {
       )}
       {showTeacherCreateForm && (
         <div className={styles.createForm}>
-          <TeacherCreateForm user={user} setShowAdminCreateForm={setShowTeacherCreateForm} />
+          <TeacherCreateForm user={user} setShowTeacherCreateForm={setShowTeacherCreateForm} />
         </div>
       )}
       {showParentCreateForm && (
         <div className={styles.createForm}>
-          <ParentCreateForm />
+          <ParentCreateForm user={user} setShowParentCreateForm={setShowParentCreateForm} />
         </div>
       )}
       {showStudentCreateForm && (
         <div className={styles.createForm}>
-          <StudentCreateForm />
+          <StudentCreateForm user={user} setShowStudentCreateForm={setShowStudentCreateForm} />
         </div>
       )}
+      <h1 className={styles.Header}>
+        Welcome, <span className={styles.span}>{user.firstName}</span>!
+      </h1>
+      <div className={styles.addBtnContainer}>
+        <button className={styles.addBtn} onClick={toggleAdminCreateForm}>Add Admin</button>
+        <button className={styles.addBtn} onClick={toggleTeacherCreateForm}>Add Teacher</button>
+        <button className={styles.addBtn} onClick={toggleParentCreateForm}>Add Parent</button>
+        <button className={styles.addBtn} onClick={toggleStudentCreateForm}>Add Student</button>
+      </div>
       <div className={styles.mainContainer}>
         <div className={styles.leftContainer}>
           <BarGraph />
