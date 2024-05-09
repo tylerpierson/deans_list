@@ -27,6 +27,7 @@ const StudentCreateForm = ({ user, setShowStudentCreateForm }) => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [campusNum, setCampusNum] = useState(`${user.campusNum}`);
     const [role, setRole] = useState('student'); // State for role
+    const [selectedTeachers, setSelectedTeachers] = useState([]); // State for selected teachers
 
     const [validFirstName, setValidFirstName] = useState(false);
     const [validLastName, setValidLastName] = useState(false);
@@ -34,7 +35,7 @@ const StudentCreateForm = ({ user, setShowStudentCreateForm }) => {
     const [validPassword, setValidPassword] = useState(false);
     const [validConfirmPassword, setValidConfirmPassword] = useState(false);
     const [validCampusNum, setValidCampusNum] = useState(true);
-    const [validRole, setValidRole] = useState(true); // Always valid for hard-coded role
+    const [validRole, setValidRole] = useState(true);
 
     const [firstNameFocus, setFirstNameFocus] = useState(false);
     const [lastNameFocus, setLastNameFocus] = useState(false);
@@ -94,7 +95,8 @@ const StudentCreateForm = ({ user, setShowStudentCreateForm }) => {
                     email,
                     password,
                     campusNum,
-                    role // Include role in the request body
+                    role, // Include role in the request body
+                    teachers: selectedTeachers // Include selected teachers in the request body
                 })
             });
     
@@ -122,7 +124,7 @@ const StudentCreateForm = ({ user, setShowStudentCreateForm }) => {
     
     const handleExit = async (e) => {
         e.preventDefault()
-
+        console.log(user.teachers[0]._id)
         setShowStudentCreateForm(false)
     }
 
@@ -274,6 +276,29 @@ const StudentCreateForm = ({ user, setShowStudentCreateForm }) => {
                             <FontAwesomeIcon icon={faInfoCircle} />
                             Please confirm your password.
                         </p>
+                        <div className={styles.teacherContainer}>
+                        <label className={styles.label}>Select Teachers:</label>
+                        {user.teachers.map((teacher, index) => (
+                            <div key={index}>
+                                <input
+                                    type="checkbox"
+                                    id={`teacher_${index}`}
+                                    value={teacher._id}
+                                    onChange={(e) => {
+                                        const teacherId = e.target.value;
+                                        setSelectedTeachers(prevTeachers => {
+                                            if (e.target.checked) {
+                                                return [...prevTeachers, teacherId];
+                                            } else {
+                                                return prevTeachers.filter(id => id !== teacherId);
+                                            }
+                                        });
+                                    }}
+                                />
+                                <label htmlFor={`teacher_${index}`}>{teacher.firstName}</label>
+                            </div>
+                        ))}
+                        </div>
                         <button
                             disabled={!validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword }
                             className={(!validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword ) ? styles.disabledButton : styles.button}

@@ -2469,6 +2469,7 @@ const StudentCreateForm = _ref => {
   const [confirmPassword, setConfirmPassword] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [campusNum, setCampusNum] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("".concat(user.campusNum));
   const [role, setRole] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('student'); // State for role
+  const [selectedTeachers, setSelectedTeachers] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]); // State for selected teachers
 
   const [validFirstName, setValidFirstName] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [validLastName, setValidLastName] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
@@ -2476,8 +2477,7 @@ const StudentCreateForm = _ref => {
   const [validPassword, setValidPassword] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [validConfirmPassword, setValidConfirmPassword] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [validCampusNum, setValidCampusNum] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
-  const [validRole, setValidRole] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true); // Always valid for hard-coded role
-
+  const [validRole, setValidRole] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
   const [firstNameFocus, setFirstNameFocus] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [lastNameFocus, setLastNameFocus] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [emailFocus, setEmailFocus] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
@@ -2525,7 +2525,9 @@ const StudentCreateForm = _ref => {
           email,
           password,
           campusNum,
-          role // Include role in the request body
+          role,
+          // Include role in the request body
+          teachers: selectedTeachers // Include selected teachers in the request body
         })
       });
       if (!response.ok) {
@@ -2549,6 +2551,7 @@ const StudentCreateForm = _ref => {
   };
   const handleExit = async e => {
     e.preventDefault();
+    console.log(user.teachers[0]._id);
     setShowStudentCreateForm(false);
   };
   return /*#__PURE__*/React.createElement(React.Fragment, null, success ? /*#__PURE__*/React.createElement("section", {
@@ -2711,7 +2714,29 @@ const StudentCreateForm = _ref => {
     className: confirmPasswordFocus && !validConfirmPassword ? _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].instructions : _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen
   }, /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
     icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faInfoCircle
-  }), "Please confirm your password."), /*#__PURE__*/React.createElement("button", {
+  }), "Please confirm your password."), /*#__PURE__*/React.createElement("div", {
+    className: _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].teacherContainer
+  }, /*#__PURE__*/React.createElement("label", {
+    className: _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].label
+  }, "Select Teachers:"), user.teachers.map((teacher, index) => /*#__PURE__*/React.createElement("div", {
+    key: index
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "checkbox",
+    id: "teacher_".concat(index),
+    value: teacher._id,
+    onChange: e => {
+      const teacherId = e.target.value;
+      setSelectedTeachers(prevTeachers => {
+        if (e.target.checked) {
+          return [...prevTeachers, teacherId];
+        } else {
+          return prevTeachers.filter(id => id !== teacherId);
+        }
+      });
+    }
+  }), /*#__PURE__*/React.createElement("label", {
+    htmlFor: "teacher_".concat(index)
+  }, teacher.firstName)))), /*#__PURE__*/React.createElement("button", {
     disabled: !validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword,
     className: !validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword ? _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].disabledButton : _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].button
   }, "Create Student User")), /*#__PURE__*/React.createElement("img", {
@@ -4178,6 +4203,11 @@ function StudentPage(_ref) {
 /* harmony import */ var _components_AssignmentCollapsible_AssignmentCollapsible__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/AssignmentCollapsible/AssignmentCollapsible */ "./src/components/AssignmentCollapsible/AssignmentCollapsible.js");
 /* harmony import */ var _components_ClassCollapsible_ClassCollapsible__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/ClassCollapsible/ClassCollapsible */ "./src/components/ClassCollapsible/ClassCollapsible.js");
 /* harmony import */ var _components_TeamCollapsible_TeamCollapsible__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/TeamCollapsible/TeamCollapsible */ "./src/components/TeamCollapsible/TeamCollapsible.js");
+/* harmony import */ var _components_ParentCreateForm_ParentCreateForm__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../components/ParentCreateForm/ParentCreateForm */ "./src/components/ParentCreateForm/ParentCreateForm.js");
+/* harmony import */ var _components_StudentCreateForm_StudentCreateForm__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../components/StudentCreateForm/StudentCreateForm */ "./src/components/StudentCreateForm/StudentCreateForm.js");
+/* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+
 
 
 
@@ -4189,19 +4219,47 @@ function TeacherPage(_ref) {
   let {
     user
   } = _ref;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  const [showParentCreateForm, setShowParentCreateForm] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [showStudentCreateForm, setShowStudentCreateForm] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const toggleParentCreateForm = () => {
+    setShowParentCreateForm(prevState => !prevState);
+    setShowStudentCreateForm(false);
+  };
+  const toggleStudentCreateForm = () => {
+    setShowStudentCreateForm(prevState => !prevState);
+    setShowParentCreateForm(false);
+  };
+  return /*#__PURE__*/React.createElement("div", {
     className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].TeacherPage
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", {
+  }, showParentCreateForm && /*#__PURE__*/React.createElement("div", {
+    className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].createForm
+  }, /*#__PURE__*/React.createElement(_components_ParentCreateForm_ParentCreateForm__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    user: user,
+    setShowParentCreateForm: setShowParentCreateForm
+  })), showStudentCreateForm && /*#__PURE__*/React.createElement("div", {
+    className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].createForm
+  }, /*#__PURE__*/React.createElement(_components_StudentCreateForm_StudentCreateForm__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    user: user,
+    setShowStudentCreateForm: setShowStudentCreateForm
+  })), /*#__PURE__*/React.createElement("h1", {
     className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Header
-  }, "Welcome, ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+  }, "Welcome, ", /*#__PURE__*/React.createElement("span", {
     className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].span
-  }, user.firstName), "!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, user.firstName), "!"), /*#__PURE__*/React.createElement("div", {
+    className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].addBtnContainer
+  }, /*#__PURE__*/React.createElement("button", {
+    className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].addBtn,
+    onClick: toggleParentCreateForm
+  }, "Add Parent"), /*#__PURE__*/React.createElement("button", {
+    className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].addBtn,
+    onClick: toggleStudentCreateForm
+  }, "Add Student")), /*#__PURE__*/React.createElement("div", {
     className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].mainContainer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].leftContainer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_BarGraph_BarGraph__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_TeacherReadingTracker_TeacherReadingTracker__WEBPACK_IMPORTED_MODULE_3__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, /*#__PURE__*/React.createElement(_components_BarGraph_BarGraph__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/React.createElement(_components_TeacherReadingTracker_TeacherReadingTracker__WEBPACK_IMPORTED_MODULE_3__["default"], null)), /*#__PURE__*/React.createElement("div", {
     className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].rightContainer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_AssignmentCollapsible_AssignmentCollapsible__WEBPACK_IMPORTED_MODULE_4__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ClassCollapsible_ClassCollapsible__WEBPACK_IMPORTED_MODULE_5__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_TeamCollapsible_TeamCollapsible__WEBPACK_IMPORTED_MODULE_6__["default"], null))));
+  }, /*#__PURE__*/React.createElement(_components_AssignmentCollapsible_AssignmentCollapsible__WEBPACK_IMPORTED_MODULE_4__["default"], null), /*#__PURE__*/React.createElement(_components_ClassCollapsible_ClassCollapsible__WEBPACK_IMPORTED_MODULE_5__["default"], null), /*#__PURE__*/React.createElement(_components_TeamCollapsible_TeamCollapsible__WEBPACK_IMPORTED_MODULE_6__["default"], null))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TeacherPage);
 
@@ -4348,7 +4406,8 @@ function getUser() {
   if (!token) return null; // Return null if token is missing
   try {
     const payload = JSON.parse(atob(token.split('.')[1]));
-    return payload.user; // Return user object from token payload
+    const user = _users_api__WEBPACK_IMPORTED_MODULE_0__.findUser(payload.user._id); // Return user object from token payload
+    return user;
   } catch (error) {
     console.error("Error parsing user from token:", error);
     return null; // Return null if there's an error parsing the token
@@ -7015,6 +7074,7 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 ___CSS_LOADER_EXPORT___.push([module.id, `.emsU6kgDEloBJriL_yTp {
   width: 100%;
   height: 100%;
+  position: relative;
 }
 .emsU6kgDEloBJriL_yTp .o_abCV2G_KvW4SW8IQfK {
   color: white;
@@ -7027,6 +7087,42 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.emsU6kgDEloBJriL_yTp {
 .emsU6kgDEloBJriL_yTp .o_abCV2G_KvW4SW8IQfK .sK6u_wOJOHRKnq4Occ1Q {
   color: var(--text-light);
   text-shadow: 1px 1px 1px white, -1px 1px 1px white, -1px -1px 0 white, 1px -1px 0 white;
+}
+.emsU6kgDEloBJriL_yTp .G1Z_hX8nfCAq3jJ29DQb {
+  width: 100%;
+  display: flex;
+  justify-items: stretch;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.emsU6kgDEloBJriL_yTp .G1Z_hX8nfCAq3jJ29DQb .gKDpmKxiZNIAr4FCvvQy {
+  font-family: "Dekko", cursive;
+  background-color: var(--text-light);
+  border: 0.2rem solid var(--text-dark);
+  height: 3rem;
+  width: 100%;
+  margin: 0.3rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 0.3rem;
+  color: var(--text-dark);
+  transition: 0.4s ease;
+}
+.emsU6kgDEloBJriL_yTp .G1Z_hX8nfCAq3jJ29DQb .gKDpmKxiZNIAr4FCvvQy:hover {
+  background-color: var(--text-dark);
+  color: white;
+  transition: 0.4s ease;
+}
+.emsU6kgDEloBJriL_yTp .UODI2mGCqYkxcILS5ffp {
+  width: 100%;
+  height: 100%;
+  z-index: 500;
+  position: absolute;
+  display: flex;
+  border-radius: 3rem;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 10px black;
 }
 .emsU6kgDEloBJriL_yTp .wDUvVrlG84aiRkCPonSb {
   width: 100%;
@@ -7092,12 +7188,15 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.emsU6kgDEloBJriL_yTp {
 }
 .emsU6kgDEloBJriL_yTp .wDUvVrlG84aiRkCPonSb .VW6MmtRTDJxGtq1Vfq6Z {
   width: 50%;
-}`, "",{"version":3,"sources":["webpack://./src/pages/TeacherPage/TeacherPage.module.scss"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,YAAA;AACJ;AAAI;EACI,YAAA;EACA,eAAA;EACA,kBAAA;EACA,kCAAA;EACA,qBAAA;EACA,0BAAA;AAER;AADQ;EACI,wBAAA;EACA,uFACA;AAEZ;AAII;EACI,WAAA;EACA,aAAA;AAFR;AAGQ;EACI,UAAA;EACA,SAAA;EACA,YAAA;EACA,UAAA;EACA,aAAA;EACA,sBAAA;EACA,mBAAA;AADZ;AAEY;EACI,aAAA;EACA,aAAA;EACA,sBAAA;EACA,8BAAA;EACA,mBAAA;AAAhB;AACgB;EACI,SAAA;AACpB;AAEY;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,mBAAA;EACA,qCAAA;EACA,mCAAA;EACA,YAAA;EACA,aAAA;AAAhB;AACgB;EACI,SAAA;AACpB;AACgB;EACI,YAAA;EACA,aAAA;EACA,aAAA;EACA,6BAAA;EACA,qBAAA;EACA,mBAAA;EACA,uBAAA;AACpB;AAAoB;EACI,aAAA;EACA,sBAAA;AAExB;AADwB;EACI,aAAA;EACA,aAAA;EACA,kBAAA;AAG5B;AAF4B;EACI,kBAAA;EACA,SAAA;EACA,YAAA;EACA,WAAA;EACA,kCAAA;EACA,2BAAA;AAIhC;AAGQ;EACI,UAAA;AADZ","sourcesContent":[".TeacherPage {\n    width: 100%;\n    height: 100%;\n    .Header {\n        color: white;\n        font-size: 3rem;\n        text-align: center;\n        background-color: var(--text-dark);\n        border-radius: 1.5rem;\n        box-shadow: 0 0 10px black;\n        .span {\n            color: var(--text-light);\n            text-shadow:\n            1px 1px 1px white,\n            -1px 1px 1px white,\n            -1px -1px 0 white,\n            1px -1px 0 white;\n        }\n    }\n    .mainContainer {\n        width: 100%;\n        display: flex;\n        .leftContainer {\n            padding: 0;\n            margin: 0;\n            height: 100%;\n            width: 50%;\n            display: flex;\n            flex-direction: column;\n            align-items: center;\n            .graphScale {\n                height: 325px;\n                display: flex;\n                flex-direction: column;\n                justify-content: space-between;\n                margin-bottom: 1rem;\n                p {\n                    margin: 0;\n                }\n            }\n            .graphContainer {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                border-radius: 2rem;\n                border: .2rem solid var(--text-dark);\n                background-color: var(--text-light);\n                width: 500px;\n                height: 500px;\n                .subject {\n                    margin: 0;\n                }\n                .graphInnerContainer {\n                    width: 400px;\n                    height: 350px;\n                    display: flex;\n                    justify-content: space-evenly;\n                    align-items: flex-end;\n                    border-radius: 2rem;\n                    background-color: white;\n                    .gradeContainer {\n                        display: flex;\n                        flex-direction: column;\n                        .bar {\n                            width: 1.5rem;\n                            height: 325px;\n                            position: relative;\n                            .barColor {\n                                position: absolute;\n                                bottom: 0;\n                                height: 100%;\n                                width: 100%;\n                                background-color: var(--text-dark);\n                                border: .15rem solid white;\n                            }\n                        }\n                    }\n                }\n            }\n        }\n        .rightContainer {\n            width: 50%;\n        }\n    }\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/pages/TeacherPage/TeacherPage.module.scss"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,YAAA;EACA,kBAAA;AACJ;AAAI;EACI,YAAA;EACA,eAAA;EACA,kBAAA;EACA,kCAAA;EACA,qBAAA;EACA,0BAAA;AAER;AADQ;EACI,wBAAA;EACA,uFACA;AAEZ;AAII;EACI,WAAA;EACA,aAAA;EACA,sBAAA;EACA,mBAAA;EACA,mBAAA;AAFR;AAGQ;EACI,6BAAA;EACA,mCAAA;EACA,qCAAA;EACA,YAAA;EACA,WAAA;EACA,cAAA;EACA,iBAAA;EACA,iBAAA;EACA,qBAAA;EACA,uBAAA;EACA,qBAAA;AADZ;AAEY;EACI,kCAAA;EACA,YAAA;EACA,qBAAA;AAAhB;AAII;EACI,WAAA;EACA,YAAA;EACA,YAAA;EACA,kBAAA;EACA,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,oCAAA;EACA,0BAAA;AAFR;AAII;EACI,WAAA;EACA,aAAA;AAFR;AAGQ;EACI,UAAA;EACA,SAAA;EACA,YAAA;EACA,UAAA;EACA,aAAA;EACA,sBAAA;EACA,mBAAA;AADZ;AAEY;EACI,aAAA;EACA,aAAA;EACA,sBAAA;EACA,8BAAA;EACA,mBAAA;AAAhB;AACgB;EACI,SAAA;AACpB;AAEY;EACI,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,mBAAA;EACA,qCAAA;EACA,mCAAA;EACA,YAAA;EACA,aAAA;AAAhB;AACgB;EACI,SAAA;AACpB;AACgB;EACI,YAAA;EACA,aAAA;EACA,aAAA;EACA,6BAAA;EACA,qBAAA;EACA,mBAAA;EACA,uBAAA;AACpB;AAAoB;EACI,aAAA;EACA,sBAAA;AAExB;AADwB;EACI,aAAA;EACA,aAAA;EACA,kBAAA;AAG5B;AAF4B;EACI,kBAAA;EACA,SAAA;EACA,YAAA;EACA,WAAA;EACA,kCAAA;EACA,2BAAA;AAIhC;AAGQ;EACI,UAAA;AADZ","sourcesContent":[".TeacherPage {\n    width: 100%;\n    height: 100%;\n    position: relative;\n    .Header {\n        color: white;\n        font-size: 3rem;\n        text-align: center;\n        background-color: var(--text-dark);\n        border-radius: 1.5rem;\n        box-shadow: 0 0 10px black;\n        .span {\n            color: var(--text-light);\n            text-shadow:\n            1px 1px 1px white,\n            -1px 1px 1px white,\n            -1px -1px 0 white,\n            1px -1px 0 white;\n        }\n    }\n    .addBtnContainer {\n        width: 100%;\n        display: flex;\n        justify-items: stretch;\n        align-items: center;\n        margin-bottom: 1rem;\n        .addBtn {\n            font-family: \"Dekko\", cursive;\n            background-color: var(--text-light);\n            border: .2rem solid var(--text-dark);\n            height: 3rem;\n            width: 100%;\n            margin: .3rem;\n            font-size: 1.2rem;\n            font-weight: bold;\n            border-radius: .3rem;\n            color: var(--text-dark);\n            transition: .4s ease;\n            &:hover {\n                background-color: var(--text-dark);\n                color: white;\n                transition: .4s ease;\n            }\n        }\n    }\n    .createForm {\n        width: 100%;\n        height: 100%;\n        z-index: 500;\n        position: absolute;\n        display: flex;\n        border-radius: 3rem;\n        justify-content: center;\n        background-color: rgba(0, 0, 0, .3);\n        box-shadow: 0 0 10px black;\n    }\n    .mainContainer {\n        width: 100%;\n        display: flex;\n        .leftContainer {\n            padding: 0;\n            margin: 0;\n            height: 100%;\n            width: 50%;\n            display: flex;\n            flex-direction: column;\n            align-items: center;\n            .graphScale {\n                height: 325px;\n                display: flex;\n                flex-direction: column;\n                justify-content: space-between;\n                margin-bottom: 1rem;\n                p {\n                    margin: 0;\n                }\n            }\n            .graphContainer {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                border-radius: 2rem;\n                border: .2rem solid var(--text-dark);\n                background-color: var(--text-light);\n                width: 500px;\n                height: 500px;\n                .subject {\n                    margin: 0;\n                }\n                .graphInnerContainer {\n                    width: 400px;\n                    height: 350px;\n                    display: flex;\n                    justify-content: space-evenly;\n                    align-items: flex-end;\n                    border-radius: 2rem;\n                    background-color: white;\n                    .gradeContainer {\n                        display: flex;\n                        flex-direction: column;\n                        .bar {\n                            width: 1.5rem;\n                            height: 325px;\n                            position: relative;\n                            .barColor {\n                                position: absolute;\n                                bottom: 0;\n                                height: 100%;\n                                width: 100%;\n                                background-color: var(--text-dark);\n                                border: .15rem solid white;\n                            }\n                        }\n                    }\n                }\n            }\n        }\n        .rightContainer {\n            width: 50%;\n        }\n    }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"TeacherPage": `emsU6kgDEloBJriL_yTp`,
 	"Header": `o_abCV2G_KvW4SW8IQfK`,
 	"span": `sK6u_wOJOHRKnq4Occ1Q`,
+	"addBtnContainer": `G1Z_hX8nfCAq3jJ29DQb`,
+	"addBtn": `gKDpmKxiZNIAr4FCvvQy`,
+	"createForm": `UODI2mGCqYkxcILS5ffp`,
 	"mainContainer": `wDUvVrlG84aiRkCPonSb`,
 	"leftContainer": `PVZyCcTXgOloKXyLtzGG`,
 	"graphScale": `EfKHN2SAytWqEql6vdoQ`,
@@ -8531,4 +8630,4 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.8713c5ca5a0e576f0dc576bf1bf5e003.js.map
+//# sourceMappingURL=App.20ce771606038cf531be2010eaffe756.js.map

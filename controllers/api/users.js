@@ -261,7 +261,7 @@ async function indexUsers(req, res, next){
     /****** Index Individual User *******/
 async function showUser(req, res, next){
     try {
-        const user = await User.findById({_id: req.params.id})
+        const user = await User.findById({_id: req.params.id}).populate("teachers")
         console.log(user)
         res.locals.data.user = user
         next()

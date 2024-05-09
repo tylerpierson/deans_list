@@ -46,7 +46,8 @@ export function getUser() {
   if (!token) return null; // Return null if token is missing
   try {
     const payload = JSON.parse(atob(token.split('.')[1]));
-    return payload.user; // Return user object from token payload
+    const user =  usersAPI.findUser(payload.user._id)// Return user object from token payload
+    return user
   } catch (error) {
     console.error("Error parsing user from token:", error);
     return null; // Return null if there's an error parsing the token
