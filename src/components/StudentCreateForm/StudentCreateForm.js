@@ -36,6 +36,7 @@ const StudentCreateForm = ({ user, setShowStudentCreateForm }) => {
     const [validConfirmPassword, setValidConfirmPassword] = useState(false);
     const [validCampusNum, setValidCampusNum] = useState(true);
     const [validRole, setValidRole] = useState(true);
+    const [validSelectedTeachers, setValidSelectedTeachers] = useState(true);
 
     const [firstNameFocus, setFirstNameFocus] = useState(false);
     const [lastNameFocus, setLastNameFocus] = useState(false);
@@ -74,10 +75,15 @@ const StudentCreateForm = ({ user, setShowStudentCreateForm }) => {
         setErrMsg('');
     }, [firstName, lastName, email, password, confirmPassword]);
 
+    // Update the validSelectedTeachers state based on whether at least one teacher is selected
+    useEffect(() => {
+        setValidSelectedTeachers(selectedTeachers.length > 0);
+    }, [selectedTeachers]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        if (!validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword ) {
+        if (!validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword || (user.role === 'admin' && !validSelectedTeachers)) {
             setErrMsg("Invalid Entry");
             return;
         }
@@ -268,7 +274,7 @@ const StudentCreateForm = ({ user, setShowStudentCreateForm }) => {
                 </p>
                 {user.role === 'admin' ? 
                     <div className={styles.teacherContainer}>
-                        <label className={styles.label}>Select Teachers:</label>
+                        <label className={styles.label}>* Select Teachers:</label>
                         {user.teachers.map((teacher, index) => (
                             <div key={index}>
                                 <input
@@ -294,8 +300,8 @@ const StudentCreateForm = ({ user, setShowStudentCreateForm }) => {
                     ''
                 }
                 <button
-                    disabled={!validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword }
-                    className={(!validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword ) ? styles.disabledButton : styles.button}
+                    disabled={!validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword || (user.role === 'admin' && !validSelectedTeachers) }
+                    className={(!validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword || (user.role === 'admin' && !validSelectedTeachers)) ? styles.disabledButton : styles.button}
                 >
                     Create Student User
                 </button>

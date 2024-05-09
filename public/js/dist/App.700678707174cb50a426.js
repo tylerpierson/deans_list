@@ -2494,6 +2494,7 @@ const StudentCreateForm = _ref => {
   const [validConfirmPassword, setValidConfirmPassword] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [validCampusNum, setValidCampusNum] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
   const [validRole, setValidRole] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
+  const [validSelectedTeachers, setValidSelectedTeachers] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
   const [firstNameFocus, setFirstNameFocus] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [lastNameFocus, setLastNameFocus] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [emailFocus, setEmailFocus] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
@@ -2522,9 +2523,14 @@ const StudentCreateForm = _ref => {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     setErrMsg('');
   }, [firstName, lastName, email, password, confirmPassword]);
+
+  // Update the validSelectedTeachers state based on whether at least one teacher is selected
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    setValidSelectedTeachers(selectedTeachers.length > 0);
+  }, [selectedTeachers]);
   const handleSubmit = async e => {
     e.preventDefault();
-    if (!validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword) {
+    if (!validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword || user.role === 'admin' && !validSelectedTeachers) {
       setErrMsg("Invalid Entry");
       return;
     }
@@ -2728,7 +2734,7 @@ const StudentCreateForm = _ref => {
     className: _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].teacherContainer
   }, /*#__PURE__*/React.createElement("label", {
     className: _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].label
-  }, "Select Teachers:"), user.teachers.map((teacher, index) => /*#__PURE__*/React.createElement("div", {
+  }, "* Select Teachers:"), user.teachers.map((teacher, index) => /*#__PURE__*/React.createElement("div", {
     key: index
   }, /*#__PURE__*/React.createElement("input", {
     type: "checkbox",
@@ -2747,8 +2753,8 @@ const StudentCreateForm = _ref => {
   }), /*#__PURE__*/React.createElement("label", {
     htmlFor: "teacher_".concat(index)
   }, teacher.firstName)))) : '', /*#__PURE__*/React.createElement("button", {
-    disabled: !validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword,
-    className: !validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword ? _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].disabledButton : _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].button
+    disabled: !validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword || user.role === 'admin' && !validSelectedTeachers,
+    className: !validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword || user.role === 'admin' && !validSelectedTeachers ? _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].disabledButton : _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].button
   }, "Create Student User")), /*#__PURE__*/React.createElement("img", {
     onClick: handleExit,
     className: _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].closeBtn,
@@ -8646,4 +8652,4 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.13c0145fb7df3227947cbcae0dfa164b.js.map
+//# sourceMappingURL=App.89873392c486a4230b130ed684553855.js.map
