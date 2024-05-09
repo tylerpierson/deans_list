@@ -268,14 +268,9 @@ const AdminCreateForm = _ref => {
     e.preventDefault();
     setShowAdminCreateForm(false);
   };
-  return /*#__PURE__*/React.createElement(React.Fragment, null, success ? /*#__PURE__*/React.createElement("section", {
+  return /*#__PURE__*/React.createElement("section", {
     className: _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].section
-  }, /*#__PURE__*/React.createElement("h1", null, "Success!"), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("a", {
-    className: _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].a,
-    href: "#"
-  }, "Sign In"))) : /*#__PURE__*/React.createElement("section", {
-    className: _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].section
-  }, /*#__PURE__*/React.createElement("p", {
+  }, success ? /*#__PURE__*/React.createElement("p", null, "User Created!") : '', /*#__PURE__*/React.createElement("p", {
     ref: errRef,
     className: errMsg ? _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].errmsg : _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen,
     "aria-live": "assertive"
@@ -436,7 +431,7 @@ const AdminCreateForm = _ref => {
     className: _AdminCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].closeBtn,
     src: "/img/window-close.png",
     alt: "window-close"
-  })));
+  }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AdminCreateForm);
 
@@ -1817,6 +1812,7 @@ const ParentCreateForm = _ref => {
   const [confirmPassword, setConfirmPassword] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [campusNum, setCampusNum] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("".concat(user.campusNum));
   const [role, setRole] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('parent'); // State for role
+  const [selectedStudents, setSelectedStudents] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]); // State for selected students
 
   const [validFirstName, setValidFirstName] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [validLastName, setValidLastName] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
@@ -1825,7 +1821,7 @@ const ParentCreateForm = _ref => {
   const [validConfirmPassword, setValidConfirmPassword] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [validCampusNum, setValidCampusNum] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
   const [validRole, setValidRole] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true); // Always valid for hard-coded role
-
+  const [validSelectedStudents, setValidSelectedStudents] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
   const [firstNameFocus, setFirstNameFocus] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [lastNameFocus, setLastNameFocus] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [emailFocus, setEmailFocus] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
@@ -1854,9 +1850,17 @@ const ParentCreateForm = _ref => {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     setErrMsg('');
   }, [firstName, lastName, email, password, confirmPassword]);
+
+  // Update the validSelectedStudents state based on whether at least one student is selected
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    setValidSelectedStudents(selectedStudents.length > 0);
+  }, [selectedStudents]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    console.log('Selected Students:', selectedStudents);
+  }, [selectedStudents]);
   const handleSubmit = async e => {
     e.preventDefault();
-    if (!validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword) {
+    if (!validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword || !validSelectedStudents) {
       setErrMsg("Invalid Entry");
       return;
     }
@@ -1873,7 +1877,9 @@ const ParentCreateForm = _ref => {
           email,
           password,
           campusNum,
-          role // Include role in the request body
+          role,
+          // Include role in the request body
+          students: [selectedStudents] // Include selected students in the request body
         })
       });
       if (!response.ok) {
@@ -1881,6 +1887,8 @@ const ParentCreateForm = _ref => {
       }
       const responseData = await response.json();
       setSuccess(true);
+      setShowParentCreateForm(false);
+      console.log(user, user.students);
 
       // Clear form fields
       setFirstName('');
@@ -1899,14 +1907,9 @@ const ParentCreateForm = _ref => {
     e.preventDefault();
     setShowParentCreateForm(false);
   };
-  return /*#__PURE__*/React.createElement(React.Fragment, null, success ? /*#__PURE__*/React.createElement("section", {
+  return /*#__PURE__*/React.createElement("section", {
     className: _ParentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].section
-  }, /*#__PURE__*/React.createElement("h1", null, "Success!"), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("a", {
-    className: _ParentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].a,
-    href: "#"
-  }, "Sign In"))) : /*#__PURE__*/React.createElement("section", {
-    className: _ParentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].section
-  }, /*#__PURE__*/React.createElement("p", {
+  }, user ? /*#__PURE__*/React.createElement("p", null, "User Created!") : '', /*#__PURE__*/React.createElement("p", {
     ref: errRef,
     className: errMsg ? _ParentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].errmsg : _ParentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen,
     "aria-live": "assertive"
@@ -2059,15 +2062,37 @@ const ParentCreateForm = _ref => {
     className: confirmPasswordFocus && !validConfirmPassword ? _ParentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].instructions : _ParentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen
   }, /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
     icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faInfoCircle
-  }), "Please confirm your password."), /*#__PURE__*/React.createElement("button", {
-    disabled: !validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword,
-    className: !validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword ? _ParentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].disabledButton : _ParentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].button
+  }), "Please confirm your password."), /*#__PURE__*/React.createElement("div", {
+    className: _ParentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].studentContainer
+  }, /*#__PURE__*/React.createElement("label", {
+    className: _ParentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].label
+  }, "* Select Students:"), user.students.map((student, index) => /*#__PURE__*/React.createElement("div", {
+    key: index
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "checkbox",
+    id: "student_".concat(index),
+    value: student._id,
+    onChange: e => {
+      const studentId = e.target.value;
+      setSelectedStudents(prevStudents => {
+        if (e.target.checked) {
+          return [...prevStudents, studentId];
+        } else {
+          return prevStudents.filter(id => id !== studentId);
+        }
+      });
+    }
+  }), /*#__PURE__*/React.createElement("label", {
+    htmlFor: "student_".concat(index)
+  }, student.lastName, ", ", student.firstName)))), /*#__PURE__*/React.createElement("button", {
+    disabled: !validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword || !validSelectedStudents,
+    className: !validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword || !validSelectedStudents ? _ParentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].disabledButton : _ParentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].button
   }, "Create Parent User")), /*#__PURE__*/React.createElement("img", {
     onClick: handleExit,
     className: _ParentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].closeBtn,
     src: "/img/window-close.png",
     alt: "window-close"
-  })));
+  }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ParentCreateForm);
 
@@ -2486,6 +2511,7 @@ const StudentCreateForm = _ref => {
   const [campusNum, setCampusNum] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("".concat(user.campusNum));
   const [role, setRole] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('student'); // State for role
   const [selectedTeachers, setSelectedTeachers] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]); // State for selected teachers
+  const [selectedTeacherGradeLevel, setSelectedTeacherGradeLevel] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''); // State for selected teacher's gradeLevel
 
   const [validFirstName, setValidFirstName] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [validLastName, setValidLastName] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
@@ -2530,11 +2556,25 @@ const StudentCreateForm = _ref => {
   }, [selectedTeachers]);
   const handleSubmit = async e => {
     e.preventDefault();
+
+    // Validate form fields
     if (!validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword || user.role === 'admin' && !validSelectedTeachers) {
       setErrMsg("Invalid Entry");
       return;
     }
+    let selectedTeacherGradeLevel = null;
     try {
+      // If the user is an admin and selected teachers are provided
+      if (user.role === 'admin' && validSelectedTeachers) {
+        // Assuming the teachers array contains teacher objects with a gradeLevel property
+        const selectedTeacher = user.teachers.find(teacher => selectedTeachers.includes(teacher._id));
+        if (selectedTeacher) {
+          selectedTeacherGradeLevel = selectedTeacher.gradeLevel;
+        }
+      } else if (user.role === 'teacher') {
+        // If the user is a teacher, use their own gradeLevel
+        selectedTeacherGradeLevel = user.gradeLevel;
+      }
       const response = await fetch(REGISTER_URL, {
         method: 'POST',
         headers: {
@@ -2548,8 +2588,8 @@ const StudentCreateForm = _ref => {
           password,
           campusNum,
           role,
-          // Include role in the request body
-          teachers: selectedTeachers // Include selected teachers in the request body
+          teachers: selectedTeachers,
+          gradeLevel: selectedTeacherGradeLevel // Include selected teacher's gradeLevel
         })
       });
       if (!response.ok) {
@@ -2578,7 +2618,7 @@ const StudentCreateForm = _ref => {
   };
   return /*#__PURE__*/React.createElement("section", {
     className: _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].section
-  }, /*#__PURE__*/React.createElement("p", {
+  }, success ? /*#__PURE__*/React.createElement("p", null, "User Created!") : '', /*#__PURE__*/React.createElement("p", {
     ref: errRef,
     className: errMsg ? _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].errmsg : _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen,
     "aria-live": "assertive"
@@ -2753,7 +2793,7 @@ const StudentCreateForm = _ref => {
     }
   }), /*#__PURE__*/React.createElement("label", {
     htmlFor: "teacher_".concat(index)
-  }, teacher.firstName)))) : '', /*#__PURE__*/React.createElement("button", {
+  }, teacher.lastName, ", ", teacher.firstName)))) : '', /*#__PURE__*/React.createElement("button", {
     disabled: !validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword || user.role === 'admin' && !validSelectedTeachers,
     className: !validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword || user.role === 'admin' && !validSelectedTeachers ? _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].disabledButton : _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].button
   }, "Create Student User")), /*#__PURE__*/React.createElement("img", {
@@ -2916,7 +2956,7 @@ const TeacherCreateForm = _ref => {
   const [confirmPassword, setConfirmPassword] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [campusNum, setCampusNum] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("".concat(user.campusNum));
   const [role, setRole] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('teacher'); // State for role
-
+  const [gradeLevel, setGradeLevel] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [validFirstName, setValidFirstName] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [validLastName, setValidLastName] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [validEmail, setValidEmail] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
@@ -2932,6 +2972,9 @@ const TeacherCreateForm = _ref => {
   const [confirmPasswordFocus, setConfirmPasswordFocus] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [errMsg, setErrMsg] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [success, setSuccess] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+
+  // Define an array of grade options
+  const gradeOptions = ["Pre-K", "K", "1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th", "11th", "12th"];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     firstNameRef.current.focus();
   }, []);
@@ -2972,7 +3015,9 @@ const TeacherCreateForm = _ref => {
           email,
           password,
           campusNum,
-          role // Include role in the request body
+          role,
+          // Include role in the request body
+          gradeLevel
         })
       });
       if (!response.ok) {
@@ -2987,6 +3032,7 @@ const TeacherCreateForm = _ref => {
       setEmail('');
       setPassword('');
       setConfirmPassword('');
+      setGradeLevel('');
       // Role is hard-coded, no need to reset
     } catch (err) {
       console.error(err); // Log the error to the console
@@ -2998,14 +3044,9 @@ const TeacherCreateForm = _ref => {
     e.preventDefault();
     setShowTeacherCreateForm(false);
   };
-  return /*#__PURE__*/React.createElement(React.Fragment, null, success ? /*#__PURE__*/React.createElement("section", {
+  return /*#__PURE__*/React.createElement("section", {
     className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].section
-  }, /*#__PURE__*/React.createElement("h1", null, "Success!"), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("a", {
-    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].a,
-    href: "#"
-  }, "Sign In"))) : /*#__PURE__*/React.createElement("section", {
-    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].section
-  }, /*#__PURE__*/React.createElement("p", {
+  }, success ? /*#__PURE__*/React.createElement("p", null, "User Created!") : '', /*#__PURE__*/React.createElement("p", {
     ref: errRef,
     className: errMsg ? _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].errmsg : _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen,
     "aria-live": "assertive"
@@ -3101,6 +3142,23 @@ const TeacherCreateForm = _ref => {
   }, /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
     icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faInfoCircle
   }), "Please enter a valid email address."), /*#__PURE__*/React.createElement("div", {
+    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].grade
+  }, /*#__PURE__*/React.createElement("label", {
+    htmlFor: "gradeLevel",
+    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].label
+  }, "Grade Level:"), /*#__PURE__*/React.createElement("select", {
+    id: "gradeLevel",
+    onChange: e => setGradeLevel(e.target.value) // Handle changes to the selected grade
+    ,
+    value: gradeLevel,
+    required: true,
+    className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].select
+  }, /*#__PURE__*/React.createElement("option", {
+    value: ""
+  }, "Select Grade"), gradeOptions.map((grade, index) => /*#__PURE__*/React.createElement("option", {
+    key: index,
+    value: grade
+  }, grade))), "`"), /*#__PURE__*/React.createElement("div", {
     className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].passwordContainer
   }, /*#__PURE__*/React.createElement("div", {
     className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].pwd
@@ -3166,7 +3224,7 @@ const TeacherCreateForm = _ref => {
     className: _TeacherCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].closeBtn,
     src: "/img/window-close.png",
     alt: "window-close"
-  })));
+  }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TeacherCreateForm);
 
@@ -8653,4 +8711,4 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.c3e1a62614812e82878d88f4881b6f59.js.map
+//# sourceMappingURL=App.12d2dd2a8a33044af09b1738d77760cd.js.map

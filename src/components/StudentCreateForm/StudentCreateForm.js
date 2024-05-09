@@ -2,14 +2,14 @@ import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from './StudentCreateForm.module.scss'; // Import your CSS module
-import { getToken } from '../../utilities/users-service'
+import { getToken } from '../../utilities/users-service';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const REGISTER_URL = '/api/users';
 
 const StudentCreateForm = ({ user, setShowStudentCreateForm }) => {
-    const token = getToken()
+    const token = getToken();
 
     const firstNameRef = useRef();
     const lastNameRef = useRef();
@@ -28,6 +28,7 @@ const StudentCreateForm = ({ user, setShowStudentCreateForm }) => {
     const [campusNum, setCampusNum] = useState(`${user.campusNum}`);
     const [role, setRole] = useState('student'); // State for role
     const [selectedTeachers, setSelectedTeachers] = useState([]); // State for selected teachers
+    const [selectedTeacherGradeLevel, setSelectedTeacherGradeLevel] = useState(''); // State for selected teacher's gradeLevel
 
     const [validFirstName, setValidFirstName] = useState(false);
     const [validLastName, setValidLastName] = useState(false);
@@ -83,12 +84,27 @@ const StudentCreateForm = ({ user, setShowStudentCreateForm }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
+        // Validate form fields
         if (!validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword || (user.role === 'admin' && !validSelectedTeachers)) {
             setErrMsg("Invalid Entry");
             return;
         }
         
+        let selectedTeacherGradeLevel = null;
+    
         try {
+            // If the user is an admin and selected teachers are provided
+            if (user.role === 'admin' && validSelectedTeachers) {
+                // Assuming the teachers array contains teacher objects with a gradeLevel property
+                const selectedTeacher = user.teachers.find(teacher => selectedTeachers.includes(teacher._id));
+                if (selectedTeacher) {
+                    selectedTeacherGradeLevel = selectedTeacher.gradeLevel;
+                }
+            } else if (user.role === 'teacher') {
+                // If the user is a teacher, use their own gradeLevel
+                selectedTeacherGradeLevel = user.gradeLevel;
+            }
+    
             const response = await fetch(REGISTER_URL, {
                 method: 'POST',
                 headers: {
@@ -101,8 +117,9 @@ const StudentCreateForm = ({ user, setShowStudentCreateForm }) => {
                     email,
                     password,
                     campusNum,
-                    role, // Include role in the request body
-                    teachers: selectedTeachers // Include selected teachers in the request body
+                    role,
+                    teachers: selectedTeachers,
+                    gradeLevel: selectedTeacherGradeLevel // Include selected teacher's gradeLevel
                 })
             });
     
@@ -113,7 +130,7 @@ const StudentCreateForm = ({ user, setShowStudentCreateForm }) => {
             const responseData = await response.json();
     
             setSuccess(true);
-            setShowStudentCreateForm(false)
+            setShowStudentCreateForm(false);
     
             // Clear form fields
             setFirstName('');
@@ -127,7 +144,9 @@ const StudentCreateForm = ({ user, setShowStudentCreateForm }) => {
             setErrMsg(err.message || 'Registration Failed');
             errRef.current.focus();
         }
-    };     
+    };
+    
+    
     
     const handleExit = async (e) => {
         e.preventDefault()
@@ -136,6 +155,7 @@ const StudentCreateForm = ({ user, setShowStudentCreateForm }) => {
 
     return (
         <section className={styles.section}>
+            {success ? <p>User Created!</p> : ''}
             <p ref={errRef} className={errMsg ? styles.errmsg : styles.offscreen} aria-live="assertive">{errMsg}</p>
             <h1>Register</h1>
             <form className={styles.form} onSubmit={handleSubmit}>
@@ -293,7 +313,7 @@ const StudentCreateForm = ({ user, setShowStudentCreateForm }) => {
                                         });
                                     }}
                                 />
-                                <label htmlFor={`teacher_${index}`}>{teacher.firstName}</label>
+                                <label htmlFor={`teacher_${index}`}>{teacher.lastName}, {teacher.firstName}</label>
                             </div>
                         ))}
                     </div>

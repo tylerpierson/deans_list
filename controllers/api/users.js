@@ -132,6 +132,11 @@ async function createUser(req, res, next) {
             campus.parents.push(user._id);
         }
 
+        // Automatically set the gradeLevel of the new student to the gradeLevel of the first teacher in their teachers array
+        if (currentUser.role === 'teacher' && user.role === 'student') {
+            user.gradeLevel = currentUser.gradeLevel;
+        }
+
         // Save the campus document after pushing the user's ID
         await campus.save();
 
@@ -208,16 +213,16 @@ async function createUser(req, res, next) {
                         }
                     }
                 }
-                // Update parents' students arrays
-                if (req.body.parents && req.body.parents.length > 0) {
-                    // Loop through each teacher in the req body
-                    for (const parentId of req.body.parents) {
-                        // Find the parent in the database
-                        const parent = await User.findById(parentId);
-                        // If parent is found, push the new student's ID to their students array
-                        if (parent) {
-                            parent.parents.push(user._id);
-                            await parent.save();
+                        // Update students' parents arrays
+                if (user.role === 'parent' && req.body.students && req.body.students.length > 0) {
+                    // Loop through each student in the req body
+                    for (const studentId of req.body.students) {
+                        // Find the student in the database
+                        const student = await User.findById(studentId);
+                        // If student is found, push the new parent's ID to their parents array
+                        if (student) {
+                            student.parents.push(user._id);
+                            await student.save();
                         }
                     }
                 }
