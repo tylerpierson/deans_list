@@ -1,97 +1,66 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './Collapsible.module.scss';
 
 function Collapsible({ user }) {
-    const [selected, setSelected] = useState(null)
+    const [selected, setSelected] = useState(null);
 
-    const data = [
-        {
-            gradeLevel: 'Kindergarten',
-            teachers: 'Teacher 1',
-            students: 'Student 1'
-        },
-        {
-            gradeLevel: '1st Grade',
-            teachers: 'Teacher 1',
-            students: 'Student 1'
-        },
-        {
-            gradeLevel: '2nd Grade',
-            teachers: 'Teacher 1',
-            students: 'Student 1'
-        },
-        {
-            gradeLevel: '3rd Grade',
-            teachers: 'Teacher 1',
-            students: 'Student 1'
-        },
-        {
-            gradeLevel: '4th Grade',
-            teachers: 'Teacher 1',
-            students: 'Student 1'
-        },
-        {
-            gradeLevel: '5th Grade',
-            teachers: 'Teacher 1',
-            students: 'Student 1'
-        },
-        {
-            gradeLevel: '6th Grade',
-            teachers: 'Teacher 1',
-            students: 'Student 1'
-        },
-        {
-            gradeLevel: '7th Grade',
-            teachers: 'Teacher 1',
-            students: 'Student 1'
-        },
-        {
-            gradeLevel: '8th Grade',
-            teachers: 'Teacher 1',
-            students: 'Student 1'
-        },
-        {
-            gradeLevel: '9th Grade',
-            teachers: 'Teacher 1',
-            students: 'Student 1'
-        },
-        {
-            gradeLevel: '10th Grade',
-            teachers: 'Teacher 1',
-            students: 'Student 1'
-        },
-        {
-            gradeLevel: '11th Grade',
-            teachers: 'Teacher 1',
-            students: 'Student 1'
-        },
-        {
-            gradeLevel: '12th Grade',
-            teachers: 'Teacher 1',
-            students: 'Student 1'
-        }
-    ]
+    // Check if user and user.teachers are properly initialized
+    if (!user || !user.teachers || !user.students) {
+        return null; // or render a loading indicator, an error message, or handle this condition as needed
+    }
+
+    // Extract unique grade levels from all teachers
+    const gradeLevels = Array.from(new Set(user.teachers.map(teacher => teacher.gradeLevel)));
+
+    // Organize data based on grade levels
+    const data = gradeLevels.map(gradeLevel => {
+        const teachersInGradeLevel = user.teachers.filter(teacher => teacher.gradeLevel === gradeLevel);
+        const studentsInGradeLevel = user.students.filter(student =>
+            teachersInGradeLevel.some(teacher => student.teachers.includes(teacher._id))
+        );
+        const teachersWithStudents = teachersInGradeLevel.map(teacher => {
+            const students = studentsInGradeLevel.filter(student => student.teachers.includes(teacher._id));
+            const studentsNames = students.map(student => `${student.firstName} ${student.lastName}`);
+            return {
+                ...teacher,
+                students: studentsNames
+            };
+        });
+        return { gradeLevel, teachers: teachersWithStudents };
+    });
 
     const toggle = i => {
-        if(selected === i){
-            return setSelected(null)
+        if (selected === i) {
+            return setSelected(null);
         }
-
-        setSelected(i)
-    }
+        setSelected(i);
+    };
 
     return (
         <div className={styles.wrapper}>
             <div className={styles.accordion}>
-                {data.map((item, i) => (
+                {data.map((gradeData, i) => (
                     <div className={`${styles.item} ${i === 0 ? styles.firstItem : ''} ${i === data.length - 1 ? styles.lastItem : ''}`} key={i}>
                         <div className={`${styles.title} ${i === 0 ? styles.firstTitle : ''} ${i === data.length - 1 ? styles.lastTitle : ''}`} onClick={() => toggle(i)}>
-                            <h3>{item.gradeLevel}</h3>
+                            <h3>{gradeData.gradeLevel}</h3>
                             <span>{selected === i ? '-' : '+'}</span>
                         </div>
                         <div className={`${styles.content} ${selected === i ? styles.show : ''}`}>
-                            <p>{item.teachers}</p>
-                            <p>{item.students}</p>
+                            {gradeData.teachers.map((teacher, j) => (
+                                <div key={j}>
+                                    <p>
+                                        <Link to={`/teachers/${teacher._id}`}>
+                                            {`${teacher.firstName} ${teacher.lastName}`}
+                                        </Link>
+                                    </p>
+                                    <ul>
+                                        {teacher.students.map((student, k) => (
+                                            <li key={k}>{student}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 ))}

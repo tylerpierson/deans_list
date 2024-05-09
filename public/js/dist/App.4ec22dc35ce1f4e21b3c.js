@@ -1343,8 +1343,15 @@ function ClassCollapsible() {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
 /* harmony import */ var _Collapsible_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Collapsible.module.scss */ "./src/components/Collapsible/Collapsible.module.scss");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
 
 
 function Collapsible(_ref) {
@@ -1352,59 +1359,31 @@ function Collapsible(_ref) {
     user
   } = _ref;
   const [selected, setSelected] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
-  const data = [{
-    gradeLevel: 'Kindergarten',
-    teachers: 'Teacher 1',
-    students: 'Student 1'
-  }, {
-    gradeLevel: '1st Grade',
-    teachers: 'Teacher 1',
-    students: 'Student 1'
-  }, {
-    gradeLevel: '2nd Grade',
-    teachers: 'Teacher 1',
-    students: 'Student 1'
-  }, {
-    gradeLevel: '3rd Grade',
-    teachers: 'Teacher 1',
-    students: 'Student 1'
-  }, {
-    gradeLevel: '4th Grade',
-    teachers: 'Teacher 1',
-    students: 'Student 1'
-  }, {
-    gradeLevel: '5th Grade',
-    teachers: 'Teacher 1',
-    students: 'Student 1'
-  }, {
-    gradeLevel: '6th Grade',
-    teachers: 'Teacher 1',
-    students: 'Student 1'
-  }, {
-    gradeLevel: '7th Grade',
-    teachers: 'Teacher 1',
-    students: 'Student 1'
-  }, {
-    gradeLevel: '8th Grade',
-    teachers: 'Teacher 1',
-    students: 'Student 1'
-  }, {
-    gradeLevel: '9th Grade',
-    teachers: 'Teacher 1',
-    students: 'Student 1'
-  }, {
-    gradeLevel: '10th Grade',
-    teachers: 'Teacher 1',
-    students: 'Student 1'
-  }, {
-    gradeLevel: '11th Grade',
-    teachers: 'Teacher 1',
-    students: 'Student 1'
-  }, {
-    gradeLevel: '12th Grade',
-    teachers: 'Teacher 1',
-    students: 'Student 1'
-  }];
+
+  // Check if user and user.teachers are properly initialized
+  if (!user || !user.teachers || !user.students) {
+    return null; // or render a loading indicator, an error message, or handle this condition as needed
+  }
+
+  // Extract unique grade levels from all teachers
+  const gradeLevels = Array.from(new Set(user.teachers.map(teacher => teacher.gradeLevel)));
+
+  // Organize data based on grade levels
+  const data = gradeLevels.map(gradeLevel => {
+    const teachersInGradeLevel = user.teachers.filter(teacher => teacher.gradeLevel === gradeLevel);
+    const studentsInGradeLevel = user.students.filter(student => teachersInGradeLevel.some(teacher => student.teachers.includes(teacher._id)));
+    const teachersWithStudents = teachersInGradeLevel.map(teacher => {
+      const students = studentsInGradeLevel.filter(student => student.teachers.includes(teacher._id));
+      const studentsNames = students.map(student => "".concat(student.firstName, " ").concat(student.lastName));
+      return _objectSpread(_objectSpread({}, teacher), {}, {
+        students: studentsNames
+      });
+    });
+    return {
+      gradeLevel,
+      teachers: teachersWithStudents
+    };
+  });
   const toggle = i => {
     if (selected === i) {
       return setSelected(null);
@@ -1415,15 +1394,21 @@ function Collapsible(_ref) {
     className: _Collapsible_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].wrapper
   }, /*#__PURE__*/React.createElement("div", {
     className: _Collapsible_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].accordion
-  }, data.map((item, i) => /*#__PURE__*/React.createElement("div", {
+  }, data.map((gradeData, i) => /*#__PURE__*/React.createElement("div", {
     className: "".concat(_Collapsible_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].item, " ").concat(i === 0 ? _Collapsible_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].firstItem : '', " ").concat(i === data.length - 1 ? _Collapsible_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].lastItem : ''),
     key: i
   }, /*#__PURE__*/React.createElement("div", {
     className: "".concat(_Collapsible_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].title, " ").concat(i === 0 ? _Collapsible_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].firstTitle : '', " ").concat(i === data.length - 1 ? _Collapsible_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].lastTitle : ''),
     onClick: () => toggle(i)
-  }, /*#__PURE__*/React.createElement("h3", null, item.gradeLevel), /*#__PURE__*/React.createElement("span", null, selected === i ? '-' : '+')), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("h3", null, gradeData.gradeLevel), /*#__PURE__*/React.createElement("span", null, selected === i ? '-' : '+')), /*#__PURE__*/React.createElement("div", {
     className: "".concat(_Collapsible_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].content, " ").concat(selected === i ? _Collapsible_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].show : '')
-  }, /*#__PURE__*/React.createElement("p", null, item.teachers), /*#__PURE__*/React.createElement("p", null, item.students))))));
+  }, gradeData.teachers.map((teacher, j) => /*#__PURE__*/React.createElement("div", {
+    key: j
+  }, /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+    to: "/teachers/".concat(teacher._id)
+  }, "".concat(teacher.firstName, " ").concat(teacher.lastName))), /*#__PURE__*/React.createElement("ul", null, teacher.students.map((student, k) => /*#__PURE__*/React.createElement("li", {
+    key: k
+  }, student))))))))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Collapsible);
 
@@ -8711,4 +8696,4 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.12d2dd2a8a33044af09b1738d77760cd.js.map
+//# sourceMappingURL=App.2d1b1425241d7ae70970446f24081d3f.js.map
