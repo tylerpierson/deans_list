@@ -40,6 +40,10 @@
 function App() {
   const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)((0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_10__.getUser)());
   const [users, setUsers] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const [showAdminCreateForm, setShowAdminCreateForm] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [showTeacherCreateForm, setShowTeacherCreateForm] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [showParentCreateForm, setShowParentCreateForm] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [showStudentCreateForm, setShowStudentCreateForm] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const updateUser = async userData => {
     const userId = user._id; // Assuming you have the user's ID in your state
     const token = localStorage.getItem('token'); // Retrieve the token from local storage or your state management
@@ -103,12 +107,24 @@ function App() {
   }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
     path: "/admin",
     element: /*#__PURE__*/React.createElement(_pages_AdminPage_AdminPage__WEBPACK_IMPORTED_MODULE_6__["default"], {
-      user: user
+      user: user,
+      showAdminCreateForm: showAdminCreateForm,
+      setShowAdminCreateForm: setShowAdminCreateForm,
+      showParentCreateForm: showParentCreateForm,
+      setShowParentCreateForm: setShowParentCreateForm,
+      showStudentCreateForm: showStudentCreateForm,
+      setShowStudentCreateForm: setShowStudentCreateForm,
+      showTeacherCreateForm: showTeacherCreateForm,
+      setShowTeacherCreateForm: setShowTeacherCreateForm
     })
   }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
     path: "/teacher",
     element: /*#__PURE__*/React.createElement(_pages_TeacherPage_TeacherPage__WEBPACK_IMPORTED_MODULE_7__["default"], {
-      user: user
+      user: user,
+      setShowParentCreateForm: setShowParentCreateForm,
+      showParentCreateForm: showParentCreateForm,
+      setShowStudentCreateForm: setShowStudentCreateForm,
+      showStudentCreateForm: showStudentCreateForm
     })
   }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
     path: "/student",
@@ -2551,15 +2567,9 @@ const StudentCreateForm = _ref => {
   };
   const handleExit = async e => {
     e.preventDefault();
-    console.log(user.teachers[0]._id);
     setShowStudentCreateForm(false);
   };
-  return /*#__PURE__*/React.createElement(React.Fragment, null, success ? /*#__PURE__*/React.createElement("section", {
-    className: _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].section
-  }, /*#__PURE__*/React.createElement("h1", null, "Success!"), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("a", {
-    className: _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].a,
-    href: "#"
-  }, "Sign In"))) : /*#__PURE__*/React.createElement("section", {
+  return /*#__PURE__*/React.createElement("section", {
     className: _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].section
   }, /*#__PURE__*/React.createElement("p", {
     ref: errRef,
@@ -2714,7 +2724,7 @@ const StudentCreateForm = _ref => {
     className: confirmPasswordFocus && !validConfirmPassword ? _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].instructions : _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].offscreen
   }, /*#__PURE__*/React.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
     icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faInfoCircle
-  }), "Please confirm your password."), /*#__PURE__*/React.createElement("div", {
+  }), "Please confirm your password."), user.role === 'admin' ? /*#__PURE__*/React.createElement("div", {
     className: _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].teacherContainer
   }, /*#__PURE__*/React.createElement("label", {
     className: _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].label
@@ -2736,7 +2746,7 @@ const StudentCreateForm = _ref => {
     }
   }), /*#__PURE__*/React.createElement("label", {
     htmlFor: "teacher_".concat(index)
-  }, teacher.firstName)))), /*#__PURE__*/React.createElement("button", {
+  }, teacher.firstName)))) : '', /*#__PURE__*/React.createElement("button", {
     disabled: !validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword,
     className: !validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword ? _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].disabledButton : _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].button
   }, "Create Student User")), /*#__PURE__*/React.createElement("img", {
@@ -2744,7 +2754,7 @@ const StudentCreateForm = _ref => {
     className: _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].closeBtn,
     src: "/img/window-close.png",
     alt: "window-close"
-  })));
+  }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (StudentCreateForm);
 
@@ -3922,12 +3932,16 @@ root.render( /*#__PURE__*/React.createElement(react__WEBPACK_IMPORTED_MODULE_0__
 
 function AdminPage(_ref) {
   let {
-    user
+    user,
+    setShowAdminCreateForm,
+    showAdminCreateForm,
+    setShowParentCreateForm,
+    showParentCreateForm,
+    setShowStudentCreateForm,
+    showStudentCreateForm,
+    setShowTeacherCreateForm,
+    showTeacherCreateForm
   } = _ref;
-  const [showAdminCreateForm, setShowAdminCreateForm] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-  const [showTeacherCreateForm, setShowTeacherCreateForm] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-  const [showParentCreateForm, setShowParentCreateForm] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-  const [showStudentCreateForm, setShowStudentCreateForm] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const toggleAdminCreateForm = () => {
     setShowAdminCreateForm(prevState => !prevState);
     setShowTeacherCreateForm(false);
@@ -4217,10 +4231,12 @@ function StudentPage(_ref) {
 
 function TeacherPage(_ref) {
   let {
-    user
+    user,
+    setShowParentCreateForm,
+    showParentCreateForm,
+    setShowStudentCreateForm,
+    showStudentCreateForm
   } = _ref;
-  const [showParentCreateForm, setShowParentCreateForm] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-  const [showStudentCreateForm, setShowStudentCreateForm] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const toggleParentCreateForm = () => {
     setShowParentCreateForm(prevState => !prevState);
     setShowStudentCreateForm(false);
@@ -8630,4 +8646,4 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.20ce771606038cf531be2010eaffe756.js.map
+//# sourceMappingURL=App.13c0145fb7df3227947cbcae0dfa164b.js.map

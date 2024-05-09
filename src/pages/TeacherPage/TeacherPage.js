@@ -9,10 +9,13 @@ import TeamCollapsible from '../../components/TeamCollapsible/TeamCollapsible'
 import ParentCreateForm from '../../components/ParentCreateForm/ParentCreateForm'
 import StudentCreateForm from '../../components/StudentCreateForm/StudentCreateForm'
 
-function TeacherPage({ user }) {
-  const [showParentCreateForm, setShowParentCreateForm] = useState(false);
-  const [showStudentCreateForm, setShowStudentCreateForm] = useState(false);
-
+function TeacherPage({ 
+    user, 
+    setShowParentCreateForm, 
+    showParentCreateForm,
+    setShowStudentCreateForm,
+    showStudentCreateForm
+  }) {
   const toggleParentCreateForm = () => {
     setShowParentCreateForm(prevState => !prevState);
     setShowStudentCreateForm(false)

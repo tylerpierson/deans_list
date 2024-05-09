@@ -9,12 +9,17 @@ import TeacherCreateForm from '../../components/TeacherCreateForm/TeacherCreateF
 import ParentCreateForm from '../../components/ParentCreateForm/ParentCreateForm'
 import StudentCreateForm from '../../components/StudentCreateForm/StudentCreateForm'
 
-function AdminPage({ user }) {
-  const [showAdminCreateForm, setShowAdminCreateForm] = useState(false);
-  const [showTeacherCreateForm, setShowTeacherCreateForm] = useState(false);
-  const [showParentCreateForm, setShowParentCreateForm] = useState(false);
-  const [showStudentCreateForm, setShowStudentCreateForm] = useState(false);
-
+function AdminPage({ 
+    user, 
+    setShowAdminCreateForm, 
+    showAdminCreateForm,
+    setShowParentCreateForm, 
+    showParentCreateForm,
+    setShowStudentCreateForm, 
+    showStudentCreateForm,
+    setShowTeacherCreateForm,
+    showTeacherCreateForm
+   }) {
   const toggleAdminCreateForm = () => {
     setShowAdminCreateForm(prevState => !prevState);
     setShowTeacherCreateForm(false)

@@ -16,6 +16,10 @@ import ParentPage from './pages/ParentPage/ParentPage'
 export default function App(){
     const [user, setUser] = useState(getUser());
     const [users, setUsers] = useState([]);
+    const [showAdminCreateForm, setShowAdminCreateForm] = useState(false);
+    const [showTeacherCreateForm, setShowTeacherCreateForm] = useState(false);
+    const [showParentCreateForm, setShowParentCreateForm] = useState(false);
+    const [showStudentCreateForm, setShowStudentCreateForm] = useState(false);
 
     const updateUser = async (userData) => {
         const userId = user._id; // Assuming you have the user's ID in your state
@@ -69,8 +73,24 @@ export default function App(){
                 <Route path='/' element={<HomePage user={user} setUser={setUser} users={users} setUsers={setUsers}/>} />
                 <Route path='/auth' element={<AuthPage user={user} setUser={setUser}/>} />
                 <Route path='/data' element={<DataPage />} />
-                <Route path='/admin' element={<AdminPage user={user} />} />
-                <Route path='/teacher' element={<TeacherPage user={user} />} />
+                <Route path='/admin' element={<AdminPage 
+                    user={user} 
+                    showAdminCreateForm={showAdminCreateForm}
+                    setShowAdminCreateForm={setShowAdminCreateForm}
+                    showParentCreateForm={showParentCreateForm}
+                    setShowParentCreateForm={setShowParentCreateForm}
+                    showStudentCreateForm={showStudentCreateForm}
+                    setShowStudentCreateForm={setShowStudentCreateForm}
+                    showTeacherCreateForm={showTeacherCreateForm}
+                    setShowTeacherCreateForm={setShowTeacherCreateForm}
+                    />} />
+                <Route path='/teacher' element={<TeacherPage 
+                    user={user} 
+                    setShowParentCreateForm={setShowParentCreateForm}
+                    showParentCreateForm={showParentCreateForm}
+                    setShowStudentCreateForm={setShowStudentCreateForm}
+                    showStudentCreateForm={showStudentCreateForm}
+                    />} />
                 <Route path='/student' element={<StudentPage user={user} />} />
                 <Route path='/parent' element={<ParentPage user={user} />} />
             </Routes>

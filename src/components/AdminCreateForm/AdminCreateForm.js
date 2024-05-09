@@ -122,7 +122,6 @@ const AdminCreateForm = ({ user, setShowAdminCreateForm }) => {
     
     const handleExit = async (e) => {
         e.preventDefault()
-
         setShowAdminCreateForm(false)
     }
 
