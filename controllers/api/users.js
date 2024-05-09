@@ -160,6 +160,32 @@ async function createUser(req, res, next) {
                     admin.students.push(user._id);
                     await admin.save();
                 }
+                // Update teachers' students arrays
+                if (req.body.teachers && req.body.teachers.length > 0) {
+                    // Loop through each teacher in the req body
+                    for (const teacherId of req.body.teachers) {
+                        // Find the teacher in the database
+                        const teacher = await User.findById(teacherId);
+                        // If teacher is found, push the new student's ID to their students array
+                        if (teacher) {
+                            teacher.students.push(user._id);
+                            await teacher.save();
+                        }
+                    }
+                }
+                // Update parents' students arrays
+                if (req.body.parents && req.body.parents.length > 0) {
+                    // Loop through each teacher in the req body
+                    for (const parentId of req.body.parents) {
+                        // Find the parent in the database
+                        const parent = await User.findById(parentId);
+                        // If parent is found, push the new student's ID to their students array
+                        if (parent) {
+                            parent.students.push(user._id);
+                            await parent.save();
+                        }
+                    }
+                }
             } else if (user.role === 'parent') {
                 currentUser.parents.push(user._id);
                 user.admins.push(...currentUser.admins);
@@ -168,6 +194,51 @@ async function createUser(req, res, next) {
                 for (const admin of admins) {
                     admin.parents.push(user._id);
                     await admin.save();
+                }
+                // Update teachers' students arrays
+                if (req.body.teachers && req.body.teachers.length > 0) {
+                    // Loop through each teacher in the req body
+                    for (const teacherId of req.body.teachers) {
+                        // Find the teacher in the database
+                        const teacher = await User.findById(teacherId);
+                        // If teacher is found, push the new student's ID to their students array
+                        if (teacher) {
+                            teacher.parents.push(user._id);
+                            await teacher.save();
+                        }
+                    }
+                }
+                // Update parents' students arrays
+                if (req.body.parents && req.body.parents.length > 0) {
+                    // Loop through each teacher in the req body
+                    for (const parentId of req.body.parents) {
+                        // Find the parent in the database
+                        const parent = await User.findById(parentId);
+                        // If parent is found, push the new student's ID to their students array
+                        if (parent) {
+                            parent.parents.push(user._id);
+                            await parent.save();
+                        }
+                    }
+                }
+                // Update teachers' arrays for the new parent
+                if (req.body.students && req.body.students.length > 0) {
+                    // Loop through each student in the req body
+                    for (const studentId of req.body.students) {
+                        // Find the student in the database
+                        const student = await User.findById(studentId);
+                        // If student is found, push their teachers' IDs to the new parent's teachers array
+                        if (student && student.teachers && student.teachers.length > 0) {
+                            // Loop through each teacher of the student
+                            for (const teacherId of student.teachers) {
+                                // Check if the teacher already exists in the parent's teachers array
+                                if (!user.teachers.includes(teacherId)) {
+                                    // If not, add the teacher to the parent's teachers array
+                                    user.teachers.push(teacherId);
+                                }
+                            }
+                        }
+                    }
                 }
             }
             await currentUser.save();
@@ -261,7 +332,7 @@ async function indexUsers(req, res, next){
     /****** Index Individual User *******/
 async function showUser(req, res, next){
     try {
-        const user = await User.findById({_id: req.params.id}).populate("teachers")
+        const user = await User.findById({_id: req.params.id}).populate("admins teachers students parents")
         console.log(user)
         res.locals.data.user = user
         next()

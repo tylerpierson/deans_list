@@ -113,6 +113,7 @@ const StudentCreateForm = ({ user, setShowStudentCreateForm }) => {
             const responseData = await response.json();
     
             setSuccess(true);
+            setShowStudentCreateForm(false)
     
             // Clear form fields
             setFirstName('');

@@ -60,14 +60,14 @@ function AdminPage({
           <TeacherCreateForm user={user} setShowTeacherCreateForm={setShowTeacherCreateForm} />
         </div>
       )}
-      {showParentCreateForm && (
-        <div className={styles.createForm}>
-          <ParentCreateForm user={user} setShowParentCreateForm={setShowParentCreateForm} />
-        </div>
-      )}
       {showStudentCreateForm && (
         <div className={styles.createForm}>
           <StudentCreateForm user={user} setShowStudentCreateForm={setShowStudentCreateForm} />
+        </div>
+      )}
+      {showParentCreateForm && (
+        <div className={styles.createForm}>
+          <ParentCreateForm user={user} setShowParentCreateForm={setShowParentCreateForm} />
         </div>
       )}
       <h1 className={styles.Header}>
@@ -76,8 +76,8 @@ function AdminPage({
       <div className={styles.addBtnContainer}>
         <button className={styles.addBtn} onClick={toggleAdminCreateForm}>Add Admin</button>
         <button className={styles.addBtn} onClick={toggleTeacherCreateForm}>Add Teacher</button>
-        <button className={styles.addBtn} onClick={toggleParentCreateForm}>Add Parent</button>
         <button className={styles.addBtn} onClick={toggleStudentCreateForm}>Add Student</button>
+        <button className={styles.addBtn} onClick={toggleParentCreateForm}>Add Parent</button>
       </div>
       <div className={styles.mainContainer}>
         <div className={styles.leftContainer}>

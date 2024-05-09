@@ -2557,6 +2557,7 @@ const StudentCreateForm = _ref => {
       }
       const responseData = await response.json();
       setSuccess(true);
+      setShowStudentCreateForm(false);
 
       // Clear form fields
       setFirstName('');
@@ -3984,16 +3985,16 @@ function AdminPage(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_TeacherCreateForm_TeacherCreateForm__WEBPACK_IMPORTED_MODULE_6__["default"], {
     user: user,
     setShowTeacherCreateForm: setShowTeacherCreateForm
-  })), showParentCreateForm && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].createForm
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ParentCreateForm_ParentCreateForm__WEBPACK_IMPORTED_MODULE_7__["default"], {
-    user: user,
-    setShowParentCreateForm: setShowParentCreateForm
   })), showStudentCreateForm && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].createForm
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_StudentCreateForm_StudentCreateForm__WEBPACK_IMPORTED_MODULE_8__["default"], {
     user: user,
     setShowStudentCreateForm: setShowStudentCreateForm
+  })), showParentCreateForm && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].createForm
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ParentCreateForm_ParentCreateForm__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    user: user,
+    setShowParentCreateForm: setShowParentCreateForm
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", {
     className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Header
   }, "Welcome, ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
@@ -4008,11 +4009,11 @@ function AdminPage(_ref) {
     onClick: toggleTeacherCreateForm
   }, "Add Teacher"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].addBtn,
-    onClick: toggleParentCreateForm
-  }, "Add Parent"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].addBtn,
     onClick: toggleStudentCreateForm
-  }, "Add Student")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, "Add Student"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].addBtn,
+    onClick: toggleParentCreateForm
+  }, "Add Parent")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].mainContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].leftContainer
@@ -4253,16 +4254,16 @@ function TeacherPage(_ref) {
   };
   return /*#__PURE__*/React.createElement("div", {
     className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].TeacherPage
-  }, showParentCreateForm && /*#__PURE__*/React.createElement("div", {
-    className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].createForm
-  }, /*#__PURE__*/React.createElement(_components_ParentCreateForm_ParentCreateForm__WEBPACK_IMPORTED_MODULE_7__["default"], {
-    user: user,
-    setShowParentCreateForm: setShowParentCreateForm
-  })), showStudentCreateForm && /*#__PURE__*/React.createElement("div", {
+  }, showStudentCreateForm && /*#__PURE__*/React.createElement("div", {
     className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].createForm
   }, /*#__PURE__*/React.createElement(_components_StudentCreateForm_StudentCreateForm__WEBPACK_IMPORTED_MODULE_8__["default"], {
     user: user,
     setShowStudentCreateForm: setShowStudentCreateForm
+  })), showParentCreateForm && /*#__PURE__*/React.createElement("div", {
+    className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].createForm
+  }, /*#__PURE__*/React.createElement(_components_ParentCreateForm_ParentCreateForm__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    user: user,
+    setShowParentCreateForm: setShowParentCreateForm
   })), /*#__PURE__*/React.createElement("h1", {
     className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Header
   }, "Welcome, ", /*#__PURE__*/React.createElement("span", {
@@ -4271,11 +4272,11 @@ function TeacherPage(_ref) {
     className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].addBtnContainer
   }, /*#__PURE__*/React.createElement("button", {
     className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].addBtn,
-    onClick: toggleParentCreateForm
-  }, "Add Parent"), /*#__PURE__*/React.createElement("button", {
-    className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].addBtn,
     onClick: toggleStudentCreateForm
-  }, "Add Student")), /*#__PURE__*/React.createElement("div", {
+  }, "Add Student"), /*#__PURE__*/React.createElement("button", {
+    className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].addBtn,
+    onClick: toggleParentCreateForm
+  }, "Add Parent")), /*#__PURE__*/React.createElement("div", {
     className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].mainContainer
   }, /*#__PURE__*/React.createElement("div", {
     className: _TeacherPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].leftContainer
@@ -8652,4 +8653,4 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.89873392c486a4230b130ed684553855.js.map
+//# sourceMappingURL=App.c3e1a62614812e82878d88f4881b6f59.js.map

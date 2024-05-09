@@ -28,20 +28,20 @@ function TeacherPage({
 
   return (
     <div className={styles.TeacherPage}>
-        {showParentCreateForm && (
-          <div className={styles.createForm}>
-            <ParentCreateForm user={user} setShowParentCreateForm={setShowParentCreateForm} />
-          </div>
-        )}
         {showStudentCreateForm && (
           <div className={styles.createForm}>
             <StudentCreateForm user={user} setShowStudentCreateForm={setShowStudentCreateForm} />
           </div>
         )}
+        {showParentCreateForm && (
+          <div className={styles.createForm}>
+            <ParentCreateForm user={user} setShowParentCreateForm={setShowParentCreateForm} />
+          </div>
+        )}
         <h1 className={styles.Header}>Welcome, <span className={styles.span}>{user.firstName}</span>!</h1>
         <div className={styles.addBtnContainer}>
-          <button className={styles.addBtn} onClick={toggleParentCreateForm}>Add Parent</button>
           <button className={styles.addBtn} onClick={toggleStudentCreateForm}>Add Student</button>
+          <button className={styles.addBtn} onClick={toggleParentCreateForm}>Add Parent</button>
         </div>
         <div className={styles.mainContainer}>
           <div className={styles.leftContainer}>
