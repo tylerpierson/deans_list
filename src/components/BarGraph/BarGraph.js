@@ -20,7 +20,8 @@ export default function BarGraph({ user }) {
   const gradeLevelData = user.teachers.reduce((acc, teacher) => {
     const { gradeLevel } = teacher;
     // Extract the numerical part of the grade level and convert it to a number
-    const numericGrade = parseInt(gradeLevel.match(/\d+/)[0]);
+    const matchResult = gradeLevel.match(/\d+/);
+    const numericGrade = matchResult ? parseInt(matchResult[0]) : null;
     if (!acc[numericGrade]) {
       // Initialize the data object for the grade level if it doesn't exist
       acc[numericGrade] = {
@@ -37,13 +38,41 @@ export default function BarGraph({ user }) {
   }, {});
 
   // Convert the accumulated grade level data object into an array
-  const data = Object.values(gradeLevelData);
+  let data = Object.values(gradeLevelData);
 
-  // Sort the data array based on the numerical order of grade levels
-  data.sort((a, b) => a.name.localeCompare(b.name, undefined, {numeric: true}));
+  // Check if there are teachers associated with "Pre-K", if so, add it to the data array
+  const preKTeachersExist = user.teachers.some(teacher => teacher.gradeLevel === "Pre-K");
+  if (preKTeachersExist) {
+    const preKIndex = data.findIndex(entry => entry.name === "Pre-K");
+    if (preKIndex === -1) {
+      data.push({
+        name: "Pre-K",
+        Goal: 0, // You can set the initial value for Goal here
+        Current: 0, // You can set the initial value for Current here
+      });
+    }
+  }
 
-  // Calculate the width of the BarChart dynamically based on the number of grade levels
-  const chartWidth = data.length * 100; // Adjust 50 to the desired width of each bar
+  // Sort the data array based on the specified order
+  data.sort((a, b) => {
+    if (a.name === "Pre-K") {
+      return -1; // "Pre-K" should come first
+    } else if (b.name === "Pre-K") {
+      return 1; // "Pre-K" should come first
+    } else if (a.name === "K") {
+      return -1; // "K" should come after "Pre-K"
+    } else if (b.name === "K") {
+      return 1; // "K" should come after "Pre-K"
+    } else {
+      // Sort numerically for other grade levels
+      return parseInt(a.name) - parseInt(b.name);
+    }
+  });
+
+// Calculate the width of the BarChart dynamically based on the number of grade levels
+const baseWidth = 75; // Base width for 4 grade levels
+const maxWidth = 550; // Maximum width for the chart
+const chartWidth = Math.min(maxWidth, data.length * baseWidth);
 
   return (
     <BarChart

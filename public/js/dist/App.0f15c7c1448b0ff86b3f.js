@@ -1186,7 +1186,8 @@ function BarGraph(_ref) {
       gradeLevel
     } = teacher;
     // Extract the numerical part of the grade level and convert it to a number
-    const numericGrade = parseInt(gradeLevel.match(/\d+/)[0]);
+    const matchResult = gradeLevel.match(/\d+/);
+    const numericGrade = matchResult ? parseInt(matchResult[0]) : null;
     if (!acc[numericGrade]) {
       // Initialize the data object for the grade level if it doesn't exist
       acc[numericGrade] = {
@@ -1204,16 +1205,42 @@ function BarGraph(_ref) {
   }, {});
 
   // Convert the accumulated grade level data object into an array
-  const data = Object.values(gradeLevelData);
+  let data = Object.values(gradeLevelData);
 
-  // Sort the data array based on the numerical order of grade levels
-  data.sort((a, b) => a.name.localeCompare(b.name, undefined, {
-    numeric: true
-  }));
+  // Check if there are teachers associated with "Pre-K", if so, add it to the data array
+  const preKTeachersExist = user.teachers.some(teacher => teacher.gradeLevel === "Pre-K");
+  if (preKTeachersExist) {
+    const preKIndex = data.findIndex(entry => entry.name === "Pre-K");
+    if (preKIndex === -1) {
+      data.push({
+        name: "Pre-K",
+        Goal: 0,
+        // You can set the initial value for Goal here
+        Current: 0 // You can set the initial value for Current here
+      });
+    }
+  }
+
+  // Sort the data array based on the specified order
+  data.sort((a, b) => {
+    if (a.name === "Pre-K") {
+      return -1; // "Pre-K" should come first
+    } else if (b.name === "Pre-K") {
+      return 1; // "Pre-K" should come first
+    } else if (a.name === "K") {
+      return -1; // "K" should come after "Pre-K"
+    } else if (b.name === "K") {
+      return 1; // "K" should come after "Pre-K"
+    } else {
+      // Sort numerically for other grade levels
+      return parseInt(a.name) - parseInt(b.name);
+    }
+  });
 
   // Calculate the width of the BarChart dynamically based on the number of grade levels
-  const chartWidth = data.length * 100; // Adjust 50 to the desired width of each bar
-
+  const baseWidth = 75; // Base width for 4 grade levels
+  const maxWidth = 550; // Maximum width for the chart
+  const chartWidth = Math.min(maxWidth, data.length * baseWidth);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_2__.BarChart, {
     width: chartWidth,
     height: 300,
@@ -1339,13 +1366,24 @@ function Collapsible(_ref) {
   }
 
   // Extract unique grade levels from all teachers
-  const gradeLevels = Array.from(new Set(user.teachers.map(teacher => teacher.gradeLevel)));
+  let gradeLevels = Array.from(new Set(user.teachers.map(teacher => teacher.gradeLevel)));
 
-  // Sort grade levels numerically
+  // Sort grade levels
   gradeLevels.sort((a, b) => {
-    const numericA = parseInt(a.match(/\d+/)[0]);
-    const numericB = parseInt(b.match(/\d+/)[0]);
-    return numericA - numericB;
+    if (a === "Pre-K") {
+      return -1; // "Pre-K" should come first
+    } else if (b === "Pre-K") {
+      return 1; // "Pre-K" should come first
+    } else if (a === "K" && b !== "Pre-K") {
+      return -1; // "K" should come after "Pre-K"
+    } else if (b === "K" && a !== "Pre-K") {
+      return 1; // "K" should come after "Pre-K"
+    } else {
+      // Sort numerically for other grade levels
+      const numericA = parseInt(a.match(/\d+/)[0]);
+      const numericB = parseInt(b.match(/\d+/)[0]);
+      return numericA - numericB;
+    }
   });
 
   // Organize data based on grade levels
@@ -8678,4 +8716,4 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.f42d821e0b5f2cb1f792eed6b060fe61.js.map
+//# sourceMappingURL=App.3214cd154d678e9f1457d7f2c89dc0c1.js.map

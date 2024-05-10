@@ -11,13 +11,24 @@ function Collapsible({ user }) {
     }
 
     // Extract unique grade levels from all teachers
-    const gradeLevels = Array.from(new Set(user.teachers.map(teacher => teacher.gradeLevel)));
+    let gradeLevels = Array.from(new Set(user.teachers.map(teacher => teacher.gradeLevel)));
 
-    // Sort grade levels numerically
+    // Sort grade levels
     gradeLevels.sort((a, b) => {
-        const numericA = parseInt(a.match(/\d+/)[0]);
-        const numericB = parseInt(b.match(/\d+/)[0]);
-        return numericA - numericB;
+        if (a === "Pre-K") {
+            return -1; // "Pre-K" should come first
+        } else if (b === "Pre-K") {
+            return 1; // "Pre-K" should come first
+        } else if (a === "K" && b !== "Pre-K") {
+            return -1; // "K" should come after "Pre-K"
+        } else if (b === "K" && a !== "Pre-K") {
+            return 1; // "K" should come after "Pre-K"
+        } else {
+            // Sort numerically for other grade levels
+            const numericA = parseInt(a.match(/\d+/)[0]);
+            const numericB = parseInt(b.match(/\d+/)[0]);
+            return numericA - numericB;
+        }
     });
 
     // Organize data based on grade levels
