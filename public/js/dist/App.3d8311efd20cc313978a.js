@@ -40,34 +40,11 @@
 function App() {
   const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)((0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_10__.getUser)());
   const [users, setUsers] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const [token, setToken] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)((0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_10__.getToken)());
   const [showAdminCreateForm, setShowAdminCreateForm] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [showTeacherCreateForm, setShowTeacherCreateForm] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [showParentCreateForm, setShowParentCreateForm] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [showStudentCreateForm, setShowStudentCreateForm] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-  const updateUser = async userData => {
-    const userId = user._id; // Assuming you have the user's ID in your state
-    const token = localStorage.getItem('token'); // Retrieve the token from local storage or your state management
-    try {
-      const response = await fetch("/api/users/".concat(userId), {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': "Bearer ".concat(token) // Include the authorization token in the request
-        },
-        body: JSON.stringify(userData)
-      });
-      if (!response.ok) {
-        const error = await response.text();
-        throw new Error(error || 'Profile update failed');
-      }
-      const updatedUser = await response.json();
-      setUser(updatedUser); // Update user state with the updated data
-      return updatedUser;
-    } catch (error) {
-      console.error('Update failed:', error);
-      return null;
-    }
-  };
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     const fetchUser = async () => {
       try {
@@ -108,6 +85,7 @@ function App() {
     path: "/admin",
     element: /*#__PURE__*/React.createElement(_pages_AdminPage_AdminPage__WEBPACK_IMPORTED_MODULE_6__["default"], {
       user: user,
+      token: token,
       showAdminCreateForm: showAdminCreateForm,
       setShowAdminCreateForm: setShowAdminCreateForm,
       showParentCreateForm: showParentCreateForm,
@@ -1238,9 +1216,10 @@ function BarGraph(_ref) {
   });
 
   // Calculate the width of the BarChart dynamically based on the number of grade levels
-  const baseWidth = 75; // Base width for 4 grade levels
+  const baseWidth = 100; // Base width for 4 grade levels
+  const minWidth = 150;
   const maxWidth = 550; // Maximum width for the chart
-  const chartWidth = Math.min(maxWidth, data.length * baseWidth);
+  const chartWidth = data.length === 1 ? Math.min(maxWidth, data.length * baseWidth + minWidth) : Math.min(maxWidth, data.length * baseWidth);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(recharts__WEBPACK_IMPORTED_MODULE_2__.BarChart, {
     width: chartWidth,
     height: 300,
@@ -1356,9 +1335,11 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
 
 function Collapsible(_ref) {
   let {
-    user
+    user,
+    token
   } = _ref;
   const [selected, setSelected] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const REGISTER_URL = '/api/users';
 
   // Check if user and user.teachers are properly initialized
   if (!user || !user.teachers || !user.students) {
@@ -1394,7 +1375,7 @@ function Collapsible(_ref) {
       const students = studentsInGradeLevel.filter(student => student.teachers.includes(teacher._id));
       const studentsNames = students.map(student => "".concat(student.firstName, " ").concat(student.lastName));
       return _objectSpread(_objectSpread({}, teacher), {}, {
-        students: studentsNames
+        students: students
       });
     });
     return {
@@ -1402,6 +1383,24 @@ function Collapsible(_ref) {
       teachers: teachersWithStudents
     };
   });
+  const handleDelete = async id => {
+    try {
+      const response = await fetch("".concat(REGISTER_URL, "/").concat(id), {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': "Bearer ".concat(token)
+        }
+      });
+      if (!response.ok) {
+        throw new Error('Deletion Failed');
+      }
+      // Handle success, e.g., update UI, refresh data
+    } catch (err) {
+      console.error(err); // Log the error to the console
+      // Handle error, e.g., display error message to user
+    }
+  };
   const toggle = i => {
     if (selected === i) {
       return setSelected(null);
@@ -1424,9 +1423,13 @@ function Collapsible(_ref) {
     key: j
   }, /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
     to: "/teachers/".concat(teacher._id)
-  }, "".concat(teacher.firstName, " ").concat(teacher.lastName))), /*#__PURE__*/React.createElement("ul", null, teacher.students.map((student, k) => /*#__PURE__*/React.createElement("li", {
+  }, "".concat(teacher.firstName, " ").concat(teacher.lastName)), /*#__PURE__*/React.createElement("button", {
+    onClick: () => handleDelete(teacher._id)
+  }, "Delete Teacher")), /*#__PURE__*/React.createElement("ul", null, teacher.students.map((student, k) => /*#__PURE__*/React.createElement("li", {
     key: k
-  }, student))))))))));
+  }, student.firstName, " ", student.lastName, /*#__PURE__*/React.createElement("button", {
+    onClick: () => handleDelete(student._id)
+  }, "Delete Student")))))))))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Collapsible);
 
@@ -4001,6 +4004,8 @@ root.render( /*#__PURE__*/React.createElement(react__WEBPACK_IMPORTED_MODULE_0__
 function AdminPage(_ref) {
   let {
     user,
+    token,
+    setToken,
     setShowAdminCreateForm,
     showAdminCreateForm,
     setShowParentCreateForm,
@@ -4083,7 +4088,8 @@ function AdminPage(_ref) {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_AdminReadingTracker_AdminReadingTracker__WEBPACK_IMPORTED_MODULE_3__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _AdminPage_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].rightContainer
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_Collapsible_Collapsible__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    user: user
+    user: user,
+    token: token
   }))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AdminPage);
@@ -8716,4 +8722,4 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.3214cd154d678e9f1457d7f2c89dc0c1.js.map
+//# sourceMappingURL=App.d39f3d1da4b3e1ea6846a1b6faa9fc7b.js.map

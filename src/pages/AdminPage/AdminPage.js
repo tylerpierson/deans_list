@@ -11,6 +11,8 @@ import StudentCreateForm from '../../components/StudentCreateForm/StudentCreateF
 
 function AdminPage({ 
     user, 
+    token,
+    setToken,
     setShowAdminCreateForm, 
     showAdminCreateForm,
     setShowParentCreateForm, 
@@ -85,7 +87,7 @@ function AdminPage({
           <AdminReadingTracker />
         </div>
         <div className={styles.rightContainer}>
-          <Collapsible user={user} />
+          <Collapsible user={user} token={token} />
         </div>
       </div>
     </div>

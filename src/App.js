@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import styles from './App.module.scss'
-import { indexUsers, getUser } from './utilities/users-service'
+import { indexUsers, getUser, getToken } from './utilities/users-service'
 
 import NavBar from './components/NavBar/NavBar'
 import HomePage from './pages/HomePage/HomePage'
@@ -16,35 +16,11 @@ import ParentPage from './pages/ParentPage/ParentPage'
 export default function App(){
     const [user, setUser] = useState(getUser());
     const [users, setUsers] = useState([]);
+    const [token, setToken] = useState(getToken())
     const [showAdminCreateForm, setShowAdminCreateForm] = useState(false);
     const [showTeacherCreateForm, setShowTeacherCreateForm] = useState(false);
     const [showParentCreateForm, setShowParentCreateForm] = useState(false);
     const [showStudentCreateForm, setShowStudentCreateForm] = useState(false);
-
-    const updateUser = async (userData) => {
-        const userId = user._id; // Assuming you have the user's ID in your state
-        const token = localStorage.getItem('token'); // Retrieve the token from local storage or your state management
-        try {
-            const response = await fetch(`/api/users/${userId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}` // Include the authorization token in the request
-                },
-                body: JSON.stringify(userData)
-            });
-            if (!response.ok) {
-                const error = await response.text();
-                throw new Error(error || 'Profile update failed');
-            }
-            const updatedUser = await response.json();
-            setUser(updatedUser); // Update user state with the updated data
-            return updatedUser;
-        } catch (error) {
-            console.error('Update failed:', error);
-            return null;
-        }
-    };
       
     useEffect(() => {
         const fetchUser = async () => {
@@ -56,7 +32,6 @@ export default function App(){
                 setUser(null);
             }
         };
-    
         fetchUser();
     }, []); // Removed 'user' from the dependency array because it was running an endless loop which was breaking the page
     
@@ -75,6 +50,7 @@ export default function App(){
                 <Route path='/data' element={<DataPage />} />
                 <Route path='/admin' element={<AdminPage 
                     user={user} 
+                    token={token}
                     showAdminCreateForm={showAdminCreateForm}
                     setShowAdminCreateForm={setShowAdminCreateForm}
                     showParentCreateForm={showParentCreateForm}

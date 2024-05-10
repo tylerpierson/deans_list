@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Collapsible.module.scss';
 
-function Collapsible({ user }) {
+function Collapsible({ user, token }) {
     const [selected, setSelected] = useState(null);
+
+    const REGISTER_URL = '/api/users';
 
     // Check if user and user.teachers are properly initialized
     if (!user || !user.teachers || !user.students) {
@@ -42,11 +44,30 @@ function Collapsible({ user }) {
             const studentsNames = students.map(student => `${student.firstName} ${student.lastName}`);
             return {
                 ...teacher,
-                students: studentsNames
+                students: students
             };
         });
         return { gradeLevel, teachers: teachersWithStudents };
     });
+
+    const handleDelete = async (id) => {
+        try {
+            const response = await fetch(`${REGISTER_URL}/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Deletion Failed');
+            }
+            // Handle success, e.g., update UI, refresh data
+        } catch (err) {
+            console.error(err); // Log the error to the console
+            // Handle error, e.g., display error message to user
+        }
+    };
 
     const toggle = i => {
         if (selected === i) {
@@ -71,10 +92,14 @@ function Collapsible({ user }) {
                                         <Link to={`/teachers/${teacher._id}`}>
                                             {`${teacher.firstName} ${teacher.lastName}`}
                                         </Link>
+                                        <button onClick={() => handleDelete(teacher._id)}>Delete Teacher</button>
                                     </p>
                                     <ul>
                                         {teacher.students.map((student, k) => (
-                                            <li key={k}>{student}</li>
+                                            <li key={k}>
+                                                {student.firstName} {student.lastName}
+                                                <button onClick={() => handleDelete(student._id)}>Delete Student</button>
+                                            </li>
                                         ))}
                                     </ul>
                                 </div>

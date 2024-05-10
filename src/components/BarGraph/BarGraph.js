@@ -70,9 +70,10 @@ export default function BarGraph({ user }) {
   });
 
 // Calculate the width of the BarChart dynamically based on the number of grade levels
-const baseWidth = 75; // Base width for 4 grade levels
+const baseWidth = 100; // Base width for 4 grade levels
+const minWidth = 150 
 const maxWidth = 550; // Maximum width for the chart
-const chartWidth = Math.min(maxWidth, data.length * baseWidth);
+const chartWidth = data.length === 1 ? Math.min(maxWidth, data.length * baseWidth + minWidth) : Math.min(maxWidth, data.length * baseWidth);
 
   return (
     <BarChart
