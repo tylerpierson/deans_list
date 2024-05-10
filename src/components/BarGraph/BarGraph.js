@@ -10,91 +10,44 @@ import {
   Legend,
 } from "recharts";
 
-const data = [
-  {
-    name: "KG",
-    Goal: 20,
-    Current: 80,
-    amt: 2400,
-  },
-  {
-    name: "1st",
-    Goal: 40,
-    Current: 60,
-    amt: 2210,
-  },
-  {
-    name: "2nd",
-    Goal: 25,
-    Current: 75,
-    amt: 2290,
-  },
-  {
-    name: "3rd",
-    Goal: 18,
-    Current: 82,
-    amt: 2000,
-  },
-  {
-    name: "4th",
-    Goal: 8,
-    Current: 92,
-    amt: 2181,
-  },
-  {
-    name: "5th",
-    Goal: 27,
-    Current: 73,
-    amt: 2500,
-  },
-  {
-    name: "6th",
-    Goal: 0,
-    Current: 0,
-    amt: 2100,
-  },
-  {
-    name: "7th",
-    Goal: 0,
-    Current: 0,
-    amt: 2100,
-  },
-  {
-    name: "8th",
-    Goal: 0,
-    Current: 0,
-    amt: 2100,
-  },
-  {
-    name: "9th",
-    Goal: 0,
-    Current: 0,
-    amt: 2100,
-  },
-  {
-    name: "10th",
-    Goal: 0,
-    Current: 0,
-    amt: 2100,
-  },
-  {
-    name: "11th",
-    Goal: 0,
-    Current: 0,
-    amt: 2100,
-  },
-  {
-    name: "12th",
-    Goal: 0,
-    Current: 0,
-    amt: 2100,
-  },
-];
-
 export default function BarGraph({ user }) {
+  // Check if user and user.teachers are properly initialized
+  if (!user || !user.teachers) {
+    return null; // or render a loading indicator, an error message, or handle this condition as needed
+  }
+
+  // Initialize an object to accumulate data for each grade level
+  const gradeLevelData = user.teachers.reduce((acc, teacher) => {
+    const { gradeLevel } = teacher;
+    // Extract the numerical part of the grade level and convert it to a number
+    const numericGrade = parseInt(gradeLevel.match(/\d+/)[0]);
+    if (!acc[numericGrade]) {
+      // Initialize the data object for the grade level if it doesn't exist
+      acc[numericGrade] = {
+        name: gradeLevel,
+        Goal: 0, // You can set the initial value for Goal here
+        Current: 0, // You can set the initial value for Current here
+      };
+    }
+    // Accumulate the data for Goal and Current for the grade level
+    // You can update the Goal and Current values here based on your requirements
+    acc[numericGrade].Goal += 0; // Update Goal
+    acc[numericGrade].Current += 0; // Update Current
+    return acc;
+  }, {});
+
+  // Convert the accumulated grade level data object into an array
+  const data = Object.values(gradeLevelData);
+
+  // Sort the data array based on the numerical order of grade levels
+  data.sort((a, b) => a.name.localeCompare(b.name, undefined, {numeric: true}));
+
+  // Calculate the width of the BarChart dynamically based on the number of grade levels
+  const chartWidth = data.length * 100; // Adjust 50 to the desired width of each bar
+
   return (
     <BarChart
-      width={550}
+      width={chartWidth}
       height={300}
       data={data}
       margin={{

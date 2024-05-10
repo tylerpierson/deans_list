@@ -13,6 +13,13 @@ function Collapsible({ user }) {
     // Extract unique grade levels from all teachers
     const gradeLevels = Array.from(new Set(user.teachers.map(teacher => teacher.gradeLevel)));
 
+    // Sort grade levels numerically
+    gradeLevels.sort((a, b) => {
+        const numericA = parseInt(a.match(/\d+/)[0]);
+        const numericB = parseInt(b.match(/\d+/)[0]);
+        return numericA - numericB;
+    });
+
     // Organize data based on grade levels
     const data = gradeLevels.map(gradeLevel => {
         const teachersInGradeLevel = user.teachers.filter(teacher => teacher.gradeLevel === gradeLevel);

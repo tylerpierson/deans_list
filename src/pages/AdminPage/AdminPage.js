@@ -81,7 +81,7 @@ function AdminPage({
       </div>
       <div className={styles.mainContainer}>
         <div className={styles.leftContainer}>
-          <BarGraph />
+          <BarGraph user={user}/>
           <AdminReadingTracker />
         </div>
         <div className={styles.rightContainer}>
