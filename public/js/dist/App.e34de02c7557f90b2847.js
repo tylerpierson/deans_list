@@ -1166,9 +1166,9 @@ function BarGraph(_ref) {
     // Extract the numerical part of the grade level and convert it to a number
     const matchResult = gradeLevel.match(/\d+/);
     const numericGrade = matchResult ? parseInt(matchResult[0]) : null;
-    if (!acc[numericGrade]) {
+    if (!acc[gradeLevel]) {
       // Initialize the data object for the grade level if it doesn't exist
-      acc[numericGrade] = {
+      acc[gradeLevel] = {
         name: gradeLevel,
         Goal: 0,
         // You can set the initial value for Goal here
@@ -1177,26 +1177,32 @@ function BarGraph(_ref) {
     }
     // Accumulate the data for Goal and Current for the grade level
     // You can update the Goal and Current values here based on your requirements
-    acc[numericGrade].Goal += 0; // Update Goal
-    acc[numericGrade].Current += 0; // Update Current
+    acc[gradeLevel].Goal += 0; // Update Goal
+    acc[gradeLevel].Current += 0; // Update Current
     return acc;
   }, {});
 
   // Convert the accumulated grade level data object into an array
   let data = Object.values(gradeLevelData);
 
-  // Check if there are teachers associated with "Pre-K", if so, add it to the data array
-  const preKTeachersExist = user.teachers.some(teacher => teacher.gradeLevel === "Pre-K");
-  if (preKTeachersExist) {
-    const preKIndex = data.findIndex(entry => entry.name === "Pre-K");
-    if (preKIndex === -1) {
-      data.push({
-        name: "Pre-K",
-        Goal: 0,
-        // You can set the initial value for Goal here
-        Current: 0 // You can set the initial value for Current here
-      });
-    }
+  // Check if there are teachers associated with "Pre-K" and "Kindergarten", and add them if necessary
+  const preKExist = user.teachers.some(teacher => teacher.gradeLevel === "Pre-K");
+  const kindergartenExist = user.teachers.some(teacher => teacher.gradeLevel === "K");
+  if (preKExist && !data.find(entry => entry.name === "Pre-K")) {
+    data.push({
+      name: "Pre-K",
+      Goal: 0,
+      // You can set the initial value for Goal here
+      Current: 0 // You can set the initial value for Current here
+    });
+  }
+  if (kindergartenExist && !data.find(entry => entry.name === "K")) {
+    data.push({
+      name: "K",
+      Goal: 0,
+      // You can set the initial value for Goal here
+      Current: 0 // You can set the initial value for Current here
+    });
   }
 
   // Sort the data array based on the specified order
@@ -1206,9 +1212,9 @@ function BarGraph(_ref) {
     } else if (b.name === "Pre-K") {
       return 1; // "Pre-K" should come first
     } else if (a.name === "K") {
-      return -1; // "K" should come after "Pre-K"
+      return -1; // "Kindergarten" should come after "Pre-K"
     } else if (b.name === "K") {
-      return 1; // "K" should come after "Pre-K"
+      return 1; // "Kindergarten" should come after "Pre-K"
     } else {
       // Sort numerically for other grade levels
       return parseInt(a.name) - parseInt(b.name);
@@ -1339,6 +1345,7 @@ function Collapsible(_ref) {
     token
   } = _ref;
   const [selected, setSelected] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [homeroomVisible, setHomeroomVisible] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
   const REGISTER_URL = '/api/users';
 
   // Check if user and user.teachers are properly initialized
@@ -1407,6 +1414,11 @@ function Collapsible(_ref) {
     }
     setSelected(i);
   };
+  const toggleHomeroom = teacherId => {
+    setHomeroomVisible(prevState => _objectSpread(_objectSpread({}, prevState), {}, {
+      [teacherId]: !prevState[teacherId]
+    }));
+  };
   return /*#__PURE__*/React.createElement("div", {
     className: _Collapsible_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].wrapper
   }, /*#__PURE__*/React.createElement("div", {
@@ -1425,11 +1437,17 @@ function Collapsible(_ref) {
     to: "/teachers/".concat(teacher._id)
   }, "".concat(teacher.firstName, " ").concat(teacher.lastName)), /*#__PURE__*/React.createElement("button", {
     onClick: () => handleDelete(teacher._id)
-  }, "Delete Teacher")), /*#__PURE__*/React.createElement("ul", null, teacher.students.map((student, k) => /*#__PURE__*/React.createElement("li", {
+  }, "Delete Teacher")), teacher.students.length > 0 ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("button", {
+    onClick: () => toggleHomeroom(teacher._id)
+  }, homeroomVisible[teacher._id] ? 'Hide Homeroom' : 'Show Homeroom')), /*#__PURE__*/React.createElement("ul", {
+    style: {
+      display: homeroomVisible[teacher._id] ? 'block' : 'none'
+    }
+  }, teacher.students.sort((a, b) => a.lastName.localeCompare(b.lastName)).map((student, k) => /*#__PURE__*/React.createElement("li", {
     key: k
-  }, student.firstName, " ", student.lastName, /*#__PURE__*/React.createElement("button", {
+  }, student.lastName, ", ", student.firstName, /*#__PURE__*/React.createElement("button", {
     onClick: () => handleDelete(student._id)
-  }, "Delete Student")))))))))));
+  }, "Delete Student"))))) : '')))))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Collapsible);
 
@@ -2517,6 +2535,7 @@ const StudentCreateForm = _ref => {
   const [campusNum, setCampusNum] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("".concat(user.campusNum));
   const [role, setRole] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('student'); // State for role
   const [selectedTeachers, setSelectedTeachers] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]); // State for selected teachers
+  const [selectedSwitchTeachers, setSelectedSwitchTeachers] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const [selectedTeacherGradeLevel, setSelectedTeacherGradeLevel] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''); // State for selected teacher's gradeLevel
 
   const [validFirstName, setValidFirstName] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
@@ -2527,6 +2546,7 @@ const StudentCreateForm = _ref => {
   const [validCampusNum, setValidCampusNum] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
   const [validRole, setValidRole] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
   const [validSelectedTeachers, setValidSelectedTeachers] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
+  const [validSelectedSwitchTeachers, setValidSelectedSwitchTeachers] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
   const [firstNameFocus, setFirstNameFocus] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [lastNameFocus, setLastNameFocus] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [emailFocus, setEmailFocus] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
@@ -2560,6 +2580,16 @@ const StudentCreateForm = _ref => {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     setValidSelectedTeachers(selectedTeachers.length > 0);
   }, [selectedTeachers]);
+
+  // Update the validSelectedTeachers state based on whether at least one teacher is selected
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    setValidSelectedTeachers(selectedTeachers.length > 0);
+  }, [selectedTeachers]);
+
+  // Update the validSelectedTeachers state based on whether at least one teacher is selected
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    setValidSelectedSwitchTeachers(selectedSwitchTeachers.length > 0);
+  }, [selectedSwitchTeachers]);
   const handleSubmit = async e => {
     e.preventDefault();
 
@@ -2595,6 +2625,8 @@ const StudentCreateForm = _ref => {
           campusNum,
           role,
           teachers: selectedTeachers,
+          switchTeachers: selectedSwitchTeachers,
+          // Include selected switch teachers
           gradeLevel: selectedTeacherGradeLevel // Include selected teacher's gradeLevel
         })
       });
@@ -2779,17 +2811,40 @@ const StudentCreateForm = _ref => {
     icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faInfoCircle
   }), "Please confirm your password."), user.role === 'admin' ? /*#__PURE__*/React.createElement("div", {
     className: _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].teacherContainer
+  }, /*#__PURE__*/React.createElement("div", {
+    className: _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].teacherList
   }, /*#__PURE__*/React.createElement("label", {
     className: _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].label
-  }, "* Select Teachers:"), user.teachers.map((teacher, index) => /*#__PURE__*/React.createElement("div", {
+  }, "* Select Homeroom Teacher:"), /*#__PURE__*/React.createElement("div", {
+    className: _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].scrollableList
+  }, user.teachers.sort((a, b) => a.lastName.localeCompare(b.lastName)).map((teacher, index) => /*#__PURE__*/React.createElement("div", {
     key: index
   }, /*#__PURE__*/React.createElement("input", {
-    type: "checkbox",
-    id: "teacher_".concat(index),
+    type: "radio",
+    id: "homeroom_teacher_".concat(index),
+    name: "homeroom_teacher",
     value: teacher._id,
     onChange: e => {
       const teacherId = e.target.value;
-      setSelectedTeachers(prevTeachers => {
+      setSelectedTeachers([teacherId]); // Only one teacher can be selected
+    }
+  }), /*#__PURE__*/React.createElement("label", {
+    htmlFor: "homeroom_teacher_".concat(index)
+  }, teacher.lastName, ", ", teacher.firstName))))), /*#__PURE__*/React.createElement("div", {
+    className: _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].teacherList
+  }, /*#__PURE__*/React.createElement("label", {
+    className: _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].label
+  }, "* Select Switch Teachers:"), /*#__PURE__*/React.createElement("div", {
+    className: _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].scrollableList
+  }, user.teachers.sort((a, b) => a.lastName.localeCompare(b.lastName)).map((teacher, index) => /*#__PURE__*/React.createElement("div", {
+    key: index
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "checkbox",
+    id: "switch_teacher_".concat(index),
+    value: teacher._id,
+    onChange: e => {
+      const teacherId = e.target.value;
+      setSelectedSwitchTeachers(prevTeachers => {
         if (e.target.checked) {
           return [...prevTeachers, teacherId];
         } else {
@@ -2798,8 +2853,8 @@ const StudentCreateForm = _ref => {
       });
     }
   }), /*#__PURE__*/React.createElement("label", {
-    htmlFor: "teacher_".concat(index)
-  }, teacher.lastName, ", ", teacher.firstName)))) : '', /*#__PURE__*/React.createElement("button", {
+    htmlFor: "switch_teacher_".concat(index)
+  }, teacher.lastName, ", ", teacher.firstName)))))) : '', /*#__PURE__*/React.createElement("button", {
     disabled: !validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword || user.role === 'admin' && !validSelectedTeachers,
     className: !validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword || user.role === 'admin' && !validSelectedTeachers ? _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].disabledButton : _StudentCreateForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].button
   }, "Create Student User")), /*#__PURE__*/React.createElement("img", {
@@ -6149,7 +6204,25 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.brsfA739F_ynNbix4uKv {
   transform: scale(1.1);
   border: 0.2rem solid white;
   transition: 0.2s ease;
-}`, "",{"version":3,"sources":["webpack://./src/components/StudentCreateForm/StudentCreateForm.module.scss"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,iBAAA;EACA,gBAAA;EACA,aAAA;EACA,sBAAA;EACA,2BAAA;EACA,mBAAA;EACA,aAAA;EACA,mBAAA;EACA,qCAAA;EACA,mCAAA;EACA,eAAA;EACA,aAAA;AACJ;;AAEA;EACI,aAAA;EACA,8BAAA;EACA,cAAA;AACJ;AAAI;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,gBAAA;AAER;;AAEA;EACI,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,YAAA;EACA,oBAAA;AACJ;;AAEA;EACI,WAAA;AACJ;;AAEA;;EAEE,eAAA;EACA,gBAAA;EACA,qBAAA;AACF;;AAEA;;EAEE,gBAAA;EACA,SAAA;AACF;;AAEA;EACE,eAAA;AACF;;AAEA;EACI,YAAA;EACA,kCAAA;EACA,YAAA;EACA,qBAAA;AACJ;AAAI;EACI,eAAA;EACA,eAAA;EACA,eAAA;EACA,yBAAA;EACA,qBAAA;AAER;;AAEA;EACI,kBAAA;AACJ;;AAEA;EACI,kBAAA;EACA,qBAAA;EACA,gBAAA;EACA,WAAA;EACA,gBAAA;EACA,kBAAA;EACA,aAAA;AACJ;;AAEA;EACI,qBAAA;AACJ;;AAEA;EACI,kBAAA;EACA,aAAA;AACJ;;AAEA;EACI,aAAA;AACJ;;AAEA;EACI,gBAAA;EACA,oBAAA;AACJ;;AAEA;EACI,UAAA;EACA,oBAAA;AACJ;;AAEA;EACI,2BAAA;EACA,gBAAA;EACA,iBAAA;EACA,eAAA;EACA,qBAAA;AACJ;;AAEA;EACI,qBAAA;AACJ;;AAEA;EACI,kBAAA;AACJ;;AAEA;EACI,WAAA;EACA,YAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;EACA,mBAAA;EACA,YAAA;EACA,kCAAA;EACA,YAAA;EACA,iBAAA;EACA,kBAAA;EACA,qBAAA;AACJ;AAAI;EACI,eAAA;EACA,qBAAA;EACA,0BAAA;EACA,qBAAA;AAER","sourcesContent":[".section {\n    width: 100%;\n    min-height: 400px;\n    max-width: 600px;\n    display: flex;\n    flex-direction: column;\n    justify-content: flex-start;\n    align-items: center;\n    padding: 1rem;\n    border-radius: 3rem;\n    border: .3rem solid var(--text-dark);\n    background-color: var(--text-light);\n    position: fixed;\n    z-index: 1000;\n}\n\n.nameContainer, .emailAndCampusContainer, .passwordContainer {\n    display: flex;\n    justify-content: space-between;\n    margin: 1rem 0;\n    .fName, .lName, .email, .campusNum, .pwd, .confirmPwd {\n        display: flex;\n        flex-direction: column;\n        align-items: flex-start;\n        margin: 0 .5rem;\n    }\n}\n\n.form {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-evenly;\n    flex-grow: 1;\n    padding-bottom: 1rem;\n}\n\n.a, .a:visited {\n    color: #fff;\n}\n\n.input,\n.button, .disabledButton {\n  font-size: 22px;\n  padding: 0.25rem;\n  border-radius: 0.5rem;\n}\n\n.label,\n.button, .disabledButton {\n  margin-top: 1rem;\n  margin: 0;\n}\n\n.button, .disabledButton {\n  padding: 0.5rem;\n}\n\n.button {\n    border: none;\n    background-color: var(--text-dark);\n    color: white;\n    transition: .3s ease;\n    &:hover {\n        cursor: pointer;\n        padding: 0.7rem;\n        font-size: 20px;\n        background-color: #1a1c2a;\n        transition: .3s ease;\n    }\n}\n\n.togglePara {\n    text-align: center;\n}\n\n.instructions {\n    font-size: 0.75rem;\n    border-radius: 0.5rem;\n    background: #000;\n    color: #fff;\n    padding: 0.25rem;\n    position: relative;\n    bottom: -10px;\n}\n\n.instructions > svg {\n    margin-right: 0.25rem;\n}\n\n.offscreen {\n    position: absolute;\n    left: -9999px;\n}\n\n.hide {\n    display: none;\n}\n\n.valid {\n    color: limegreen;\n    margin-left: 0.25rem;\n}\n\n.invalid {\n    color: red;\n    margin-left: 0.25rem;\n}\n\n.errmsg {\n    background-color: lightpink;\n    color: firebrick;\n    font-weight: bold;\n    padding: 0.5rem;\n    margin-bottom: 0.5rem;\n}\n\n.line {\n    display: inline-block;\n}\n\n.roleContainer {\n    visibility: hidden;\n}\n\n.closeBtn {\n    width: 2rem;\n    height: 2rem;\n    position: absolute;\n    top: 1.5rem;\n    right: 1.5rem;\n    border-radius: 100%;\n    border: none;\n    background-color: var(--text-dark);\n    color: white;\n    font-size: 1.5rem;\n    text-align: center;\n    transition: .2s ease;\n    &:hover {\n        cursor: pointer;\n        transform: scale(1.1);\n        border: .2rem solid white;\n        transition: .2s ease;\n    }\n}"],"sourceRoot":""}]);
+}
+
+.u6kpcgDsXKwqr2rQtvUA {
+  display: flex;
+  justify-content: space-between;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  padding-bottom: 1rem; /* Add some bottom padding to ensure scrollbar visibility */
+}
+
+.pokaqZ7GQ6suMKRg5YjA {
+  flex: 0 0 45%; /* Set a fixed width for each teacher list */
+  margin-right: 1rem; /* Add some margin between teacher lists */
+  max-height: 125px; /* Set a maximum height for each teacher list */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.b7CQ__BHR7Turnz1WHYI {
+  padding-right: 1rem; /* Add some right padding to ensure scrollbar visibility */
+}`, "",{"version":3,"sources":["webpack://./src/components/StudentCreateForm/StudentCreateForm.module.scss"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,iBAAA;EACA,gBAAA;EACA,aAAA;EACA,sBAAA;EACA,2BAAA;EACA,mBAAA;EACA,aAAA;EACA,mBAAA;EACA,qCAAA;EACA,mCAAA;EACA,eAAA;EACA,aAAA;AACJ;;AAEA;EACI,aAAA;EACA,8BAAA;EACA,cAAA;AACJ;AAAI;EACI,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,gBAAA;AAER;;AAEA;EACI,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,YAAA;EACA,oBAAA;AACJ;;AAEA;EACI,WAAA;AACJ;;AAEA;;EAEE,eAAA;EACA,gBAAA;EACA,qBAAA;AACF;;AAEA;;EAEE,gBAAA;EACA,SAAA;AACF;;AAEA;EACE,eAAA;AACF;;AAEA;EACI,YAAA;EACA,kCAAA;EACA,YAAA;EACA,qBAAA;AACJ;AAAI;EACI,eAAA;EACA,eAAA;EACA,eAAA;EACA,yBAAA;EACA,qBAAA;AAER;;AAEA;EACI,kBAAA;AACJ;;AAEA;EACI,kBAAA;EACA,qBAAA;EACA,gBAAA;EACA,WAAA;EACA,gBAAA;EACA,kBAAA;EACA,aAAA;AACJ;;AAEA;EACI,qBAAA;AACJ;;AAEA;EACI,kBAAA;EACA,aAAA;AACJ;;AAEA;EACI,aAAA;AACJ;;AAEA;EACI,gBAAA;EACA,oBAAA;AACJ;;AAEA;EACI,UAAA;EACA,oBAAA;AACJ;;AAEA;EACI,2BAAA;EACA,gBAAA;EACA,iBAAA;EACA,eAAA;EACA,qBAAA;AACJ;;AAEA;EACI,qBAAA;AACJ;;AAEA;EACI,kBAAA;AACJ;;AAEA;EACI,WAAA;EACA,YAAA;EACA,kBAAA;EACA,WAAA;EACA,aAAA;EACA,mBAAA;EACA,YAAA;EACA,kCAAA;EACA,YAAA;EACA,iBAAA;EACA,kBAAA;EACA,qBAAA;AACJ;AAAI;EACI,eAAA;EACA,qBAAA;EACA,0BAAA;EACA,qBAAA;AAER;;AAEA;EACI,aAAA;EACA,8BAAA;EACA,gBAAA,EAAA,gCAAA;EACA,oBAAA,EAAA,2DAAA;AACJ;;AAEA;EACI,aAAA,EAAA,4CAAA;EACA,kBAAA,EAAA,0CAAA;EACA,iBAAA,EAAA,+CAAA;EACA,gBAAA,EAAA,8BAAA;AACJ;;AAEA;EACI,mBAAA,EAAA,0DAAA;AACJ","sourcesContent":[".section {\n    width: 100%;\n    min-height: 400px;\n    max-width: 600px;\n    display: flex;\n    flex-direction: column;\n    justify-content: flex-start;\n    align-items: center;\n    padding: 1rem;\n    border-radius: 3rem;\n    border: .3rem solid var(--text-dark);\n    background-color: var(--text-light);\n    position: fixed;\n    z-index: 1000;\n}\n\n.nameContainer, .emailAndCampusContainer, .passwordContainer {\n    display: flex;\n    justify-content: space-between;\n    margin: 1rem 0;\n    .fName, .lName, .email, .campusNum, .pwd, .confirmPwd {\n        display: flex;\n        flex-direction: column;\n        align-items: flex-start;\n        margin: 0 .5rem;\n    }\n}\n\n.form {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-evenly;\n    flex-grow: 1;\n    padding-bottom: 1rem;\n}\n\n.a, .a:visited {\n    color: #fff;\n}\n\n.input,\n.button, .disabledButton {\n  font-size: 22px;\n  padding: 0.25rem;\n  border-radius: 0.5rem;\n}\n\n.label,\n.button, .disabledButton {\n  margin-top: 1rem;\n  margin: 0;\n}\n\n.button, .disabledButton {\n  padding: 0.5rem;\n}\n\n.button {\n    border: none;\n    background-color: var(--text-dark);\n    color: white;\n    transition: .3s ease;\n    &:hover {\n        cursor: pointer;\n        padding: 0.7rem;\n        font-size: 20px;\n        background-color: #1a1c2a;\n        transition: .3s ease;\n    }\n}\n\n.togglePara {\n    text-align: center;\n}\n\n.instructions {\n    font-size: 0.75rem;\n    border-radius: 0.5rem;\n    background: #000;\n    color: #fff;\n    padding: 0.25rem;\n    position: relative;\n    bottom: -10px;\n}\n\n.instructions > svg {\n    margin-right: 0.25rem;\n}\n\n.offscreen {\n    position: absolute;\n    left: -9999px;\n}\n\n.hide {\n    display: none;\n}\n\n.valid {\n    color: limegreen;\n    margin-left: 0.25rem;\n}\n\n.invalid {\n    color: red;\n    margin-left: 0.25rem;\n}\n\n.errmsg {\n    background-color: lightpink;\n    color: firebrick;\n    font-weight: bold;\n    padding: 0.5rem;\n    margin-bottom: 0.5rem;\n}\n\n.line {\n    display: inline-block;\n}\n\n.roleContainer {\n    visibility: hidden;\n}\n\n.closeBtn {\n    width: 2rem;\n    height: 2rem;\n    position: absolute;\n    top: 1.5rem;\n    right: 1.5rem;\n    border-radius: 100%;\n    border: none;\n    background-color: var(--text-dark);\n    color: white;\n    font-size: 1.5rem;\n    text-align: center;\n    transition: .2s ease;\n    &:hover {\n        cursor: pointer;\n        transform: scale(1.1);\n        border: .2rem solid white;\n        transition: .2s ease;\n    }\n}\n\n.teacherContainer {\n    display: flex;\n    justify-content: space-between;\n    overflow-x: auto; /* Enable horizontal scrolling */\n    padding-bottom: 1rem; /* Add some bottom padding to ensure scrollbar visibility */\n}\n\n.teacherList {\n    flex: 0 0 45%; /* Set a fixed width for each teacher list */\n    margin-right: 1rem; /* Add some margin between teacher lists */\n    max-height: 125px; /* Set a maximum height for each teacher list */\n    overflow-y: auto; /* Enable vertical scrolling */\n}\n\n.scrollableList {\n    padding-right: 1rem; /* Add some right padding to ensure scrollbar visibility */\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"section": `brsfA739F_ynNbix4uKv`,
@@ -6177,7 +6250,10 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"errmsg": `j3q9FTwQQ7ssEkTcsmMG`,
 	"line": `SFa2NIcskfr84De3JJ1c`,
 	"roleContainer": `yPBclw8bufyNibMeODnd`,
-	"closeBtn": `QttGHCtLSo7U286Pipb8`
+	"closeBtn": `QttGHCtLSo7U286Pipb8`,
+	"teacherContainer": `u6kpcgDsXKwqr2rQtvUA`,
+	"teacherList": `pokaqZ7GQ6suMKRg5YjA`,
+	"scrollableList": `b7CQ__BHR7Turnz1WHYI`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -8722,4 +8798,4 @@ module.exports = __webpack_require__.p + "9025efb22dcdb2c58efe.png";
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=App.d39f3d1da4b3e1ea6846a1b6faa9fc7b.js.map
+//# sourceMappingURL=App.830d8b1dd2de386e649cf90693cbf178.js.map

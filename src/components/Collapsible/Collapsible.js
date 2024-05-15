@@ -4,6 +4,7 @@ import styles from './Collapsible.module.scss';
 
 function Collapsible({ user, token }) {
     const [selected, setSelected] = useState(null);
+    const [homeroomVisible, setHomeroomVisible] = useState({});
 
     const REGISTER_URL = '/api/users';
 
@@ -76,6 +77,13 @@ function Collapsible({ user, token }) {
         setSelected(i);
     };
 
+    const toggleHomeroom = (teacherId) => {
+        setHomeroomVisible(prevState => ({
+            ...prevState,
+            [teacherId]: !prevState[teacherId]
+        }));
+    };
+
     return (
         <div className={styles.wrapper}>
             <div className={styles.accordion}>
@@ -86,24 +94,35 @@ function Collapsible({ user, token }) {
                             <span>{selected === i ? '-' : '+'}</span>
                         </div>
                         <div className={`${styles.content} ${selected === i ? styles.show : ''}`}>
-                            {gradeData.teachers.map((teacher, j) => (
-                                <div key={j}>
+                        {gradeData.teachers.map((teacher, j) => (
+                            <div key={j}>
+                                <p>
+                                    <Link to={`/teachers/${teacher._id}`}>
+                                        {`${teacher.firstName} ${teacher.lastName}`}
+                                    </Link>
+                                    <button onClick={() => handleDelete(teacher._id)}>Delete Teacher</button>
+                                </p>
+                                { teacher.students.length > 0 ? 
+                                <>
                                     <p>
-                                        <Link to={`/teachers/${teacher._id}`}>
-                                            {`${teacher.firstName} ${teacher.lastName}`}
-                                        </Link>
-                                        <button onClick={() => handleDelete(teacher._id)}>Delete Teacher</button>
+                                        <button onClick={() => toggleHomeroom(teacher._id)}>
+                                            {homeroomVisible[teacher._id] ? 'Hide Homeroom' : 'Show Homeroom'}
+                                        </button>
                                     </p>
-                                    <ul>
-                                        {teacher.students.map((student, k) => (
+                                    <ul style={{ display: homeroomVisible[teacher._id] ? 'block' : 'none' }}>
+                                        {/* Sort the students array alphabetically by last name */}
+                                        {teacher.students.sort((a, b) => a.lastName.localeCompare(b.lastName)).map((student, k) => (
                                             <li key={k}>
-                                                {student.firstName} {student.lastName}
+                                                {student.lastName}, {student.firstName}
                                                 <button onClick={() => handleDelete(student._id)}>Delete Student</button>
                                             </li>
                                         ))}
                                     </ul>
-                                </div>
-                            ))}
+                                </>
+                                : ''
+                                }
+                            </div>
+                        ))}
                         </div>
                     </div>
                 ))}

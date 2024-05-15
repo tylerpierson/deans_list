@@ -17,6 +17,7 @@ const userSchema = new Schema({
     subjects: [String],
     admins: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     teachers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    switchTeachers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     gradeLevel: String,
     assignments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Assignment' }],
     students: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],

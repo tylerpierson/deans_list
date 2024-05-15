@@ -28,6 +28,7 @@ const StudentCreateForm = ({ user, setShowStudentCreateForm }) => {
     const [campusNum, setCampusNum] = useState(`${user.campusNum}`);
     const [role, setRole] = useState('student'); // State for role
     const [selectedTeachers, setSelectedTeachers] = useState([]); // State for selected teachers
+    const [selectedSwitchTeachers, setSelectedSwitchTeachers] = useState([])
     const [selectedTeacherGradeLevel, setSelectedTeacherGradeLevel] = useState(''); // State for selected teacher's gradeLevel
 
     const [validFirstName, setValidFirstName] = useState(false);
@@ -38,6 +39,7 @@ const StudentCreateForm = ({ user, setShowStudentCreateForm }) => {
     const [validCampusNum, setValidCampusNum] = useState(true);
     const [validRole, setValidRole] = useState(true);
     const [validSelectedTeachers, setValidSelectedTeachers] = useState(true);
+    const [validSelectedSwitchTeachers, setValidSelectedSwitchTeachers] = useState(true);
 
     const [firstNameFocus, setFirstNameFocus] = useState(false);
     const [lastNameFocus, setLastNameFocus] = useState(false);
@@ -81,6 +83,16 @@ const StudentCreateForm = ({ user, setShowStudentCreateForm }) => {
         setValidSelectedTeachers(selectedTeachers.length > 0);
     }, [selectedTeachers]);
 
+    // Update the validSelectedTeachers state based on whether at least one teacher is selected
+    useEffect(() => {
+        setValidSelectedTeachers(selectedTeachers.length > 0);
+    }, [selectedTeachers]);
+
+    // Update the validSelectedTeachers state based on whether at least one teacher is selected
+    useEffect(() => {
+        setValidSelectedSwitchTeachers(selectedSwitchTeachers.length > 0);
+    }, [selectedSwitchTeachers]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         
@@ -119,6 +131,7 @@ const StudentCreateForm = ({ user, setShowStudentCreateForm }) => {
                     campusNum,
                     role,
                     teachers: selectedTeachers,
+                    switchTeachers: selectedSwitchTeachers, // Include selected switch teachers
                     gradeLevel: selectedTeacherGradeLevel // Include selected teacher's gradeLevel
                 })
             });
@@ -144,9 +157,7 @@ const StudentCreateForm = ({ user, setShowStudentCreateForm }) => {
             setErrMsg(err.message || 'Registration Failed');
             errRef.current.focus();
         }
-    };
-    
-    
+    };    
     
     const handleExit = async (e) => {
         e.preventDefault()
@@ -295,27 +306,53 @@ const StudentCreateForm = ({ user, setShowStudentCreateForm }) => {
                 </p>
                 {user.role === 'admin' ? 
                     <div className={styles.teacherContainer}>
-                        <label className={styles.label}>* Select Teachers:</label>
-                        {user.teachers.map((teacher, index) => (
-                            <div key={index}>
-                                <input
-                                    type="checkbox"
-                                    id={`teacher_${index}`}
-                                    value={teacher._id}
-                                    onChange={(e) => {
-                                        const teacherId = e.target.value;
-                                        setSelectedTeachers(prevTeachers => {
-                                            if (e.target.checked) {
-                                                return [...prevTeachers, teacherId];
-                                            } else {
-                                                return prevTeachers.filter(id => id !== teacherId);
-                                            }
-                                        });
-                                    }}
-                                />
-                                <label htmlFor={`teacher_${index}`}>{teacher.lastName}, {teacher.firstName}</label>
+                        <div className={styles.teacherList}>
+                            <label className={styles.label}>* Select Homeroom Teacher:</label>
+                            <div className={styles.scrollableList}>
+                                {/* Sort teachers alphabetically */}
+                                {user.teachers.sort((a, b) => a.lastName.localeCompare(b.lastName)).map((teacher, index) => (
+                                    <div key={index}>
+                                        <input
+                                            type="radio"
+                                            id={`homeroom_teacher_${index}`}
+                                            name="homeroom_teacher"
+                                            value={teacher._id}
+                                            onChange={(e) => {
+                                                const teacherId = e.target.value;
+                                                setSelectedTeachers([teacherId]); // Only one teacher can be selected
+                                            }}
+                                        />
+                                        <label htmlFor={`homeroom_teacher_${index}`}>{teacher.lastName}, {teacher.firstName}</label>
+                                    </div>
+                                ))}
                             </div>
-                        ))}
+                        </div>
+                        <div className={styles.teacherList}>
+                            <label className={styles.label}>* Select Switch Teachers:</label>
+                            <div className={styles.scrollableList}>
+                                {/* Sort teachers alphabetically */}
+                                {user.teachers.sort((a, b) => a.lastName.localeCompare(b.lastName)).map((teacher, index) => (
+                                    <div key={index}>
+                                        <input
+                                            type="checkbox"
+                                            id={`switch_teacher_${index}`}
+                                            value={teacher._id}
+                                            onChange={(e) => {
+                                                const teacherId = e.target.value;
+                                                setSelectedSwitchTeachers(prevTeachers => {
+                                                    if (e.target.checked) {
+                                                        return [...prevTeachers, teacherId];
+                                                    } else {
+                                                        return prevTeachers.filter(id => id !== teacherId);
+                                                    }
+                                                });
+                                            }}
+                                        />
+                                        <label htmlFor={`switch_teacher_${index}`}>{teacher.lastName}, {teacher.firstName}</label>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
                     :
                     ''
