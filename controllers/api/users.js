@@ -213,7 +213,8 @@ async function createUser(req, res, next) {
                         }
                     }
                 }
-                        // Update students' parents arrays
+                
+                // Update students' parents arrays
                 if (user.role === 'parent' && req.body.students && req.body.students.length > 0) {
                     // Loop through each student in the req body
                     for (const studentId of req.body.students) {
@@ -226,6 +227,7 @@ async function createUser(req, res, next) {
                         }
                     }
                 }
+
                 // Update teachers' arrays for the new parent
                 if (req.body.students && req.body.students.length > 0) {
                     // Loop through each student in the req body
@@ -337,7 +339,7 @@ async function indexUsers(req, res, next){
     /****** Index Individual User *******/
 async function showUser(req, res, next){
     try {
-        const user = await User.findById({_id: req.params.id}).populate("admins teachers students parents")
+        const user = await User.findById({_id: req.params.id}).populate("admins teachers students parents switchPartners")
         console.log(user)
         res.locals.data.user = user
         next()

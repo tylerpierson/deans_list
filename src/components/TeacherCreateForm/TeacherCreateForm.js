@@ -28,6 +28,7 @@ const TeacherCreateForm = ({ user, setShowTeacherCreateForm }) => {
     const [campusNum, setCampusNum] = useState(`${user.campusNum}`);
     const [role, setRole] = useState('teacher'); // State for role
     const [gradeLevel, setGradeLevel] = useState('');
+    const [selectedPartnerTeachers, setSelectedPartnerTeachers] = useState([])
 
     const [validFirstName, setValidFirstName] = useState(false);
     const [validLastName, setValidLastName] = useState(false);
@@ -101,6 +102,7 @@ const TeacherCreateForm = ({ user, setShowTeacherCreateForm }) => {
                     password,
                     campusNum,
                     role, // Include role in the request body
+                    switchPartners: selectedPartnerTeachers,
                     gradeLevel
                 })
             });
@@ -112,6 +114,7 @@ const TeacherCreateForm = ({ user, setShowTeacherCreateForm }) => {
             const responseData = await response.json();
     
             setSuccess(true);
+            setShowTeacherCreateForm(false);
     
             // Clear form fields
             setFirstName('');
@@ -120,13 +123,16 @@ const TeacherCreateForm = ({ user, setShowTeacherCreateForm }) => {
             setPassword('');
             setConfirmPassword('');
             setGradeLevel('');
+            // Clear selected partner teachers
+            setSelectedPartnerTeachers([]);
             // Role is hard-coded, no need to reset
         } catch (err) {
             console.error(err); // Log the error to the console
             setErrMsg(err.message || 'Registration Failed');
             errRef.current.focus();
         }
-    };     
+    };
+        
     
     const handleExit = async (e) => {
         e.preventDefault()
@@ -290,6 +296,32 @@ const TeacherCreateForm = ({ user, setShowTeacherCreateForm }) => {
                     <FontAwesomeIcon icon={faInfoCircle} />
                     Please confirm your password.
                 </p>
+                <div className={styles.teacherList}>
+                            <label className={styles.label}>* Select Partner Teachers:</label>
+                            <div className={styles.scrollableList}>
+                                {/* Sort teachers alphabetically */}
+                                {user.teachers.sort((a, b) => a.lastName.localeCompare(b.lastName)).map((teacher, index) => (
+                                    <div key={index}>
+                                        <input
+                                            type="checkbox"
+                                            id={`switch_teacher_${index}`}
+                                            value={teacher._id}
+                                            onChange={(e) => {
+                                                const teacherId = e.target.value;
+                                                setSelectedPartnerTeachers(prevTeachers => {
+                                                    if (e.target.checked) {
+                                                        return [...prevTeachers, teacherId];
+                                                    } else {
+                                                        return prevTeachers.filter(id => id !== teacherId);
+                                                    }
+                                                });
+                                            }}
+                                        />
+                                        <label htmlFor={`switch_teacher_${index}`}>{teacher.lastName}, {teacher.firstName}</label>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                 <button
                     disabled={!validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword }
                     className={(!validFirstName || !validLastName || !validEmail || !validPassword || !validConfirmPassword ) ? styles.disabledButton : styles.button}

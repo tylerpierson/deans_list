@@ -62,6 +62,7 @@ export default function App(){
                     />} />
                 <Route path='/teacher' element={<TeacherPage 
                     user={user} 
+                    token={token}
                     setShowParentCreateForm={setShowParentCreateForm}
                     showParentCreateForm={showParentCreateForm}
                     setShowStudentCreateForm={setShowStudentCreateForm}

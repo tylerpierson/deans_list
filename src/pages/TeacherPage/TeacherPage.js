@@ -11,6 +11,7 @@ import StudentCreateForm from '../../components/StudentCreateForm/StudentCreateF
 
 function TeacherPage({ 
     user, 
+    token,
     setShowParentCreateForm, 
     showParentCreateForm,
     setShowStudentCreateForm,
@@ -50,7 +51,7 @@ function TeacherPage({
           </div>
           <div className={styles.rightContainer}>
             <AssignmentCollapsible />
-            <ClassCollapsible />
+            <ClassCollapsible user={user} token={token} />
             <TeamCollapsible />
           </div>
         </div>

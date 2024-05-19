@@ -142,3 +142,13 @@
         transition: .2s ease;
     }
 }
+.teacherList {
+    flex: 0 0 45%; /* Set a fixed width for each teacher list */
+    margin-right: 1rem; /* Add some margin between teacher lists */
+    max-height: 125px; /* Set a maximum height for each teacher list */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.scrollableList {
+    padding-right: 1rem; /* Add some right padding to ensure scrollbar visibility */
+}

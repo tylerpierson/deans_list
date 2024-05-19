@@ -1,34 +1,23 @@
 import { useState } from 'react';
 import styles from './ClassCollapsible.module.scss';
 
-function ClassCollapsible() {
+function ClassCollapsible({ user, token }) {
     const [selected, setSelected] = useState(null);
 
+    // Create a new data array with the first item as "Homeroom" containing all students
     const data = [
         {
             classTitle: 'Homeroom',
-            students: [
-                {
-                    name: 'Johnny'
-                },
-                {
-                    name: 'Sally'
-                },
-            ]
+            students: user ? user.students : []
         },
-        {
-            classTitle: 'Johnson\'s Homeroom (Switch Class)',
-            students: [
-                {
-                    name: 'Jimmy'
-                },
-                {
-                    name: 'Susie'
-                },
-            ]
-        }
+        ...(user && user.switchPartners ? user.switchPartners.map((teacher, index) => ({
+            classTitle: `${teacher.lastName}'s Homeroom (Switch Class)`, // corrected line
+            students: teacher ? teacher.students.map((student, index) => ({
+                firstName: student.firstName // Assigning student's first name to a key
+            })) : []            
+        })) : [])
     ];
-
+    
     const toggle = (i) => {
         if (selected === i) {
             return setSelected(null);
@@ -48,11 +37,30 @@ function ClassCollapsible() {
                         </div>
                         <div className={`${styles.content} ${selected === i ? styles.show : ''}`}>
                             <div className={styles.contentContainer}>
-                                {item.students.map((student, index) => (
-                                    <div key={index}>
-                                        <p className={styles.studentName}>{student.name}</p>
-                                    </div>
-                                ))}
+                            {item.students && Array.isArray(item.students) && (
+                                <ul>
+                                    {item.students.sort((a, b) => (a.lastName || '').localeCompare(b.lastName || '')).map((student, k) => {
+                                        // Check if the student belongs to the homeroom teacher
+                                        const belongsToHomeroom = item.classTitle === 'Homeroom' || item.classTitle.startsWith(student.lastName);
+                                        
+                                        return (
+                                            <li key={student._id}>
+                                                {belongsToHomeroom ? 
+                                                    `${student.lastName}, ${student.firstName}` : // Render as usual if it's Homeroom or switch class
+                                                    // Render switch class with student from the respective teacher's students array
+                                                    item.students.map((switchStudent, index) => {
+                                                        if (switchStudent && switchStudent.firstName) {
+                                                            `${switchStudent.firstName}`
+                                                        } else {
+                                                            return null; // Return null for undefined values
+                                                        }
+                                                    })
+                                                }
+                                            </li>
+                                        );
+                                    })}
+                                </ul>
+                            )}
                             </div>
                         </div>
                     </div>
