@@ -55,7 +55,8 @@
             }
             .Logo {
                 margin: 0 .5rem;
-                width: 15vw;
+                max-height: 7.5vh;
+                max-width: 15vw;
             }
         }
         .navList {
